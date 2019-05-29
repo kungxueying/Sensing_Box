@@ -9,7 +9,6 @@
     //activity_about
     <string name="About">關於</string>
 
-
     <string name="app_name">SensingBox</string>
     <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
