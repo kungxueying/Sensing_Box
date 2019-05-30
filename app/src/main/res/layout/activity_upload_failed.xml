@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D6EAF8"
     tools:context=".upload_failed">
 
     <TextView
@@ -31,6 +32,7 @@
         android:layout_marginBottom="263dp"
         android:gravity="center"
         android:text="@string/connection_check"
+        android:textColor="#17202A"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

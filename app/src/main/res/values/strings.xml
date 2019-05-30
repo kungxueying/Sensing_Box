@@ -1,4 +1,9 @@
 <resources>
+    <!--activity_first_page-->
+    <string name="Sensing_box">Sensing Box</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+
     <!--activity_main-->
     <string name="Welcome">Welcome,</string>
     <string name="Sensor">SENSOR</string>
