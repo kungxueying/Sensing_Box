@@ -1,12 +1,28 @@
 <resources>
-    //activity_main
+    <!--activity_main-->
     <string name="Welcome">Welcome,</string>
     <string name="Sensor">SENSOR</string>
     <string name="User_info">使用者資訊</string>
     <string name="Cloud_data">雲端資料查詢</string>
     <string name="Upload_data">上傳資料</string>
 
-    //activity_about
+    <!--activity_sensor_select-->
+    <string name="Sensor_bottom_1">以上顯示sensor在box上的相對位置</string>
+    <string name="Sensor_bottom_2">點擊空的欄位以新增sensor</string>
+
+    <!--activity_upload_success-->
+    <string name="success">Success</string>
+    <string name="upload_count">Uploaded:</string>
+    <string name="total_count">Total:</string>
+    <string name="ok">OK</string>
+
+    <!--activity_upload_failed-->
+    <string name="failed">Failed</string>
+    <string name="connection_check">Please check your network connection.</string>
+    <string name="retry">RETRY</string>
+    <string name="do_it_later">DO IT LATER</string>
+
+    <!--activity_about-->
     <string name="About">關於</string>
 
     <string name="app_name">SensingBox</string>
@@ -24,4 +40,5 @@
         completions."
     </string>
     <string name="title_activity_about">About</string>
+    <string name="title_activity_sensor_select">sensor_select</string>
 </resources>

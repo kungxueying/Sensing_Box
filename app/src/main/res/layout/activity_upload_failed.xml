@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".upload_failed">
+
+    <TextView
+        android:id="@+id/failed"
+        android:layout_width="185dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="119dp"
+        android:gravity="center"
+        android:text="@string/failed"
+        android:textColor="#FF0000"
+        android:textSize="46sp"
+        app:layout_constraintBottom_toTopOf="@+id/check_connection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/check_connection"
+        android:layout_width="336dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="263dp"
+        android:gravity="center"
+        android:text="@string/connection_check"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/failed" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="138dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="493dp"
+        android:layout_marginBottom="32dp"
+        android:background="#21618C"
+        android:text="@string/retry"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/button11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="138dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="104dp"
+        android:background="#21618C"
+        android:text="@string/do_it_later"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button10" />
+
+</android.support.constraint.ConstraintLayout>

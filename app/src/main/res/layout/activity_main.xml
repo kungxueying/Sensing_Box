@@ -9,61 +9,88 @@
     <TextView
         android:id="@+id/Welcome"
         android:layout_width="250dp"
-        android:layout_height="117dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="83dp"
         android:gravity="center"
         android:text="@string/Welcome"
         android:textSize="36sp"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="82dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:background="#82E0AA"
         android:text="@string/Sensor"
         android:textColor="@color/colorAccent"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="216dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="120dp"
-        android:layout_height="82dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="39dp"
         android:background="#F1948A"
         android:text="@string/User_info"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="227dp"
-        tools:layout_editor_absoluteY="216dp" />
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/Welcome" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="120dp"
+        android:id="@+id/button3"
+        android:layout_width="0dp"
         android:layout_height="82dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:background="#F7DC6F"
         android:text="@string/Cloud_data"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="337dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="120dp"
-        android:layout_height="82dp"
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="45dp"
         android:background="#85C1E9"
         android:text="@string/About"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="227dp"
-        tools:layout_editor_absoluteY="337dp" />
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <Button
-        android:id="@+id/button6"
-        android:layout_width="120dp"
-        android:layout_height="82dp"
+        android:id="@+id/button5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="185dp"
         android:background="#E59866"
         android:text="@string/Upload_data"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="464dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
 
 </android.support.constraint.ConstraintLayout>
