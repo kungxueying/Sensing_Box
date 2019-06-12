@@ -22,7 +22,7 @@ public class main_screen extends AppCompatActivity {
     }
 
     public void goTo_User_Info (View view){
-        Intent intent = new Intent (this, user_info.class);
+        Intent intent = new Intent (this, User_info.class);
         startActivity(intent);
     }
 
