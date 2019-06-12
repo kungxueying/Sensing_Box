@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/Background"
+    android:orientation="vertical"
+    tools:context=".Select_Bluetooth">
+
+    <TextView
+        android:id="@+id/your_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/your_device"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/Text_Color"
+        android:textSize="@dimen/Text_Size" />
+
+    <Button
+        android:id="@+id/button15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/Button_Color"
+        android:layout_gravity="center"
+        android:text="@string/my_box"
+        android:textColor="@color/Button_Text_Color" />
+
+    <TextView
+        android:id="@+id/available_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/available_devices"
+        android:textColor="@color/Text_Color"
+        android:textSize="@dimen/Text_Size" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/Button_Color"
+        android:layout_gravity="center"
+        android:onClick="goTo_Uploading"
+        android:text="@string/SB_1"
+        android:textColor="@color/Button_Text_Color" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/Button_Color"
+        android:layout_gravity="center"
+        android:onClick="goTo_Uploading"
+        android:text="@string/SB_2"
+        android:textColor="@color/Button_Text_Color" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/Button_Color"
+        android:layout_gravity="center"
+        android:onClick="goTo_Uploading"
+        android:text="@string/SB_3"
+        android:textColor="@color/Button_Text_Color" />
+
+</LinearLayout>

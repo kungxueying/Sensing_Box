@@ -9,56 +9,56 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/About"
+        android:id="@+id/User_Info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/About"
+        android:text="@string/User_info"
         android:layout_marginTop="100dp"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Title_Size" />
 
     <TextView
-        android:id="@+id/App_Developer"
+        android:id="@+id/Username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="80dp"
-        android:text="@string/App_Developer"
+        android:text="@string/user_name"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Text_Size_Small" />
 
     <TextView
-        android:id="@+id/Version"
+        android:id="@+id/Box_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="80dp"
-        android:text="@string/Version"
+        android:text="@string/box_number"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Text_Size_Small" />
 
     <TextView
-        android:id="@+id/Last_Updated"
+        android:id="@+id/email2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="80dp"
-        android:text="@string/Last_Updated"
+        android:text="@string/Email2"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Text_Size_Small" />
 
     <TextView
-        android:id="@+id/Contact"
+        android:id="@+id/box_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="80dp"
-        android:text="@string/Contact"
+        android:text="@string/box_info"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Text_Size_Small" />
 

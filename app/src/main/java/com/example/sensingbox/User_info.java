@@ -3,11 +3,11 @@ package com.example.sensingbox;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class first_page extends AppCompatActivity {
+public class User_info extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_page);
+        setContentView(R.layout.activity_user_info);
     }
 }

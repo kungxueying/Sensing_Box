@@ -9,20 +9,45 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/Sensing_box"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".first_page"></activity>
-        <activity android:name=".upload_failed" />
-        <activity android:name=".upload_success" />
+        <activity
+            android:name=".User_info"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Uploading"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Select_Bluetooth"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".login"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".main_screen"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".upload_failed"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".upload_success"
+            android:label="@string/Sensing_box"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".sensor_select"
-            android:label="@string/title_activity_sensor_select"
+            android:label="@string/Sensing_box"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".About"
-            android:label="@string/title_activity_about"
+            android:label="@string/Sensing_box"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
