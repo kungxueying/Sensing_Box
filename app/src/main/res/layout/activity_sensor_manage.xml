@@ -7,36 +7,81 @@
     android:background="@color/Background"
     tools:context=".sensor_manage">
 
-
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/data_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="#000000">
+
+            <TextView
+                android:id="@+id/data_log"
+                android:textColor="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
 
         <android.support.design.widget.TextInputLayout
-
+            android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.44">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
                 android:id="@+id/input_command"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:layout_marginLeft="7dp"
-                android:hint="input command" />
+                android:ems="10"
+                android:text="input_command" />
+
+            <Button
+                android:id="@+id/searchBT"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="搜尋BT" />
 
             <Button
                 android:id="@+id/send_command"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:layout_marginLeft="7dp"
-                android:text="@string/TEST_BUTTON" />
+                android:text="send_command" />
+
+            <Button
+                android:id="@+id/get_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="get_sensor" />
+
+            <Button
+                android:id="@+id/set_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="set_sensor" />
+
+            <Button
+                android:id="@+id/del_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="del_sensor" />
+
+            <Button
+                android:id="@+id/edit_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="edit_sensor" />
+
+            <Button
+                android:id="@+id/upload_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="upload_data" />
         </android.support.design.widget.TextInputLayout>
-    </android.support.constraint.ConstraintLayout>
+
+
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>
