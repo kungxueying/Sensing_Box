@@ -27,7 +27,9 @@ public class main_screen extends AppCompatActivity {
     }
 
     public void goTo_Cloud_Data (View view){
-        Intent intent = new Intent (this, sensor_select.class);
+        System.out.println("HI");
+        System.out.println(firebase_upload.class);
+        Intent intent = new Intent (this, firebase_upload.class);
         startActivity(intent);
     }
 
