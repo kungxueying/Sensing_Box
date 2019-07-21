@@ -73,14 +73,12 @@ public class firebase_upload extends AppCompatActivity {
     private StorageReference riversRef;
     TextView t1,t2;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cdb_uploadtest);
-        System.out.println("1");
 
         t1=(TextView)findViewById(R.id.t1);
         t2=(TextView)findViewById(R.id.t2);
-        System.out.println("2");
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("CCCC");
@@ -125,10 +123,45 @@ public class firebase_upload extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("CCCC");
         myRef.child("ABCD").removeValue();
     }
+    public void deletedb(){//刪除
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("CCCC");
+        myRef.child("ABCD").removeValue();
+    }
     public void b3(View v){//新增
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
-        DatabaseReference myRef= database.getReference("CCCC");
-        myRef.child("ABCD").setValue("224466");
+        //DatabaseReference myRef= database.getReference("CCCC");
+       // myRef.child("ABCD").setValue("224466");
+        DatabaseReference myRef= database.getReference("user");
+        //myRef.child("111").setValue("");
+        myRef.child("111").child("id").setValue("111");
+        myRef.child("111").child("name").setValue("Amyy");
+        myRef.child("111").child("email").setValue("fsiduhfgi");
+        myRef.child("111").child("pwd").setValue("filsduzhtrl");
+    }
+    public void insertuser(DS_user newuser){//新增
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
+        DatabaseReference myRef= database.getReference("user");
+        myRef.child(newuser.id).child("id").setValue(newuser.id);
+        myRef.child(newuser.id).child("name").setValue(newuser.name);
+        myRef.child(newuser.id).child("email").setValue(newuser.email);
+        myRef.child(newuser.id).child("pwd").setValue(newuser.pwd);
+    }
+    public void insertsensorall(DS_sensorall newsensor){//新增
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
+        DatabaseReference myRef= database.getReference("sensorall");
+        myRef.child("name").setValue(newsensor.sensorName);
+
+    }
+    public void insertdata(DS_dataset newdata){//新增
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
+        DatabaseReference myRef= database.getReference("dataset");
+        myRef.child(newdata.sensor).child(newdata.time).child("sensor").setValue(newdata.sensor);
+        myRef.child(newdata.sensor).child(newdata.time).child("time").setValue(newdata.time);
+        myRef.child(newdata.sensor).child(newdata.time).child("userID").setValue(newdata.userID);
+        myRef.child(newdata.sensor).child(newdata.time).child("locate").setValue(newdata.locate);
+        myRef.child(newdata.sensor).child(newdata.time).child("data").setValue(newdata.data);
+        myRef.child(newdata.sensor).child(newdata.time).child("boxID").setValue(newdata.boxID);
     }
 
     public void b4(View v){//更新
