@@ -142,14 +142,12 @@ public class sensor_manage extends AppCompatActivity {
                         readMessage = new String((byte[]) msg.obj, "UTF-8");
                         readMessage =  readMessage.substring(0,1);
                         //取得傳過來字串的第一個字元，其餘為雜訊
+                        textview.append(readMessage); //將收到的字串呈現在畫面上
                         _recieveData += readMessage; //拼湊每次收到的字元成字串
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    textview.append(readMessage); //將收到的字串呈現在畫面上
-
                 }
-
                 if(msg.what == CONNECTING_STATUS){
                     //收到CONNECTING_STATUS 顯示以下訊息
                     if(msg.arg1 == 1)
@@ -175,7 +173,10 @@ public class sensor_manage extends AppCompatActivity {
                     textview.append("cmd: 1,"+input_command.getText()+ "\n");
                     if(mConnectedThread != null) //First check to make sure thread created
                         mConnectedThread.write(_sendCMD);
+
                     //傳送將輸入的資料出去
+
+
                 }
             });
             get_sensor.setOnClickListener(new View.OnClickListener() {
