@@ -1,5 +1,6 @@
 package com.example.sensingbox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,4 +20,8 @@ public class sensor_select extends AppCompatActivity {
 
     }
 
+    public void goTo_qrcode_scanner (View view){
+        Intent intent = new Intent (this, qr_code_scanner.class);
+        startActivity(intent);
+    }
 }
