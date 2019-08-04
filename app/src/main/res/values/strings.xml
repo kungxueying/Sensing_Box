@@ -27,7 +27,7 @@
     <string name="uploading_data">Uploading data...</string>
 
     <!--activity_sensor_select-->
-    <string name="Button">Button</string>
+    <string name="click_to_add_sensor">Click to add sensor</string>
     <string name="Sensor_bottom_1">以上顯示sensor在box上的相對位置</string>
     <string name="Sensor_bottom_2">點擊空的欄位以新增sensor</string>
 
