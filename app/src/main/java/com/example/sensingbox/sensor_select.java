@@ -13,15 +13,19 @@ import android.widget.TextView;
 
 public class sensor_select extends AppCompatActivity {
 
-    Button button1 = (Button)findViewById(R.id.button6);
-    Button button2 = (Button)findViewById(R.id.button7);
-    Button button3 = (Button)findViewById(R.id.button8);
-    Button button4 = (Button)findViewById(R.id.button9);
+    private Button button1;
+    private Button button2;
+    private Button button3;
+    private Button button4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_select);
+        button1 = (Button)findViewById(R.id.button6);
+        button2 = (Button)findViewById(R.id.button7);
+        button3 = (Button)findViewById(R.id.button8);
+        button4 = (Button)findViewById(R.id.button9);
     }
 
     public void goTo_qrcode_scanner1 (View view){
