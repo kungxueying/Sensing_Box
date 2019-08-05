@@ -1,0 +1,65 @@
+body {
+  font-family: monospace;
+  margin:0;
+}
+h1{
+    background-color:#0066FF;
+    margin:0;
+    color:white;
+    text-align:center;
+    height:70px;
+    line-height:70px;
+    border-bottom:1px white solid;
+}
+.btn{
+    display:flex;
+    color:white;
+    flex-direction:row;
+    background-color:#5599FF;
+    margin-bottom:30px;
+    align-items:center;
+    justify-content:center;
+}
+#TEM,#CO2,#IMG{
+    display:flex;
+    flex-direction:row;
+    cursor:pointer;
+    margin-left:10px;
+    padding-left:10px;
+    border-left-style:solid;
+    border-width:2px;
+    border-color:white;
+    
+}
+#IMG{
+     border-right-style:solid;
+     padding-right:10px;
+}
+
+#chart{
+    
+    margin-left: auto;
+    margin-right: auto;
+    max-width:70%;
+    max-height:70%;
+}
+#mapid{
+    display:flex;  
+    align-items:center;
+    justify-content:center;   
+    width: 400px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width:70%;
+    max-height:70%;
+    }
+selectitem
+{
+    display:flex;  
+    align-items:center;
+    justify-content:center;
+}
+.inactive {
+  display: none !important;
+}

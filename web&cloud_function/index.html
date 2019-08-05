@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script defer src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js" defer></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.0.4/firebase-auth.js" defer></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.0.4/firebase-firestore.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" defer></script>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="script.js" defer></script>
+    <script src="tmp.js" defer></script>
+    <script src="co2.js" defer></script>
+    <script src="img.js" defer></script>
+    <title>Sensing Box  </title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <h1>Sensing Box data </h1>
+    <div class="btn">
+    <div id="TEM" >temperature</div>
+    <div id="CO2" >CO2</div>
+    <div id="IMG" >image</div>
+    </div>
+     <!-- temperature page -->
+    <div id ="tem-page">
+    <selectitem>
+        <span>data type</span>
+        <select id="type">
+            <option>day</option>
+            <option>month</option>
+        </select>
+        <span>locate:</span>
+        <select name="YourLocation">
+        　   <option value="Min">民雄鄉</option>
+　           <option value="Ji">嘉義市</option>
+        </select>
+      <label for="meeting">date:</label>
+      <input id="date" type="date" value="2019-07-20"/>  
+      <button onclick="gettmpdata()"> OK </button>
+    </selectitem>
+        <canvas id="chart" width="400px" height="200px"></canvas>
+        <div id="showdata"></div>
+        <div id="avg">Average temperature:</div>
+        <div id="nemberOfData">Number of data:</div>
+    </div id ="tem-page">
+    
+    <!-- Co2 page -->
+    <div id="co2-page" class='inactive'>
+        co2 page
+        <selectitem>
+        <span>locate:</span>
+        <select name="YourLocation">
+        　   <option value="Min">民雄鄉</option>
+　           <option value="Ji">嘉義市</option>
+        </select>
+      <label for="meeting">date:</label>
+      <input id="date" type="date" value="2019-07-20"/>  
+      <button onclick="gettmpdata()"> OK </button>
+    </selectitem>
+        <div>出現每個BOX在地圖上的位置及濃度</div>
+        <div id="mapid" ></div>
+        <div id="avg">最近一小時出現最高濃度:</div>
+    </div>
+    
+     <!-- image page -->
+    <div id="image-page" class='inactive'>image page
+        <select name="YourLocation">
+        　   <option value="Min">民雄鄉</option>
+　           <option value="Ji">嘉義市</option>
+        </select>
+        <select>
+            <option value="Min">日期/時間</option>
+        </select>
+        <div>顯示圖片、BOX編號、照片總數</div>
+        <div> GPS: (23.xxxx,121.xxxx)</div>
+        <div>詳細拍攝時間: 2019/xx/xx</div>
+    </div>
+    
+  </body>
+</html>
