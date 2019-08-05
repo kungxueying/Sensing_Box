@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -85,4 +86,12 @@ public class qr_code_scanner extends AppCompatActivity {
 
     }
 
+<<<<<<< Updated upstream
+=======
+    public void goTo_sensor_select (View view){
+        Intent intent = new Intent (this, sensor_select.class);
+        intent.putExtra("data",message);
+        startActivity(intent);
+    }
+>>>>>>> Stashed changes
 }
