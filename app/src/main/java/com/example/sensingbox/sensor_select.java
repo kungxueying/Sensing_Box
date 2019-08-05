@@ -13,21 +13,15 @@ import android.widget.TextView;
 
 public class sensor_select extends AppCompatActivity {
 
-<<<<<<< Updated upstream
-=======
     Button button1;
     Button button2;
     Button button3;
     Button button4;
 
->>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_select);
-<<<<<<< Updated upstream
-
-=======
         button1 = (Button)findViewById(R.id.button6);
         button2 = (Button)findViewById(R.id.button7);
         button3 = (Button)findViewById(R.id.button8);
@@ -50,10 +44,9 @@ public class sensor_select extends AppCompatActivity {
     public void goTo_qrcode_scanner3 (View view){
         Intent intent = new Intent (this, qr_code_scanner.class);
         startActivity(intent);
->>>>>>> Stashed changes
     }
 
-    public void goTo_qrcode_scanner (View view){
+    public void goTo_qrcode_scanner4 (View view){
         Intent intent = new Intent (this, qr_code_scanner.class);
         startActivity(intent);
     }
