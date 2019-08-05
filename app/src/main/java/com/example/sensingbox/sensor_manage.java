@@ -11,6 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.AlertDialog;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,6 +35,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -41,6 +46,9 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class sensor_manage extends AppCompatActivity {
 
@@ -137,17 +145,13 @@ public class sensor_manage extends AppCompatActivity {
         mHandler = new Handler(){
             public void handleMessage(android.os.Message msg){
                 if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
-                    String readMessage = null;
-                    try {
-                        readMessage = new String((byte[]) msg.obj, "UTF-8");
-                        readMessage =  readMessage.substring(0,1);
-                        //取得傳過來字串的第一個字元，其餘為雜訊
-                        textview.append(readMessage); //將收到的字串呈現在畫面上
-                        _recieveData += readMessage; //拼湊每次收到的字元成字串
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    _recieveData = null;
+                    //Log.e("RRRRRRRRRRRRRRR",msg.obj.toString());
+                    _recieveData = (String)(msg.obj);
+                    _recieveData+="\n";
+                    textview.append(_recieveData); //將收到的字串呈現在畫面上
                 }
+
                 if(msg.what == CONNECTING_STATUS){
                     //收到CONNECTING_STATUS 顯示以下訊息
                     if(msg.arg1 == 1)
@@ -168,9 +172,9 @@ public class sensor_manage extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "1,"+input_command.getText()+ "\n";
+                    _sendCMD = input_command.getText()+ "\n";
                     textview.append("click send_command \n >");
-                    textview.append("cmd: 1,"+input_command.getText()+ "\n");
+                    textview.append("cmd: "+input_command.getText()+ "\n");
                     if(mConnectedThread != null) //First check to make sure thread created
                         mConnectedThread.write(_sendCMD);
 
@@ -368,6 +372,7 @@ public class sensor_manage extends AppCompatActivity {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
+        BufferedReader reader;
 
         public ConnectedThread(BluetoothSocket socket) {
             mmSocket = socket;
@@ -381,8 +386,9 @@ public class sensor_manage extends AppCompatActivity {
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) { }
 
-            mmInStream = tmpIn;
-            mmOutStream = tmpOut;
+            mmInStream = new DataInputStream(tmpIn);
+            mmOutStream = new DataOutputStream(tmpOut);
+            reader = new BufferedReader(new InputStreamReader(mmInStream));
         }
 
         public void run() {
@@ -392,17 +398,34 @@ public class sensor_manage extends AppCompatActivity {
             while (true) {
                 try {
                     // Read from the InputStream
-                    bytes = mmInStream.available();
+                    String str = null;
+                    while (true) {
+                        str = reader.readLine();
+                        if(str!=null) {
+                            Log.e("RRRRRRRRRRRRRRRRRRR",str);
+                            mHandler.obtainMessage(MESSAGE_READ, str.length(), -1, str)
+                                    .sendToTarget(); // Send the obtained bytes to the UI activity
+                        }else
+                            break;
+                    }
+                    /*bytes = mmInStream.available();
                     if(bytes != 0) {
                         SystemClock.sleep(100);
                         //pause and wait for rest of data
                         bytes = mmInStream.available();
+
                         // how many bytes are ready to be read?
                         bytes = mmInStream.read(buffer, 0, bytes);
                         // record how many bytes we actually read
                         mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
                                 .sendToTarget(); // Send the obtained bytes to the UI activity
-                    }
+
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
+
+
+                        mmInStream.close();
+                    }*/
+
                 } catch (IOException e) {
                     e.printStackTrace();
 
