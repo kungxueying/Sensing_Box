@@ -82,13 +82,12 @@ public class qr_code_scanner extends AppCompatActivity {
                         public void run() {
                             textView.setText(qrCodes.valueAt(0).displayValue);
                             //record message
-                            message=qrCodes.toString();
+                            message=qrCodes.valueAt(0).displayValue;
                         }
                     });
                 }
             }
         });
-
     }
 
     public void goTo_sensor_select (View view){
@@ -96,8 +95,6 @@ public class qr_code_scanner extends AppCompatActivity {
         intent.putExtra("data",message);
         startActivity(intent);
     }
-<<<<<<< Updated upstream
+
 }
-=======
-}
->>>>>>> Stashed changes
+
