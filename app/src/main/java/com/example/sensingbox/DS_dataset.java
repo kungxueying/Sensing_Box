@@ -7,4 +7,6 @@ public class DS_dataset {
     public String data;
     public String locate;
     public String boxID;
+    public String x;
+    public String y;
 }

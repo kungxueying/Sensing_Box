@@ -40,6 +40,8 @@ public class test_firebase extends AppCompatActivity  {
         newdata.locate ="民雄";
         newdata.sensor ="temperature";
         newdata.userID = "111";
+        newdata.x = "20";
+        newdata.y = "121";
     }
 
     public void setNewsensor(DS_sensorall sensor) {
