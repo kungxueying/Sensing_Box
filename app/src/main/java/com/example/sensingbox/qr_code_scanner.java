@@ -96,4 +96,8 @@ public class qr_code_scanner extends AppCompatActivity {
         intent.putExtra("data",message);
         startActivity(intent);
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
