@@ -19,6 +19,7 @@ public class sensor_select extends AppCompatActivity {
     Button button4;
     static int flag[]=new int[4];
     static int recent;
+    String sensor_code1,sensor_code2,sensor_code3,sensor_code4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +31,10 @@ public class sensor_select extends AppCompatActivity {
         button4 = (Button)findViewById(R.id.button9);
 
         Intent intent=getIntent();
-        if(recent==1)button1.setText(intent.getStringExtra("data"));
-        else if(recent==2)button2.setText(intent.getStringExtra("data"));
-        else if(recent==3)button3.setText(intent.getStringExtra("data"));
-        else if(recent==4)button4.setText(intent.getStringExtra("data"));
+        if(recent==1){button1.setText(intent.getStringExtra("data"));sensor_code1=intent.getStringExtra("data");}
+        else if(recent==2){button2.setText(intent.getStringExtra("data"));;sensor_code2=intent.getStringExtra("data");}
+        else if(recent==3){button3.setText(intent.getStringExtra("data"));;sensor_code3=intent.getStringExtra("data");}
+        else if(recent==4){button4.setText(intent.getStringExtra("data"));;sensor_code4=intent.getStringExtra("data");}
     }
 
     public void button1 (View view){
@@ -44,6 +45,7 @@ public class sensor_select extends AppCompatActivity {
         else if (flag[0]==1){
             flag[0]=0;recent=1;
             Intent intent2 = new Intent (this, edit_sensor.class);
+            intent2.putExtra("data",sensor_code1);
             startActivity(intent2);}
     }
 
@@ -55,6 +57,7 @@ public class sensor_select extends AppCompatActivity {
         else if (flag[1]==1){
             flag[1]=0;recent=2;
             Intent intent2 = new Intent (this, edit_sensor.class);
+            intent2.putExtra("data",sensor_code2);
             startActivity(intent2);}
     }
 
@@ -66,6 +69,7 @@ public class sensor_select extends AppCompatActivity {
         else if (flag[2]==1){
             flag[2]=0;recent=3;
             Intent intent2 = new Intent (this, edit_sensor.class);
+            intent2.putExtra("data",sensor_code3);
             startActivity(intent2);}
     }
 
@@ -77,6 +81,7 @@ public class sensor_select extends AppCompatActivity {
          else if (flag[3]==1){
             flag[3]=0;recent=4;
             Intent intent2 = new Intent (this, edit_sensor.class);
+            intent2.putExtra("data",sensor_code4);
             startActivity(intent2);}
     }
 }

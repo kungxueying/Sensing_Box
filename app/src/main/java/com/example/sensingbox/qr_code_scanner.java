@@ -91,7 +91,7 @@ public class qr_code_scanner extends AppCompatActivity {
     }
 
     public void goTo_sensor_select (View view){
-        Intent intent = new Intent (this, sensor_select.class);
+        Intent intent = new Intent (this, add_sensor.class);
         intent.putExtra("data",message);
         startActivity(intent);
     }

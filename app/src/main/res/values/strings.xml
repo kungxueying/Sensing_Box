@@ -34,6 +34,9 @@
     <!--activity_qr_code_scanner-->
     <string name="sensor_code">Sensor Code</string>
 
+    <!--activity_add_sensor-->
+    <string name="add_sensor">Add Sensor</string>
+
     <!--activity_edit_sensor-->
     <string name="edit_sensor">Edit Sensor</string>
     <string name="delete_sensor">Delete this sensor</string>
