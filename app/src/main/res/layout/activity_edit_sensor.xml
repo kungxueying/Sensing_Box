@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Background"
+    tools:context=".edit_sensor">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="401dp"
+        android:gravity="center"
+        android:text="@string/edit_sensor"
+        android:textColor="@color/Text_Color"
+        android:textSize="@dimen/Title_Size"
+        app:layout_constraintBottom_toTopOf="@+id/button19"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button19"
+        android:layout_width="208dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="17dp"
+        android:background="@color/Red"
+        android:gravity="center"
+        android:onClick="delete_sensor"
+        android:text="@string/delete_sensor"
+        android:textColor="@color/Button_Text_Color"
+        app:layout_constraintBottom_toTopOf="@+id/button20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="208dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="50dp"
+        android:background="@color/Button_Color"
+        android:gravity="center"
+        android:text="@string/ok"
+        android:textColor="@color/Button_Text_Color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button19" />
+
+</android.support.constraint.ConstraintLayout>

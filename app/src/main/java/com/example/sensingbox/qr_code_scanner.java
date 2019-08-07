@@ -1,6 +1,7 @@
 package com.example.sensingbox;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -9,6 +10,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -24,6 +26,8 @@ public class qr_code_scanner extends AppCompatActivity {
     TextView textView;
     CameraSource cameraSource;
     BarcodeDetector barcodeDetector;
+    //record message
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +81,19 @@ public class qr_code_scanner extends AppCompatActivity {
                         @Override
                         public void run() {
                             textView.setText(qrCodes.valueAt(0).displayValue);
+                            //record message
+                            message=qrCodes.valueAt(0).displayValue;
                         }
                     });
                 }
             }
         });
+    }
 
+    public void goTo_sensor_select (View view){
+        Intent intent = new Intent (this, sensor_select.class);
+        intent.putExtra("data",message);
+        startActivity(intent);
     }
 
 }
