@@ -45,7 +45,5 @@ function gettmpdata() {
           }]
 
       }
-
-
     });
   }

@@ -11,7 +11,6 @@
   };
   console.log(firebase);
   // Initialize Firebase
-  //var firebase = require('firebase');
   firebase.initializeApp(firebaseConfig);
   var isLogin = true;
   firebase.auth().signInWithEmailAndPassword('icedrip7@gmail.com', '123456')
