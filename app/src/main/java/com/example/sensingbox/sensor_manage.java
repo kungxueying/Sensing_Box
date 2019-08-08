@@ -52,7 +52,6 @@ import java.io.InputStreamReader;
 
 public class sensor_manage extends AppCompatActivity {
 
-
     private static final UUID BTMODULEUUID = UUID.fromString
             ("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
 
@@ -94,7 +93,13 @@ public class sensor_manage extends AppCompatActivity {
     private Dialog dialog;
     private Set<BluetoothDevice> mPairedDevices;
 
+    //firebase
+    DS_user newuser = new DS_user();
+    DS_dataset newdata = new DS_dataset();
+    DS_sensorall sensor = new DS_sensorall();
+    firebase_upload fb = new firebase_upload();
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_manage);
@@ -142,6 +147,7 @@ public class sensor_manage extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
 
+        //處理字串
         mHandler = new Handler(){
             public void handleMessage(android.os.Message msg){
                 if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
@@ -149,6 +155,16 @@ public class sensor_manage extends AppCompatActivity {
                     //Log.e("RRRRRRRRRRRRRRR",msg.obj.toString());
                     _recieveData = (String)(msg.obj);
                     _recieveData+="\n";
+
+                    newdata.time ="201908080528";
+                    newdata.boxID ="2";
+                    newdata.data ="33";
+                    newdata.locate ="民雄";
+                    newdata.sensor ="temperature";
+                    newdata.userID = "111";
+                    newdata.x = "20";
+                    newdata.y = "121";
+                    fb.insertdata(newdata);
                     textview.append(_recieveData); //將收到的字串呈現在畫面上
                 }
 
@@ -449,6 +465,7 @@ public class sensor_manage extends AppCompatActivity {
             } catch (IOException e) { }
         }
     }
+
 }
 
 

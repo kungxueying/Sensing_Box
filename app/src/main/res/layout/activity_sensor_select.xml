@@ -24,7 +24,6 @@
 
     <Button
         android:id="@+id/send_command"
-        android:onClick="goTo_Sensor_Manage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="7dp"
@@ -32,7 +31,8 @@
         android:layout_marginEnd="9dp"
         android:layout_marginRight="9dp"
         android:layout_marginBottom="9dp"
-        android:text="TEST_BUTTON"
+        android:text="BUTTON"
+        android:onClick="goTo_Sensor_Manage"
         app:layout_constraintBottom_toTopOf="@+id/button7"
         app:layout_constraintEnd_toStartOf="@+id/button9"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,8 @@
         android:layout_marginEnd="9dp"
         android:layout_marginRight="9dp"
         android:layout_marginBottom="60dp"
-        android:text="@string/Button"
+        android:text="TEST_BUTTON"
+        android:onClick="goTo_Sensor_Manage"
         app:layout_constraintBottom_toTopOf="@+id/sensor_bottom_1"
         app:layout_constraintEnd_toStartOf="@+id/button8"
         app:layout_constraintStart_toStartOf="parent"
