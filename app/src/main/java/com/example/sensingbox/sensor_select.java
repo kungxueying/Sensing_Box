@@ -1,5 +1,6 @@
 package com.example.sensingbox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,11 @@ public class sensor_select extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_select);
 
+    }
+
+    public void goTo_Sensor_Manage (View view){
+        Intent intent = new Intent (this, sensor_manage.class);
+        startActivity(intent);
     }
 
 }
