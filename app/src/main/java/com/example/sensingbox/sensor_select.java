@@ -24,6 +24,11 @@ public class sensor_select extends AppCompatActivity {
     static String sensor_code3="Click to add sensor";
     static String sensor_code4="Click to add sensor";
     static String model="Click to add sensor";
+    static String sensor_name1="Click to add sensor";
+    static String sensor_name2="Click to add sensor";
+    static String sensor_name3="Click to add sensor";
+    static String sensor_name4="Click to add sensor";
+    static int temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,40 +41,80 @@ public class sensor_select extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(recent==1) {
-                button1.setText(intent.getStringExtra("data"));
                 sensor_code1=intent.getStringExtra("data");
-                button2.setText(sensor_code2);
-                button3.setText(sensor_code3);
-                button4.setText(sensor_code4);
-                if (model.equals(sensor_code1))flag[0]=0;
-                else flag[0]=1;
+                if (model.equals(sensor_code1)){//delete sensor
+                    flag[0]=0;
+                    sensor_name1=sensor_code1;//click to add sensor
+                }
+                else {//add or edit sensor
+                    flag[0]=1;
+                    temp=sensor_code1.charAt(6)-'0';
+                    if (temp==1)sensor_name1="camera";
+                    else if (temp==2) sensor_name1="CO2";
+                    else if (temp==3) sensor_name1="temperature";
+                }
+
+                button1.setText(sensor_name1);
+                button2.setText(sensor_name2);
+                button3.setText(sensor_name3);
+                button4.setText(sensor_name4);
         }
         else if(recent==2){
-            button2.setText(intent.getStringExtra("data"));
             sensor_code2=intent.getStringExtra("data");
-            button1.setText(sensor_code1);
-            button3.setText(sensor_code3);
-            button4.setText(sensor_code4);
-            if (model.equals(sensor_code2))flag[1]=0;
-            else flag[1]=1;
+            if (model.equals(sensor_code2)){//delete sensor
+                flag[1]=0;
+                sensor_name2=sensor_code2;//click to add sensor
+            }
+            else {//add or edit sensor
+                flag[1]=1;
+                temp=sensor_code2.charAt(6)-'0';
+                if (temp==1)sensor_name2="camera";
+                else if (temp==2) sensor_name2="CO2";
+                else if (temp==3) sensor_name2="temperature";
+            }
+
+            button1.setText(sensor_name1);
+            button2.setText(sensor_name2);
+            button3.setText(sensor_name3);
+            button4.setText(sensor_name4);
         }
         else if(recent==3){
-            button3.setText(intent.getStringExtra("data"));
             sensor_code3=intent.getStringExtra("data");
-            button2.setText(sensor_code2);
-            button1.setText(sensor_code1);
-            button4.setText(sensor_code4);
-            if (model.equals(sensor_code3))flag[2]=0;
-            else flag[2]=1;
+            if (model.equals(sensor_code3)){//delete sensor
+                flag[2]=0;
+                sensor_name3=sensor_code3;//click to add sensor
+            }
+            else {//add or edit sensor
+                flag[2]=1;
+                temp=sensor_code3.charAt(6)-'0';
+                if (temp==1)sensor_name3="camera";
+                else if (temp==2) sensor_name3="CO2";
+                else if (temp==3) sensor_name3="temperature";
+            }
+
+            button1.setText(sensor_name1);
+            button2.setText(sensor_name2);
+            button3.setText(sensor_name3);
+            button4.setText(sensor_name4);
         }
         else if(recent==4){
-            button4.setText(intent.getStringExtra("data"));
             sensor_code4=intent.getStringExtra("data");
-            button2.setText(sensor_code2);
-            button3.setText(sensor_code3);
-            button1.setText(sensor_code1);
-            if (model.equals(sensor_code4))flag[3]=0;
-            else flag[3]=1;
+            if (model.equals(sensor_code4)){//delete sensor
+                flag[3]=0;
+                sensor_name4=sensor_code4;//click to add sensor
+            }
+            else {//add or edit sensor
+                flag[3]=1;
+                temp=sensor_code4.charAt(6)-'0';
+                if (temp==1)sensor_name4="camera";
+                else if (temp==2) sensor_name4="CO2";
+                else if (temp==3) sensor_name4="temperature";
+            }
+
+            button1.setText(sensor_name1);
+            button2.setText(sensor_name2);
+            button3.setText(sensor_name3);
+            button4.setText(sensor_name4);
         }
     }
 
