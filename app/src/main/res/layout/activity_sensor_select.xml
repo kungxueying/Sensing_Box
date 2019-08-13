@@ -102,6 +102,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginBottom="87dp"
+        android:gravity="center"
         android:text="@string/Sensor_bottom_2"
         android:textColor="@color/Text_Color"
         app:layout_constraintBottom_toBottomOf="parent"
