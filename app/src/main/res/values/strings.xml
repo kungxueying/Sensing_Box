@@ -55,15 +55,5 @@
 
     <!--activity_about-->
     <string name="About">關於</string>
-    <string name="App_Developer">App Developer:</string>
-    <string name="Version">Version:</string>
-    <string name="Last_Updated">Last Updated:</string>
-    <string name="Contact">Contact Us:</string>
-
-    <!--activity_user_info-->
-    <string name="user_name">Username:</string>
-    <string name="box_number">Box Number:</string>
-    <string name="Email2">Email:</string>
-    <string name="box_info">Box Info:</string>
 
 </resources>
