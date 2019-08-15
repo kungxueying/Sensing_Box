@@ -1,66 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/Background"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/About"
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/About"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Title_Size" />
-
-    <TextView
-        android:id="@+id/App_Developer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/App_Developer"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size_Small" />
-
-    <TextView
-        android:id="@+id/Version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/Version"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size_Small" />
-
-    <TextView
-        android:id="@+id/Last_Updated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/Last_Updated"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size_Small" />
-
-    <TextView
-        android:id="@+id/Contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/Contact"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size_Small" />
-
+        android:layout_height="424dp"></ListView>
 
 </LinearLayout>
