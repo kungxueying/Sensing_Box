@@ -95,7 +95,6 @@ public class sensor_manage extends AppCompatActivity {
 
     //firebase
     DS_user newuser = new DS_user();
-    DS_dataset newdata = new DS_dataset();
     DS_sensorall sensor = new DS_sensorall();
     firebase_upload fb = new firebase_upload();
 
@@ -129,6 +128,28 @@ public class sensor_manage extends AppCompatActivity {
 
     }
 
+    public void insert_fb(String[] _data){
+        DS_dataset newdata = new DS_dataset();
+
+        //sensor type list
+        if(_data[1].equals("2"))
+            newdata.sensor = "co2";
+        else if(_data[1].equals("3") )
+            newdata.sensor = "temperature";
+
+        newdata.time = _data[2];
+        newdata.data = _data[3];
+
+        newdata.userID = "111";
+        newdata.boxID ="2";
+
+        newdata.locate ="民雄";
+        newdata.x = "20";
+        newdata.y = "121";
+
+        fb.insertdata(newdata);
+    }
+
     public void SearchBT(Activity activity) {
         dialog = new Dialog(activity);
         // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -152,20 +173,12 @@ public class sensor_manage extends AppCompatActivity {
             public void handleMessage(android.os.Message msg){
                 if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
                     _recieveData = null;
-                    //Log.e("RRRRRRRRRRRRRRR",msg.obj.toString());
                     _recieveData = (String)(msg.obj);
                     _recieveData+="\n";
-
-                    newdata.time ="201908080528";
-                    newdata.boxID ="2";
-                    newdata.data ="33";
-                    newdata.locate ="民雄";
-                    newdata.sensor ="temperature";
-                    newdata.userID = "111";
-                    newdata.x = "20";
-                    newdata.y = "121";
-                    fb.insertdata(newdata);
                     textview.append(_recieveData); //將收到的字串呈現在畫面上
+                    String[] data = _recieveData.split(",");
+                    if(data.length==4)
+                        insert_fb(data);//上傳資料庫
                 }
 
                 if(msg.what == CONNECTING_STATUS){
@@ -215,7 +228,7 @@ public class sensor_manage extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "3,1,23,run,light,1,hero3748,/data/datalog.txt\n";
+                    _sendCMD = "3,3,3,run,5,tttt2222,/data/datalog.txt\n";
                     textview.append(  "click set_sensor\n");
                     textview.append("cmd: "+_sendCMD);
                     if(mConnectedThread != null) //First check to make sure thread created
@@ -227,8 +240,8 @@ public class sensor_manage extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "4,1\n";
-                    textview.append(  "click del_sensor\n");
+                    _sendCMD = "4,3\n";
+                    textview.append("click del_sensor\n");
                     textview.append("cmd: "+_sendCMD);
                     if(mConnectedThread != null) //First check to make sure thread created
                         mConnectedThread.write(_sendCMD);
@@ -239,7 +252,7 @@ public class sensor_manage extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "5,1,23,run,light,1,hero3748,/data(new)/datalog.txt\n";
+                    _sendCMD = "5,3,3,run,1,tttt2222,/data/datalog.txt\n";
                     textview.append( "click edit_sensor\n");
                     textview.append("cmd: "+_sendCMD);
                     if(mConnectedThread != null) //First check to make sure thread created
