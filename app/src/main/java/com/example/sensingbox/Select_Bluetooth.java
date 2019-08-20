@@ -103,10 +103,14 @@ public class Select_Bluetooth extends AppCompatActivity {
 
             if(msg.what == CONNECTING_STATUS){
                 //收到CONNECTING_STATUS 顯示以下訊息
-                if(msg.arg1 == 1)
-                    textview.append("Connected to Device: " + (String)(msg.obj));
+                if(msg.arg1 == 1) {
+                    textview.append("Connected to Device: " + (String) (msg.obj));
+                    get_sensor(0);
+                    upload_data();
+                }
                 else
                     textview.append("Connection Failed");
+
             }
 
             if(msg.what == MESSAGE_READ_CMD){
@@ -146,17 +150,20 @@ public class Select_Bluetooth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_bluetooth);
 
+        textview = (TextView) findViewById(R.id.data_log);
+        textview.setText("START input your command.\n");
+
         SearchBT(this);
 
-        get_sensor(0);
-        upload_data();
+
+
 
     }
 
     public void upload_data(){
         _recieveData = ""; //清除上次收到的資料
-        _sendCMD = "2,0\n";
-        textview.append( "click get_sensor(all)\n");
+        _sendCMD = "6\n";
+        textview.append(  "click upload_data\n");
         textview.append("cmd: "+_sendCMD);
         if(mConnectedThread != null) //First check to make sure thread created
             mConnectedThread.write(_sendCMD);
