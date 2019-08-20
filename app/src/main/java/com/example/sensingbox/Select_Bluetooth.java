@@ -46,6 +46,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     // used to identify adding bluetooth names
     private final static int MESSAGE_READ = 2;
+    private final static int MESSAGE_READ_CMD = 4;
     // used in bluetooth handler to identify message update
     private final static int CONNECTING_STATUS = 3;
     // used in bluetooth handler to identify message status
@@ -60,6 +61,8 @@ public class Select_Bluetooth extends AppCompatActivity {
     // bi-directional client-to-client data path
 
     public TextView textview;
+    public int data_count=0;
+   /*
     private ScrollView scrollView;
     private Button searchBT;
     private EditText input_command;
@@ -71,6 +74,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     private Button del_sensor;
     private Button edit_sensor;
     private Button upload_data;
+    */
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -103,6 +107,15 @@ public class Select_Bluetooth extends AppCompatActivity {
                     textview.append("Connected to Device: " + (String)(msg.obj));
                 else
                     textview.append("Connection Failed");
+            }
+
+            if(msg.what == MESSAGE_READ_CMD){
+                _recieveData = null;
+                _recieveData = (String)(msg.obj);
+                textview.append(_recieveData+"\n"); //將收到的字串呈現在畫面上
+                String[] data = _recieveData.split(",");
+                if(data[0].equals("6"))
+                    data_count = Integer.parseInt(data[1]);
             }
         }
     };
@@ -415,6 +428,14 @@ public class Select_Bluetooth extends AppCompatActivity {
                 try {
                     // Read from the InputStream
                     String str = null;
+
+                    //process data
+                    str = reader.readLine();
+                    Log.e("11111111111",str);
+
+                    mHandler.obtainMessage(MESSAGE_READ_CMD, str.length(), -1, str)
+                            .sendToTarget(); // Send the obtained bytes to the UI activity
+
                     while (true) {
                         str = reader.readLine();
                         if(str!=null) {
