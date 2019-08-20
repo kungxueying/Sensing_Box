@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         //setNewuser(newuser);
         //setNewsensor(sensor);
-        //setNewdata(newdata);
-        //setFb(fb);
+        setNewdata(newdata);
+        setFb(fb);
         System.out.println("sqllite test");
         //sqllite test
         //dbHelper = new DB_MyDBHelper(this);
@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setFb(firebase_upload fb) {
         this.fb = fb;
-        fb.insertuser(newuser);
-        fb.insertsensorall(sensor);
+        //fb.insertuser(newuser);
+        //fb.insertsensorall(sensor);
         fb.insertdata(newdata);
     }
 
