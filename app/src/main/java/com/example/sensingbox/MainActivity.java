@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goTo_Register (View view){
-        Intent intent = new Intent (this, main_screen.class);
+        Intent intent = new Intent (this, Select_Bluetooth.class);
         startActivity(intent);
     }
 }

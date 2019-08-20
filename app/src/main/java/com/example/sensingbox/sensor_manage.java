@@ -65,7 +65,7 @@ public class sensor_manage extends AppCompatActivity {
     private String _recieveData = "";
     private String _sendCMD = "";
 
-    private Handler mHandler;
+    //private Handler mHandler;
     // Our main handler that will receive callback notifications
     private ConnectedThread mConnectedThread;
     // bluetooth background worker thread to send and receive data
@@ -98,6 +98,29 @@ public class sensor_manage extends AppCompatActivity {
     DS_sensorall sensor = new DS_sensorall();
     firebase_upload fb = new firebase_upload();
 
+    //處理字串
+    private Handler mHandler = new Handler(){
+        public void handleMessage(android.os.Message msg){
+            if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
+                _recieveData = null;
+                _recieveData = (String)(msg.obj);
+                textview.append(_recieveData+"\n"); //將收到的字串呈現在畫面上
+                String[] data = _recieveData.split(",");
+                if(data.length==4)
+                    insert_fb(data);//上傳資料庫
+            }
+
+            if(msg.what == CONNECTING_STATUS){
+                //收到CONNECTING_STATUS 顯示以下訊息
+                if(msg.arg1 == 1)
+                    textview.append("Connected to Device: " + (String)(msg.obj));
+                else
+                    textview.append("Connection Failed");
+            }
+        }
+    };
+
+    bluetooth BT = new bluetooth(mHandler);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +150,10 @@ public class sensor_manage extends AppCompatActivity {
 
 
     }
+
+
+
+
 
     public void insert_fb(String[] _data){
         DS_dataset newdata = new DS_dataset();
@@ -167,29 +194,6 @@ public class sensor_manage extends AppCompatActivity {
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-
-        //處理字串
-        mHandler = new Handler(){
-            public void handleMessage(android.os.Message msg){
-                if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
-                    _recieveData = null;
-                    _recieveData = (String)(msg.obj);
-                    _recieveData+="\n";
-                    textview.append(_recieveData); //將收到的字串呈現在畫面上
-                    String[] data = _recieveData.split(",");
-                    if(data.length==4)
-                        insert_fb(data);//上傳資料庫
-                }
-
-                if(msg.what == CONNECTING_STATUS){
-                    //收到CONNECTING_STATUS 顯示以下訊息
-                    if(msg.arg1 == 1)
-                        textview.append("Connected to Device: " + (String)(msg.obj));
-                    else
-                        textview.append("Connection Failed");
-                }
-            }
-        };
 
 
         if (mBTArrayAdapter == null) {
