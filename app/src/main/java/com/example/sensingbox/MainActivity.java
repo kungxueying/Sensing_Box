@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setNewdata(DS_dataset newdata) {
         this.newdata = newdata;
-        newdata.time ="201707071150";
+        newdata.time ="2017070711";
         newdata.boxID ="2";
         newdata.data ="33:";
         newdata.locate ="民雄";

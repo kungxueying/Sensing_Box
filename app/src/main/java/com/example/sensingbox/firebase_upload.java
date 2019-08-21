@@ -162,7 +162,7 @@ public class firebase_upload extends AppCompatActivity {
         myRef.child(newdata.sensor).child(newdata.time).child("locate").setValue(newdata.locate);
         myRef.child(newdata.sensor).child(newdata.time).child("data").setValue(newdata.data);
         myRef.child(newdata.sensor).child(newdata.time).child("boxID").setValue(newdata.boxID);*/
-        myRef.child(newdata.sensor).push().setValue(newdata);
+        myRef.child(newdata.sensor).child(newdata.time).push().setValue(newdata);
 
 
     }
