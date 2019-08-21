@@ -162,9 +162,8 @@ public class firebase_upload extends AppCompatActivity {
         myRef.child(newdata.sensor).child(newdata.time).child("locate").setValue(newdata.locate);
         myRef.child(newdata.sensor).child(newdata.time).child("data").setValue(newdata.data);
         myRef.child(newdata.sensor).child(newdata.time).child("boxID").setValue(newdata.boxID);*/
+        String timekey = newdata.time.substring(0,10);//節點以小時為最小單位
         myRef.child(newdata.sensor).child(newdata.time).push().setValue(newdata);
-
-
     }
 
     public void b4(View v){//更新
