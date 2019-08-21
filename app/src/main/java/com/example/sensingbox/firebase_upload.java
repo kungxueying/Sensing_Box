@@ -156,12 +156,14 @@ public class firebase_upload extends AppCompatActivity {
     public void insertdata(DS_dataset newdata){//新增
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("dataset");
-        myRef.child(newdata.sensor).child(newdata.time).child("sensor").setValue(newdata.sensor);
+      /*  myRef.child(newdata.sensor).child(newdata.time).child("sensor").setValue(newdata.sensor);
         myRef.child(newdata.sensor).child(newdata.time).child("time").setValue(newdata.time);
         myRef.child(newdata.sensor).child(newdata.time).child("userID").setValue(newdata.userID);
         myRef.child(newdata.sensor).child(newdata.time).child("locate").setValue(newdata.locate);
         myRef.child(newdata.sensor).child(newdata.time).child("data").setValue(newdata.data);
-        myRef.child(newdata.sensor).child(newdata.time).child("boxID").setValue(newdata.boxID);
+        myRef.child(newdata.sensor).child(newdata.time).child("boxID").setValue(newdata.boxID);*/
+        String timekey = newdata.time.substring(0,10);
+        myRef.child(newdata.sensor).child(newdata.time).push().setValue(newdata);
     }
 
     public void b4(View v){//更新
