@@ -21,10 +21,10 @@ public class About extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "App Developer:",
-                "Version:",
-                "Last Updated:",
-                "Contact Us:",
+        String[] values = new String[] { "App Developer:    ",
+                "Version:   ",
+                "Last Updated:  ",
+                "Contact Us:    ",
         };
 
         // Define a new Adapter

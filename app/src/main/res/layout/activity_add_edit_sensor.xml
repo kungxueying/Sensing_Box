@@ -15,7 +15,7 @@
         android:layout_marginLeft="112dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="64dp"
         android:text="@string/add_sensor"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Title_Size"
@@ -27,12 +27,12 @@
     <Button
         android:id="@+id/button23"
         android:layout_width="208dp"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_marginStart="108dp"
         android:layout_marginLeft="108dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="80dp"
         android:background="@color/Button_Color"
         android:gravity="center"
         android:onClick="ok"
@@ -43,20 +43,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginRight="124dp"
-        android:layout_marginTop="300dp"
-        android:text="@string/sensor_code"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintTop_toBottomOf="@id/textView5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

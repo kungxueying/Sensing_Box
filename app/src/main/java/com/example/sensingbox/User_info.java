@@ -21,10 +21,10 @@ public class User_info extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Username:",
-                "Box Number:",
-                "Email:",
-                "Box Info:",
+        String[] values = new String[] { "Username: ",
+                "Box Number:    ",
+                "Email: ",
+                "Box Info:  ",
         };
 
         // Define a new Adapter
