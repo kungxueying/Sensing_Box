@@ -18,10 +18,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setNewuser(newuser);
+        setNewuser(newuser);
         //setNewsensor(sensor);
         //setNewdata(newdata);
         //setFb(fb);
+        fb_register register = new fb_register();
+        register.registerToFB(newuser);
     }
 
     public void goTo_Login (View view){
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         this.newuser = newuser;
         newuser.id = "111";
         newuser.name = "Amy";
-        newuser.email = "amy111@gmail.com";
+        newuser.email = "amy123@gmail.com";
         newuser.pwd = "11122";
     }
 

@@ -142,10 +142,9 @@ public class firebase_upload extends AppCompatActivity {
     public void insertuser(DS_user newuser){//新增
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("user");
-        myRef.child(newuser.id).child("id").setValue(newuser.id);
-        myRef.child(newuser.id).child("name").setValue(newuser.name);
-        myRef.child(newuser.id).child("email").setValue(newuser.email);
-        myRef.child(newuser.id).child("pwd").setValue(newuser.pwd);
+        String replaceStr = newuser.email.replace('.', '_');
+
+        myRef.child(replaceStr).setValue(newuser);
     }
     public void insertsensorall(DS_sensorall newsensor){//新增
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
