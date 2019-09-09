@@ -72,6 +72,7 @@ public class firebase_upload extends AppCompatActivity {
     private ProgressBar imgUploadProgress;
     private StorageReference riversRef;
     TextView t1,t2;
+    private  String dbpwd;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +118,57 @@ public class firebase_upload extends AppCompatActivity {
         });
         initData();
         initView();
+    }
+    public void readData(String email, final String ipwd,String co){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
+        DatabaseReference myRef= database.getReference("user/amy123@gmail_com");
+        final String[] correct = new String[1];
+        System.out.println("讀取 db1");
+        myRef.addChildEventListener(new ChildEventListener() {//讀取
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                System.out.println(dataSnapshot.getKey());
+                if(dataSnapshot.getKey().equals("pwd")){
+                    String dbpwd= String.valueOf(dataSnapshot.getValue());
+                    System.out.println(dbpwd);
+                    fb_login lo = new fb_login();
+                    lo.pwdcheck(ipwd,dbpwd);
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //t1.setText(""+dataSnapshot.getValue());
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Log.e("新增",snapshot.child("name").toString());
+                    System.out.println("讀取 db3");
+                }
+
+            }
+        });
+
+
     }
     public void b2(View v){//刪除
         FirebaseDatabase database = FirebaseDatabase.getInstance();
