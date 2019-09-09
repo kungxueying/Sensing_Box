@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         //setNewuser(newuser);
         //setNewsensor(sensor);
-        setNewdata(newdata);
-        setFb(fb);
+
+        //setNewdata(newdata);
+        //setFb(fb);
         System.out.println("sqllite test");
         //sqllite test
-        //dbHelper = new DB_MyDBHelper(this);
-        //db = dbHelper.getWritableDatabase(); // 開啟資料庫
+
         // 建立資料庫物件
         itemDAO = new DB_itemDAO(getApplicationContext());
         System.out.println("建立資料庫物件成功");

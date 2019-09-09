@@ -276,15 +276,19 @@ public class firebase_upload extends AppCompatActivity {
         });
     }
 
-    private void uploadImg(String path){
+    public void uploadImg(String path){
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         Uri file = Uri.fromFile(new File(path));
+        System.out.println("圖片的路徑:");
         System.out.println(path);
         StorageMetadata metadata = new StorageMetadata.Builder()
                 .setContentDisposition("universe")
                 .setContentType("image/jpg")
                 .build();
         riversRef = mStorageRef.child(file.getLastPathSegment());
+
         UploadTask uploadTask = riversRef.putFile(file, metadata);
+        /*
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -305,6 +309,8 @@ public class firebase_upload extends AppCompatActivity {
                 }
             }
         });
+
+         */
     }
 
     private void getLocalImg(){
@@ -335,6 +341,10 @@ public class firebase_upload extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
                 imgPath = getPath(firebase_upload.this, uri);
+                System.out.println("圖片的路徑2:");
+                System.out.println(uri);
+                System.out.println(imgPath);
+
                 if(!TextUtils.isEmpty(imgPath)) {
                     Toast.makeText(firebase_upload.this, imgPath, Toast.LENGTH_SHORT).show();
                     Glide.with(firebase_upload.this).load(imgPath).into(pickImg);

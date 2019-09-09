@@ -141,17 +141,22 @@ public class DB_itemDAO {
 
     // 建立範例資料
     public void sample() {
+        //image 的data是路徑
 
         //DS_dataset item = new DS_dataset(1, new Date().getTime(), Colors.RED, "關於Android Tutorial的事情.", "Hello content", "", 0, 0, 0);
-        DS_dataset item2 = new DS_dataset("111","box1", "21C","user1", "民雄", "temperature", "201908071122", "25.04719", "121.516981");
-        DS_dataset item3 = new DS_dataset("112","box1", "22C","user2", "民雄", "co2", "201908071121", "25.04719", "121");
-        DS_dataset item4 = new DS_dataset("113","box2", "23C", "user3", "嘉義", "image", "201908071123", "25.04719", "121");
+        DS_dataset item2 = new DS_dataset("111","box1", "/storage/emulated/0/Android/data/com.android.browser/files/Download/2019-08-18-19-23-28--1786833669.jpg","user1", "民雄", "temperature", "201908071122", "25.04719", "121.516981");
+        //DS_dataset item3 = new DS_dataset("112","box1", "22C","user2", "民雄", "co2", "201908071121", "25.04719", "121");
+        //DS_dataset item4 = new DS_dataset("113","box2", "23C", "user3", "嘉義", "image", "201908071123", "25.04719", "121");
 
 
-        insert(item2);
-        insert(item3);
-        insert(item4);
-        delete(1);
+        //insert(item2);
+        //insert(item3);
+        //insert(item4);
+        //delete(1);
+        //上傳到firebase
+        firebase_upload fb = new firebase_upload();
+        fb.uploadImg(item2.data);
+
 
 
     }
