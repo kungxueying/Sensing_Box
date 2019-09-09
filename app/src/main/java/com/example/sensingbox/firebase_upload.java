@@ -285,6 +285,7 @@ public class firebase_upload extends AppCompatActivity {
                 .build();
         riversRef = mStorageRef.child(file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file, metadata);
+        /*
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -304,7 +305,7 @@ public class firebase_upload extends AppCompatActivity {
                     imgUploadProgress.setVisibility(View.GONE);
                 }
             }
-        });
+        });*/
     }
 
     private void getLocalImg(){
