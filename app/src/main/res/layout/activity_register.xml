@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/Background"
     android:orientation="vertical"
-    tools:context=".login">
+    tools:context=".register">
 
     <TextView
-        android:id="@+id/login"
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:text="@string/Sensing_box"
         android:textColor="@color/Text_Color"
@@ -30,11 +30,11 @@
         android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:hint="@string/email"
-        app:layout_constraintTop_toTopOf="@id/login"/>
+        app:layout_constraintTop_toTopOf="@id/register"/>
 
     <EditText
         android:id="@+id/editText2"
@@ -46,6 +46,25 @@
         android:hint="@string/password"
         app:layout_constraintTop_toTopOf="@id/edit_email"/>
 
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/username"
+        app:layout_constraintTop_toTopOf="@id/editText2"/>
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/box_number"
+        app:layout_constraintTop_toTopOf="@id/editText3"/>
 
     <Button
         android:id="@+id/button14"
@@ -58,8 +77,8 @@
         android:layout_marginRight="112dp"
         android:layout_marginBottom="50dp"
         android:background="@color/Button_Color"
-        android:onClick="goTo_Main_Screen"
-        android:text="@string/login"
+        android:onClick="goTo_Login"
+        android:text="@string/register"
         android:textColor="@color/Button_Text_Color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class add_edit_sensor extends AppCompatActivity {
 
     sensor sensor1=new sensor();
     ListView listView ;
+    TextView sensor_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +23,17 @@ public class add_edit_sensor extends AppCompatActivity {
         Intent intent=getIntent();
         sensor1=(sensor)intent.getSerializableExtra("data");
 
+        sensor_name = (TextView) findViewById(R.id.textView2);
+        sensor_name.setText(sensor1.getSensorName());
+
         // Get ListView object from xml
         listView = (android.widget.ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Sensor Name:  "+sensor1.getSensorName(),
-                "Sensor Code:   "+sensor1.getSensorCode(),
-                "Collection Cycle:  ",
-                "Data Storage Path: ",
-                "Sensor Status: ",
+        String[] values = new String[] {
+                "Collection Cycle:  "+sensor1.getCycle(),
+                "Data Storage Path: "+sensor1.getPath(),
+                "Sensor Status: "+sensor1.getStatus(),
         };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
