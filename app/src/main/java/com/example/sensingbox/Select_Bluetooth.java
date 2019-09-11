@@ -11,18 +11,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,20 +66,14 @@ public class Select_Bluetooth extends AppCompatActivity {
     // bi-directional client-to-client data path
 
     public TextView textview;
+    public Button search_btn;
     public int data_count=0;
-   /*
-    private ScrollView scrollView;
-    private Button searchBT;
-    private EditText input_command;
 
-    //Button
-    private Button send_command;
-    private Button get_sensor;
-    private Button set_sensor;
-    private Button del_sensor;
-    private Button edit_sensor;
-    private Button upload_data;
-    */
+    private TextView BT_dev;
+    private TextView UP_info;
+    private TextView UP_status;
+    private ProgressBar UP_bar;
+    private String dev_name;
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -95,17 +94,21 @@ public class Select_Bluetooth extends AppCompatActivity {
             if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
                 _recieveData = null;
                 _recieveData = (String)(msg.obj);
-                textview.append(_recieveData+"\n"); //將收到的字串呈現在畫面上
+                textview.append("read: "+_recieveData+"\n"); //將收到的字串呈現在畫面上
                 String[] data = _recieveData.split(",");
+
+                //字串處理
                 if(data.length==4)
                     insert_fb(data);//上傳資料庫
+
             }
 
             if(msg.what == CONNECTING_STATUS){
                 //收到CONNECTING_STATUS 顯示以下訊息
                 if(msg.arg1 == 1) {
-                    textview.append("Connected to Device: " + (String) (msg.obj));
-                    get_sensor(0);
+                    dev_name = (String)(msg.obj);
+                    textview.append("Connected to Device: " + dev_name);
+
                     upload_data();
                 }
                 else
@@ -119,10 +122,50 @@ public class Select_Bluetooth extends AppCompatActivity {
                 textview.append(_recieveData+"\n"); //將收到的字串呈現在畫面上
                 String[] data = _recieveData.split(",");
                 if(data[0].equals("6"))
+                {
                     data_count = Integer.parseInt(data[1]);
+                    if(data_count==0)
+                    {
+                        get_sensor(0);
+                        setContentView(R.layout.activity_sensor_manage);
+                    }
+                    else if(data_count!=1)
+                        show_upload(data_count,0);
+                }
+                if(data_count!=1 && data[0].equals("upload success!"))
+                {
+                    show_upload(data_count,1);
+                }
             }
         }
     };
+
+
+    public void show_upload(int data, int flag){
+        int cnt = data;
+        setContentView(R.layout.upload_data_page);
+        UP_bar = (ProgressBar) findViewById(R.id.upload_bar);
+        UP_info = (TextView) findViewById(R.id.info);
+        UP_status = (TextView) findViewById(R.id.status);
+        BT_dev = (TextView) findViewById(R.id.BT_device);
+        BT_dev.setText(dev_name);
+        if(flag==0)
+        {
+            UP_info.setText("Uploading data...");
+            UP_bar.setVisibility(View.VISIBLE);
+            UP_status.setVisibility(View.GONE);
+        }
+        if(flag ==1)
+        {
+            UP_bar.setVisibility(View.GONE);
+            UP_status.setVisibility(View.VISIBLE);
+            UP_status.setTextColor(Color.parseColor("#00FF00"));
+            UP_status.setText("SUCCESS!");
+            UP_info.setText("You upload "+cnt+" data.");
+        }
+
+    }
+
     public void insert_fb(String[] _data){
         DS_dataset newdata = new DS_dataset();
 
@@ -153,10 +196,13 @@ public class Select_Bluetooth extends AppCompatActivity {
         textview = (TextView) findViewById(R.id.data_log);
         textview.setText("START input your command.\n");
 
-        SearchBT(this);
-
-
-
+        search_btn = (Button)findViewById(R.id.search);
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchBT();
+            }
+        });
 
     }
 
@@ -180,8 +226,8 @@ public class Select_Bluetooth extends AppCompatActivity {
 
 
 
-    public void SearchBT(Activity activity) {
-        dialog = new Dialog(activity);
+    public void SearchBT() {
+        dialog = new Dialog(this);
         // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_listview);
 
@@ -426,7 +472,7 @@ public class Select_Bluetooth extends AppCompatActivity {
             mmOutStream = new DataOutputStream(tmpOut);
             reader = new BufferedReader(new InputStreamReader(mmInStream));
         }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void run() {
             byte[] buffer = new byte[1024];  // buffer store for the stream
             int bytes; // bytes returned from read()
@@ -445,30 +491,21 @@ public class Select_Bluetooth extends AppCompatActivity {
 
                     while (true) {
                         str = reader.readLine();
-                        if(str!=null) {
-                            Log.e("RRRRRRRRRRRRRRRRRRR",str);
+                        if(str==null) {
+                            break;
+                        }
+                        if(str.equals("upload success!")){
+                            mHandler.obtainMessage(MESSAGE_READ_CMD, str.length(), -1, str)
+                                    .sendToTarget(); // Send the obtained bytes to the UI activity
+
+                            break;
+                        }else {
+                            Log.e("datalog", str);
                             mHandler.obtainMessage(MESSAGE_READ, str.length(), -1, str)
                                     .sendToTarget(); // Send the obtained bytes to the UI activity
-                        }else
-                            break;
+                        }
+
                     }
-                    /*bytes = mmInStream.available();
-                    if(bytes != 0) {
-                        SystemClock.sleep(100);
-                        //pause and wait for rest of data
-                        bytes = mmInStream.available();
-
-                        // how many bytes are ready to be read?
-                        bytes = mmInStream.read(buffer, 0, bytes);
-                        // record how many bytes we actually read
-                        mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
-                                .sendToTarget(); // Send the obtained bytes to the UI activity
-
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
-
-
-                        mmInStream.close();
-                    }*/
 
                 } catch (IOException e) {
                     e.printStackTrace();
