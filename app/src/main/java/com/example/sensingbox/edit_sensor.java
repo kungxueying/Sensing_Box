@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 public class edit_sensor extends AppCompatActivity {
 
-    String message="Click to add sensor";
     sensor sensor1=new sensor();
     TextView sensor_name;
     EditText Cycle;
@@ -28,13 +27,6 @@ public class edit_sensor extends AppCompatActivity {
 
         Cycle = (EditText) findViewById(R.id.editText);
         Status = (EditText) findViewById(R.id.editText2);
-    }
-
-    public void delete_sensor (View view){
-        sensor1.setSensorCode(message);
-        Intent intent = new Intent (this, sensor_select.class);
-        intent.putExtra("data",sensor1);
-        startActivity(intent);
     }
 
     public void ok (View view){

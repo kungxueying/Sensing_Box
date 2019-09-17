@@ -14,9 +14,8 @@ public class add_sensor extends AppCompatActivity {
     ListView listView ;
     sensor sensor1=new sensor();
     //temp variables
-    int temp,temp2;
+    int temp;
     char c;
-    String temps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +39,8 @@ public class add_sensor extends AppCompatActivity {
         //delay time = cycle
         temp=message.indexOf(',',4);//location of comma before delay time
         temp++;//location of delay time
-        temp2=message.indexOf(',',temp);//location of next comma
-        temp=Integer.parseInt(message.substring(temp,temp2));//extract delay time + convert string to int
+        temp=Integer.parseInt(message.substring(temp));//extract delay time + convert string to int
         sensor1.setCycle(temp);
-        //storage path
-        temp2++;//location of path
-        temps=message.substring(temp2);
-        sensor1.setPath(temps);
 
         // Get ListView object from xml
                 listView = (android.widget.ListView) findViewById(R.id.list);

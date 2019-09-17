@@ -7,7 +7,6 @@ public class sensor implements Serializable {
     private String sensor_name;
     private String sensor_code;
     private int collection_cycle;
-    private String path;
     private String status;
 
     public sensor(){
@@ -28,10 +27,6 @@ public class sensor implements Serializable {
         return collection_cycle;
     }
 
-    public String getPath() {
-        return path;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -46,10 +41,6 @@ public class sensor implements Serializable {
 
     public void setCycle(int temp) {
         collection_cycle=temp;
-    }
-
-    public void setPath(String temp) {
-        path=temp;
     }
 
     public void setStatus(String temp) { status=temp; }

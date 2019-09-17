@@ -118,7 +118,7 @@ public class sensor_select extends AppCompatActivity {
         startActivity(intent);}
         else if (flag[0]==1){
             recent=1;
-            Intent intent2 = new Intent (this, edit_sensor.class);
+            Intent intent2 = new Intent (this, edit_show.class);
             intent2.putExtra("data",sensor1);
             startActivity(intent2);
         }
@@ -131,7 +131,7 @@ public class sensor_select extends AppCompatActivity {
         startActivity(intent);}
         else if (flag[1]==1){
             recent=2;
-            Intent intent2 = new Intent (this, edit_sensor.class);
+            Intent intent2 = new Intent (this, edit_show.class);
             intent2.putExtra("data",sensor2);
             startActivity(intent2);}
     }
@@ -143,7 +143,7 @@ public class sensor_select extends AppCompatActivity {
         startActivity(intent);}
         else if (flag[2]==1){
             recent=3;
-            Intent intent2 = new Intent (this, edit_sensor.class);
+            Intent intent2 = new Intent (this, edit_show.class);
             intent2.putExtra("data",sensor3);
             startActivity(intent2);}
     }
@@ -155,7 +155,7 @@ public class sensor_select extends AppCompatActivity {
         startActivity(intent);}
          else if (flag[3]==1){
             recent=4;
-            Intent intent2 = new Intent (this, edit_sensor.class);
+            Intent intent2 = new Intent (this, edit_show.class);
             intent2.putExtra("data",sensor4);
             startActivity(intent2);}
     }
