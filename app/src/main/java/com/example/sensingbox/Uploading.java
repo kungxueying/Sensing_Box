@@ -10,7 +10,7 @@ public class Uploading extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_uploading);
+        setContentView(R.layout.activity_uploading);
     }
 
     public void goTo_upload_success (View view){

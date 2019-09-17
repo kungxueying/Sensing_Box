@@ -14,9 +14,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     }
 
     public void goTo_Uploading (View view){
-
         Intent intent = new Intent (this, Uploading.class);
         startActivity(intent);
-
     }
 }
