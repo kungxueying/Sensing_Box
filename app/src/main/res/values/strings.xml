@@ -42,6 +42,9 @@
     <!--activity_edit_sensor-->
     <string name="edit_sensor">Edit Sensor</string>
     <string name="delete_sensor">Delete this sensor</string>
+    <string name="cycle">Collection cycle:</string>
+    <string name="path">Data Storage Path:</string>
+    <string name="status">Sensor Status:</string>
 
     <!--activity_upload_success-->
     <string name="success">Success</string>

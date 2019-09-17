@@ -53,10 +53,8 @@ public class add_sensor extends AppCompatActivity {
 
         // Defined Array values to show in ListView
         String[] values = new String[] { "Sensor Name:  "+sensor1.getSensorName(),
-                "Sensor Code:   "+sensor1.getSensorCode(),
                 "Collection Cycle:  "+sensor1.getCycle(),
-                "Data Storage Path: "+sensor1.getPath(),
-                "Sensor Status: "+sensor1.getStatus(),
+                "Default Sensor Status: "+sensor1.getStatus(),
         };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

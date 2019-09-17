@@ -4,16 +4,16 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class add_edit_sensor extends AppCompatActivity {
 
     sensor sensor1=new sensor();
-    ListView listView ;
     TextView sensor_name;
+    EditText Cycle;
+    EditText Status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,24 +26,14 @@ public class add_edit_sensor extends AppCompatActivity {
         sensor_name = (TextView) findViewById(R.id.textView2);
         sensor_name.setText(sensor1.getSensorName());
 
-        // Get ListView object from xml
-        listView = (android.widget.ListView) findViewById(R.id.list);
-
-        // Defined Array values to show in ListView
-        String[] values = new String[] {
-                "Collection Cycle:  "+sensor1.getCycle(),
-                "Data Storage Path: "+sensor1.getPath(),
-                "Sensor Status: "+sensor1.getStatus(),
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
-
-        // Assign adapter to ListView
-        listView.setAdapter(adapter);
+        Cycle = (EditText) findViewById(R.id.editText);
+        Status = (EditText) findViewById(R.id.editText2);
     }
 
     public void ok (View view){
+        if(!Cycle.getText().toString().isEmpty())sensor1.setCycle(Integer.parseInt(Cycle.getText().toString()));
+        if(!Status.getText().toString().isEmpty())sensor1.setStatus(Status.getText().toString());
+
         Intent intent = new Intent (this, sensor_select.class);
         intent.putExtra("data",sensor1);
         startActivity(intent);
