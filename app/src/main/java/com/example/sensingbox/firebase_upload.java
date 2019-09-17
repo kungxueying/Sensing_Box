@@ -207,13 +207,10 @@ public class firebase_upload extends AppCompatActivity {
     public void insertdata(DS_dataset newdata){//新增
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("dataset");
-      /*  myRef.child(newdata.sensor).child(newdata.time).child("sensor").setValue(newdata.sensor);
-        myRef.child(newdata.sensor).child(newdata.time).child("time").setValue(newdata.time);
-        myRef.child(newdata.sensor).child(newdata.time).child("userID").setValue(newdata.userID);
-        myRef.child(newdata.sensor).child(newdata.time).child("locate").setValue(newdata.locate);
-        myRef.child(newdata.sensor).child(newdata.time).child("data").setValue(newdata.data);
-        myRef.child(newdata.sensor).child(newdata.time).child("boxID").setValue(newdata.boxID);*/
-        String timekey = newdata.time.substring(0,10);
+
+
+        String timekey = newdata.time.substring(0,10);//節點以小時為最小單位
+
         myRef.child(newdata.sensor).child(newdata.time).push().setValue(newdata);
     }
 
@@ -327,14 +324,17 @@ public class firebase_upload extends AppCompatActivity {
         });
     }
 
-    private void uploadImg(String path){
+    public void uploadImg(String path){
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         Uri file = Uri.fromFile(new File(path));
+        System.out.println("圖片的路徑:");
         System.out.println(path);
         StorageMetadata metadata = new StorageMetadata.Builder()
                 .setContentDisposition("universe")
                 .setContentType("image/jpg")
                 .build();
         riversRef = mStorageRef.child(file.getLastPathSegment());
+
         UploadTask uploadTask = riversRef.putFile(file, metadata);
         /*
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -356,7 +356,9 @@ public class firebase_upload extends AppCompatActivity {
                     imgUploadProgress.setVisibility(View.GONE);
                 }
             }
+
         });*/
+
     }
 
     private void getLocalImg(){
@@ -387,6 +389,10 @@ public class firebase_upload extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
                 imgPath = getPath(firebase_upload.this, uri);
+                System.out.println("圖片的路徑2:");
+                System.out.println(uri);
+                System.out.println(imgPath);
+
                 if(!TextUtils.isEmpty(imgPath)) {
                     Toast.makeText(firebase_upload.this, imgPath, Toast.LENGTH_SHORT).show();
                     Glide.with(firebase_upload.this).load(imgPath).into(pickImg);

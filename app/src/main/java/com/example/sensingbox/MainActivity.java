@@ -8,28 +8,65 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MainActivity extends AppCompatActivity {
     DS_user newuser = new DS_user();
     DS_dataset newdata = new DS_dataset();
     DS_sensorall sensor = new DS_sensorall();
     firebase_upload fb = new firebase_upload();
 
+    private DB_itemDAO itemDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setNewuser(newuser);
+
         //setNewsensor(sensor);
+
         //setNewdata(newdata);
         //setFb(fb);
+
         fb_register register = new fb_register();
         register.registerToFB(newuser);
         fb_login login = new fb_login();
         login.logincheck("icedrip7@gmail.com","11122");
         //need goto fb_login to judge correct or not
 
-    }
 
+        System.out.println("sqllite test");
+        //sqllite test
+
+        // 建立資料庫物件
+        itemDAO = new DB_itemDAO(getApplicationContext());
+        System.out.println("建立資料庫物件成功");
+        // 如果資料庫是空的，就建立一些範例資料
+        // 這是為了方便測試用的，完成應用程式以後可以拿掉
+        //if (itemDAO.getCount() == 0) {
+            System.out.println("資料庫是空的");
+            itemDAO.sample();
+       // }
+
+        System.out.println("新增資料成功");
+        List<DS_dataset> items = new ArrayList<>();
+        // 取得所有記事資料
+        items = itemDAO.getAll();
+
+        //System.out.println(items);
+        System.out.println("讀取資料成功");
+        itemDAO.close();
+
+    }
+  
     public void goTo_Login (View view){
         Intent intent = new Intent (this, main_screen.class);
         startActivity(intent);
@@ -50,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setNewdata(DS_dataset newdata) {
         this.newdata = newdata;
-        newdata.time ="201707071150";
+        newdata.time ="2017070711";
         newdata.boxID ="2";
         newdata.data ="33:";
         newdata.locate ="民雄";
@@ -67,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setFb(firebase_upload fb) {
         this.fb = fb;
-        fb.insertuser(newuser);
-        fb.insertsensorall(sensor);
+        //fb.insertuser(newuser);
+        //fb.insertsensorall(sensor);
         fb.insertdata(newdata);
     }
 
