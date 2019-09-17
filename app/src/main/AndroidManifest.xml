@@ -42,7 +42,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".register"></activity>
-        <activity android:name=".edit_sensor" /> 
+        <activity android:name=".edit_sensor" />
         <activity android:name=".add_edit_sensor" />
         <activity android:name=".add_sensor" />
         <activity
