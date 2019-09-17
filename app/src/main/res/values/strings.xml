@@ -29,7 +29,11 @@
     <string name="uploading_data">Uploading data...</string>
 
     <!--activity_sensor_select-->
+
     <string name="click_to_add_sensor">Click to add sensor</string>
+
+
+
     <string name="Sensor_bottom_1">以上顯示sensor在box上的相對位置</string>
     <string name="Sensor_bottom_2">點擊空的欄位以新增sensor\n點擊現有的sensor以修改設定</string>
 
@@ -60,5 +64,19 @@
 
     <!--activity_about-->
     <string name="About">關於</string>
+
+    <!--activity_cdb_uploadtest-->
+    <string name="get_local_img">取得照片</string>
+    <string name="do_nothing">無權限無法做事!</string>
+    <string name="download_file">下載照片</string>
+    <string name="upload_file">上傳照片</string>
+    <string name="load_img_fail">讀取圖片失敗</string>
+    <string name="plz_pick_img">請選取照片</string>
+    <string name="upload_success">上傳成功</string>
+    <string name="download_success">下載成功</string>
+    <string name="download_fail">下載失敗</string>
+    <string name="delete_success">刪除成功</string>
+    <string name="plz_upload_img">請先上傳照片</string>
+
 
 </resources>

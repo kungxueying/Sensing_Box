@@ -48,6 +48,7 @@
 
     <Button
         android:id="@+id/button7"
+
         android:layout_width="180dp"
         android:layout_height="130dp"
         android:layout_marginTop="300dp"
@@ -55,12 +56,14 @@
         android:layout_marginRight="1dp"
         android:onClick="button2"
         android:text="@string/click_to_add_sensor"
+
         app:layout_constraintEnd_toStartOf="@+id/button8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button8"
+
         android:layout_width="180dp"
         android:layout_height="130dp"
         android:layout_marginTop="300dp"
@@ -69,6 +72,7 @@
         android:onClick="button3"
         android:text="@string/click_to_add_sensor"
         app:layout_constraintStart_toEndOf="@+id/button7"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
