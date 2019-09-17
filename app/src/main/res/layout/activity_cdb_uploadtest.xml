@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".firebase_upload">
+
+
+        <Button
+            android:text="@string/get_local_img"
+            android:id="@+id/pick_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pick_button"
+            android:text="@string/upload_file" />
+        <Button
+            android:layout_toRightOf="@id/upload_button"
+            android:id="@+id/download_button"
+            android:text="@string/download_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="刪照片"
+            android:id="@+id/delete_button"
+            android:layout_toRightOf="@id/download_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@id/pick_button"
+            android:id="@+id/upload_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_below="@id/upload_info_text"
+            android:id="@+id/upload_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/upload_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@id/upload_progress"
+                android:id="@+id/pick_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:layout_below="@id/upload_layout"
+            android:id="@+id/download_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_below="@id/download_info_text"
+            android:id="@+id/download_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@id/download_info_text"
+            android:id="@+id/t1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@id/t1"
+            android:id="@+id/t2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upload_layout"
+            android:layout_marginTop="6dp"
+            android:onClick="b2"
+            android:text="刪除"
+            app:layout_constraintTop_toBottomOf="@+id/t1" />
+
+        <Button
+
+            android:id="@+id/b3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t1"
+            android:layout_marginLeft="28dp"
+            android:layout_toRightOf="@id/b2"
+            android:onClick="b3"
+            android:text="新增" />
+
+        <Button
+            android:id="@+id/b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upload_button"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="23dp"
+            android:layout_toRightOf="@id/b3"
+            android:onClick="b4"
+            android:text="更新" />
+    </RelativeLayout>
+
+</ScrollView>
