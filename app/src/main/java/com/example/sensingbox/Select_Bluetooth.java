@@ -162,6 +162,10 @@ public class Select_Bluetooth extends AppCompatActivity {
             UP_status.setTextColor(Color.parseColor("#00FF00"));
             UP_status.setText("SUCCESS!");
             UP_info.setText("You upload "+cnt+" data.");
+
+            //go to main page
+            Intent intent = new Intent (this, main_screen.class);
+            startActivity(intent);
         }
 
     }
