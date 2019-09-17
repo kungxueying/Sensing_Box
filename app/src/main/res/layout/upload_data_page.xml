@@ -2,19 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#aaaaaa"
+    android:background="@color/Background"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/BT_device"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:text="aaaa"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textSize="30dp" />
 
     <ProgressBar
         android:id="@+id/upload_bar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:layout_marginBottom="80dp"
@@ -24,8 +28,12 @@
     <TextView
         android:id="@+id/status"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textFontWeight="BOLD"
+        android:layout_height="80dp"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:text="1111"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
         android:visibility="gone"
         />
 
@@ -33,6 +41,9 @@
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textSize="20dp"
         />
 
 </LinearLayout>
