@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         //setNewsensor(sensor);
         //setNewdata(newdata);
         //setFb(fb);
-        //fb_register register = new fb_register();
-        //register.registerToFB(newuser);
+        fb_register register = new fb_register();
+        register.registerToFB(newuser);
         fb_login login = new fb_login();
         login.logincheck("icedrip7@gmail.com","11122");
         //need goto fb_login to judge correct or not
