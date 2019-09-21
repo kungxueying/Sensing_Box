@@ -9,7 +9,7 @@
     tools:context=".login">
 
     <TextView
-        android:id="@+id/login"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -27,28 +27,28 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/edit_email"
+        android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:hint="@string/email"
-        app:layout_constraintTop_toTopOf="@id/login"/>
+        app:layout_constraintTop_toTopOf="@id/title"/>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/password"
-        app:layout_constraintTop_toTopOf="@id/edit_email"/>
+        app:layout_constraintTop_toTopOf="@id/account"/>
 
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/login"
         android:layout_width="208dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
