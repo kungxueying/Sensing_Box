@@ -37,7 +37,7 @@ public class login extends AppCompatActivity {
 
         return false;
     }
-    public void goTo_Main_Screen (View view){
+    public void goTo_BlueTooth (View view){
 
         String txt_account = account.getText().toString();
         String txt_password = password.getText().toString();
@@ -46,7 +46,7 @@ public class login extends AppCompatActivity {
         login_flag = login_check(txt_account,txt_password);
 
         if(login_flag==true){
-            Intent intent = new Intent (this, main_screen.class);
+            Intent intent = new Intent (this, Select_Bluetooth.class);
             startActivity(intent);
         }else{
             new AlertDialog.Builder(this)

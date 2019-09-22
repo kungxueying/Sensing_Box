@@ -42,9 +42,10 @@ public class register extends AppCompatActivity {
             return true;
         }
 
-        return false;
+        //return false;
+        return true;
     }
-    public void goTo_Main_Screen (View view){
+    public void goTo_BlueTooth (View view){
 
         String txt_account = account.getText().toString();
         String txt_password = password.getText().toString();
