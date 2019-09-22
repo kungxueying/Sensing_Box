@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,14 +19,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getPermissionsCamera();
+        getPermissions(); //Camera, BT, GPS
     }
 
-    public void getPermissionsCamera(){
+    public void getPermissions(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
     }
 
     public void goTo_Login (View view){
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goTo_Register (View view){
-        Intent intent = new Intent (this, main_screen.class);
+        Intent intent = new Intent (this, register.class);
         startActivity(intent);
     }
 }
