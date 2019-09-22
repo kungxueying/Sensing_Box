@@ -1,5 +1,7 @@
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
+//terminal 指令
+//firebase deploy --only functions
 
 //exports.helloWorld = functions.https.onRequest((request, response) => {
 //response.send("Hello from Firebase!");
@@ -31,62 +33,55 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
     }); */
     
 // operate data to "processeddata/temperature/day"
-exports.processTemDay = functions.database.ref('/dataset/temperature/{pushId}')
+exports.processTemDay = functions.database.ref('/dataset/temperature/{pushId}/{pushIdRam}')
     .onCreate((snapshot, context) => {
-      const original = snapshot.val();
-      
-      //determine if this is a new day 
-        //catch processeddata/temperature/day 
-        //20190707(1330)
-        var date = context.params.pushId.substring(0,8);//20190707
-        var time = context.params.pushId.substring(8,10);//13
-        var datapath = "processeddata/temperature/day/" + date +'/'+ time;
-        
+        const original = snapshot.val();
+        //20190707(13)
+        const date = context.params.pushId.substring(0,8);//20190707
+        const time = context.params.pushId.substring(8,10);//13
+        const locate = original["locate"]; 
+        const datapath = "processeddata/temperature/day/" + locate + '/'+ date +'/'+ time;
+        var newdata = original["data"]; 
         console.log('processTemDay', context.params.pushId, original,datapath);
-        //console.log(original["data"]);
-        var newdata = original["data"];
-        var isExist = 0;
-        //catch old data (wrong
-        admin.database().ref(datapath).once("value", targettime => {
-            isExist = targettime.val();
-            if (targettime.before.exists()){
-            console.log("time exists!"+ isExist);
-            }
-            console.log(targettime.before.exists(),targettime.after.exists(),targettime.before.val());
-        });
-        //calculate avg
-      return admin.database().ref(datapath).set(newdata);
-    });
-exports.processTemMonth = functions.database.ref('/dataset/temperature/{pushId}')
-    .onCreate((snapshot, context) => {
-      const original = snapshot.val();
-      
-      //determine if this is a new day 
-        //catch processeddata/temperature/day 
-        //201907(07)(1330)
-        var date = context.params.pushId.substring(0,6);//201907
-        var time = context.params.pushId.substring(6,8);//07
-        var datapath = "processeddata/temperature/month/" + date +'/'+ time;
+        console.log(original["data"]);
         
-        console.log('processTemMonth', context.params.pushId, original,datapath);
-        //console.log(original["data"]);
-        var newdata = original["data"];
-        var isExist = 0;
-        //catch old data (wrong
+        //catch old data (processeddata/temperature/day/../../..) 
         admin.database().ref(datapath).once("value", targettime => {
-            isExist = targettime.val();
-            if (targettime.before.exists()){
-            console.log("time exists!"+ isExist);
+            var isExist = targettime.val();//old data
+            console.log(newdata);//new data
+            if (isExist){
+                console.log("time exists!"+ isExist);
+                newdata = newdata*0.5 + isExist*0.5;//average
+                admin.database().ref(datapath).set(newdata);
             }
-            console.log(targettime.before.exists(),targettime.after.exists(),targettime.before.val());
+            else{
+                 console.log("not exists!");
+                 admin.database().ref(datapath).set(newdata);        
+            }
         });
-        //calculate avg
-      return admin.database().ref(datapath).set(newdata);
+        return;
+    });
+    // operate data to "processeddata/co2"
+exports.processTemDay = functions.database.ref('/dataset/co2/{pushId}/{pushIdRam}')
+    .onCreate((snapshot, context) => {
+        const original = snapshot.val();
+        const locate = original["locate"]; 
+        const boxID = original["boxID"];
+    
+        var newdata = {
+            value: original["data"],
+            x: original["x"],
+            y: original["y"]
+        }
+       
+        const datapath = "processeddata/co2/" + locate + '/BOX' + boxID;
+        console.log('processco2', context.params.pushId, original,datapath);
+        console.log(original["data"]);
+       
+        return admin.database().ref(datapath).set(newdata);
     });
     
-    
-    
-    
+   
     
     
     
