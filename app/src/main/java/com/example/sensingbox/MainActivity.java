@@ -21,13 +21,18 @@ public class MainActivity extends AppCompatActivity {
 
         getPermissions(); //Camera, BT, GPS
     }
+    @Override
+    protected void onPause() {
+        this.finish();
+        super.onPause();
+    }
 
     public void getPermissions(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
     }

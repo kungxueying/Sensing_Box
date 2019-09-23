@@ -45,5 +45,14 @@
         android:gravity="center"
         android:textSize="20dp"
         />
+    <Button
+        android:id="@+id/UP_OK"
+        android:layout_width="match_parent"
+        android:layout_margin="50dp"
+        android:layout_height="50dp"
+        android:text="OK"
+        android:onClick="UP_success"
+        android:visibility="gone"
+        />
 
 </LinearLayout>

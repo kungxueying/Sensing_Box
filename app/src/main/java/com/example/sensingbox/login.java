@@ -32,10 +32,10 @@ public class login extends AppCompatActivity {
 
     public boolean login_check(String account, String password){
         if(account.equals("111")&&password.equals("111")){
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
     public void goTo_BlueTooth (View view){
 
