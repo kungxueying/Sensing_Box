@@ -69,17 +69,17 @@
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Text_Size_Small"
         android:text="@string/cycle"
-        app:layout_constraintBottom_toTopOf="@id/editText"
+        app:layout_constraintBottom_toTopOf="@id/spinner1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:ems="10"
-        android:inputType="text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView2" />
 
     <TextView
@@ -92,17 +92,16 @@
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Text_Size_Small"
         android:text="@string/status"
-        app:layout_constraintBottom_toTopOf="@id/editText2"
+        app:layout_constraintBottom_toTopOf="@id/spinner2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@id/editText" />
-
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner1" />
 </android.support.constraint.ConstraintLayout>
