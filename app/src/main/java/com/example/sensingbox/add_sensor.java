@@ -46,7 +46,7 @@ public class add_sensor extends AppCompatActivity {
                 listView = (android.widget.ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Sensor Name:  "+sensor1.getSensorName(),
+        String[] values = new String[] { "Sensor Type:  "+sensor1.getSensorName(),
                 "Collection Cycle:  "+sensor1.getCycle()+" seconds",
                 "Default Sensor Status: "+sensor1.getStatus(),
         };
