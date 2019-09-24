@@ -47,7 +47,7 @@ public class add_sensor extends AppCompatActivity {
 
         // Defined Array values to show in ListView
         String[] values = new String[] { "Sensor Name:  "+sensor1.getSensorName(),
-                "Collection Cycle:  "+sensor1.getCycle(),
+                "Collection Cycle:  "+sensor1.getCycle()+" seconds",
                 "Default Sensor Status: "+sensor1.getStatus(),
         };
 

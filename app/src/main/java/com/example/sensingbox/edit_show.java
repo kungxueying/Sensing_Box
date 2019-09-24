@@ -31,7 +31,7 @@ public class edit_show extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Collection Cycle:    " + sensor1.getCycle(),
+        String[] values = new String[] { "Collection Cycle:    " + sensor1.getCycle()+" seconds",
                 "Sensor Status:    "+ sensor1.getStatus(),
         };
 
