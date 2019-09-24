@@ -31,7 +31,7 @@ public class main_screen extends AppCompatActivity {
     public void goTo_Sensor_Select (View view){
         try{
             //OutputStream mmOutStream = new DataOutputStream(Select_Bluetooth.mBTSocket.getOutputStream());
-            Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
+            //Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
 
         }catch (Exception e){
             Log.d("WTF", "QWQQQQQ");

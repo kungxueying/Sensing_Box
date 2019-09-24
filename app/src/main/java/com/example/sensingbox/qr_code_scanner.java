@@ -28,11 +28,14 @@ public class qr_code_scanner extends AppCompatActivity {
     BarcodeDetector barcodeDetector;
     //record message
     String message;
+    String now_place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code_scanner);
+        Intent intent=getIntent();
+        now_place=intent.getStringExtra("place");
 
         surfaceView=(SurfaceView)findViewById(R.id.surfaceView);
         textView=(TextView)findViewById(R.id.textView);
@@ -90,9 +93,17 @@ public class qr_code_scanner extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        this.finish();
+        super.onPause();
+    }
+
     public void goTo_sensor_select (View view){
+
         Intent intent = new Intent (this, add_sensor.class);
         intent.putExtra("data",message);
+        intent.putExtra("place",now_place);
         startActivity(intent);
     }
 

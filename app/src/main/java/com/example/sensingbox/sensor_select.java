@@ -21,11 +21,10 @@ public class sensor_select extends AppCompatActivity {
     static int recent;
     static String model="Click to add sensor";
 
-    static sensor sensor1=new sensor();
-    static sensor sensor2=new sensor();
-    static sensor sensor3=new sensor();
-    static sensor sensor4=new sensor();
-    sensor temp_sensor=new sensor();
+    sensor sensor1;
+    sensor sensor2;
+    sensor sensor3;
+    sensor sensor4;
 
 /*
     static String sensor_code1="Click to add sensor";
@@ -46,9 +45,18 @@ public class sensor_select extends AppCompatActivity {
         button3 = (Button)findViewById(R.id.button8);
         button4 = (Button)findViewById(R.id.button9);
 
-        Intent intent=getIntent();
-        temp_sensor=(sensor)intent.getSerializableExtra("data");
+        sensor_set m = (sensor_set) getApplication();
+        sensor1 = m.getSensor(1);
+        sensor2 = m.getSensor(2);
+        sensor3 = m.getSensor(3);
+        sensor4 = m.getSensor(4);
 
+        button1.setText(sensor1.getSensorName());
+        button2.setText(sensor2.getSensorName());
+        button3.setText(sensor3.getSensorName());
+        button4.setText(sensor4.getSensorName());
+
+        /*
         if(recent==1) {
                 sensor1=temp_sensor;
                 if (model.equals(sensor1.getSensorCode())){//delete sensor
@@ -109,17 +117,41 @@ public class sensor_select extends AppCompatActivity {
             button3.setText(sensor3.getSensorName());
             button4.setText(sensor4.getSensorName());
         }
+        */
     }
 
-    public void button1 (View view){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_sensor_select);
+        button1 = (Button) findViewById(R.id.button6);
+        button2 = (Button) findViewById(R.id.button7);
+        button3 = (Button) findViewById(R.id.button8);
+        button4 = (Button) findViewById(R.id.button9);
+
+
+        sensor_set m = (sensor_set) getApplication();
+        sensor1 = m.getSensor(1);
+        sensor2 = m.getSensor(2);
+        sensor3 = m.getSensor(3);
+        sensor4 = m.getSensor(4);
+
+        button1.setText(sensor1.getSensorName());
+        button2.setText(sensor2.getSensorName());
+        button3.setText(sensor3.getSensorName());
+        button4.setText(sensor4.getSensorName());
+    }
+
+    public void button1_onclick (View view){
         if(flag[0]==0){
-        flag[0]=1;recent=1;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+            flag[0]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","1");
+            startActivity(intent);
+        }
         else if (flag[0]==1){
-            recent=1;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor1);
+            intent2.putExtra("place","1");
             startActivity(intent2);
         }
     }

@@ -11,7 +11,8 @@ import android.widget.TextView;
 public class edit_show extends AppCompatActivity {
 
     String message="Click to add sensor";
-    sensor sensor1=new sensor();
+    String now_place;
+    sensor now_sensor;
     ListView listView ;
     TextView sensor_name;
 
@@ -20,19 +21,22 @@ public class edit_show extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_show);
 
-        Intent intent=getIntent();
-        sensor1=(sensor)intent.getSerializableExtra("data");
+        Intent intent2=getIntent();
+        now_place=intent2.getStringExtra("place");
+
+        sensor_set m = (sensor_set) getApplication();
+        now_sensor = m.getSensor(Integer.valueOf(now_place));
 
         sensor_name = (TextView) findViewById(R.id.textView2);
-        sensor_name.setText(sensor1.getSensorName());
+        sensor_name.setText(now_sensor.getSensorName());
 
 
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Collection Cycle:    " + sensor1.getCycle()+" seconds",
-                "Sensor Status:    "+ sensor1.getStatus(),
+        String[] values = new String[] { "Collection Cycle:    " + now_sensor.getCycle()+" seconds",
+                "Sensor Status:    "+ now_sensor.getStatus(),
         };
 
         // Define a new Adapter
@@ -50,15 +54,14 @@ public class edit_show extends AppCompatActivity {
     }
 
     public void delete_sensor (View view){
-        sensor1.setSensorCode(message);
-        Intent intent = new Intent (this, sensor_select.class);
-        intent.putExtra("data",sensor1);
-        startActivity(intent);
+        now_sensor.setSensorCode(message);
+        this.finish();
     }
 
     public void edit (View view){
         Intent intent = new Intent (this, edit_sensor.class);
-        intent.putExtra("data",sensor1);
+        intent.putExtra("place",now_place);
         startActivity(intent);
+        this.finish();
     }
 }
