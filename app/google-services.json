@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "851158753970",
+    "firebase_url": "https://sensingbox-2a962.firebaseio.com",
+    "project_id": "sensingbox-2a962",
+    "storage_bucket": "sensingbox-2a962.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851158753970:android:c8a6ed9961e5e2e6",
+        "android_client_info": {
+          "package_name": "com.example.sensingbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851158753970-ndjfoisomp1rtjcmbbdv4283ut94jeq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sensingbox",
+            "certificate_hash": "5e0e331aec740c8889251e59b444fe78021c3d8e"
+          }
+        },
+        {
+          "client_id": "851158753970-jqukjpmu95ra74boh5jtq09mf6i78ka6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoqVFPPSp6HvLyv82vqOEqG2lmLvhqbO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851158753970-jqukjpmu95ra74boh5jtq09mf6i78ka6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
