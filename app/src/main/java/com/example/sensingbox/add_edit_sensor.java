@@ -14,23 +14,29 @@ import android.widget.Toast;
 
 public class add_edit_sensor extends AppCompatActivity {
 
-    sensor sensor1=new sensor();
+    sensor now_sensor;
     TextView sensor_name;
     Spinner spinner1;
     Spinner spinner2;
     String cycle_temp;
     String status_temp;
+    String now_place;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_sensor);
 
+
         Intent intent=getIntent();
-        sensor1=(sensor)intent.getSerializableExtra("data");
+        now_place=intent.getStringExtra("place");
+
+        sensor_set m = (sensor_set) getApplication();
+        now_sensor = m.getSensor(Integer.valueOf(now_place));
 
         sensor_name = (TextView) findViewById(R.id.textView2);
-        sensor_name.setText(sensor1.getSensorName());
+        sensor_name.setText(now_sensor.getSensorName());
 
         //spinner
         spinner1 = (Spinner)findViewById(R.id.spinner1);
@@ -45,8 +51,8 @@ public class add_edit_sensor extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 status);spinner2.setAdapter(statusList);
 
-        cycle_temp=Integer.toString(sensor1.getCycle());
-        status_temp=sensor1.getStatus();
+        cycle_temp=Integer.toString(now_sensor.getCycle());
+        status_temp=now_sensor.getStatus();
 
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -68,11 +74,8 @@ public class add_edit_sensor extends AppCompatActivity {
     }
 
     public void ok (View view){
-        sensor1.setCycle(Integer.parseInt(cycle_temp));
-        sensor1.setStatus(status_temp);
-
-        Intent intent = new Intent (this, sensor_select.class);
-        intent.putExtra("data",sensor1);
-        startActivity(intent);
+        now_sensor.setCycle(Integer.parseInt(cycle_temp));
+        now_sensor.setStatus(status_temp);
+        this.finish();
     }
 }
