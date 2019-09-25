@@ -19,7 +19,7 @@ public class sensor_select extends AppCompatActivity {
     Button button4;
     static int flag[]=new int[4];
     static int recent;
-    static String model="Click to add sensor";
+    //static String model="Click to add sensor";
 
     sensor sensor1;
     sensor sensor2;
@@ -157,38 +157,44 @@ public class sensor_select extends AppCompatActivity {
     }
 
     public void button2 (View view){
-        if(flag[1]==0){
-        flag[1]=1;recent=2;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+        if(flag[1]==0) {
+            flag[1] = 1;
+            Intent intent = new Intent(this, qr_code_scanner.class);
+            intent.putExtra("place", "2");
+            startActivity(intent);
+        }
         else if (flag[1]==1){
-            recent=2;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor2);
-            startActivity(intent2);}
+            intent2.putExtra("place","2");
+            startActivity(intent2);
+        }
     }
 
     public void button3 (View view){
         if(flag[2]==0){
-        flag[2]=1;recent=3;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+            flag[2]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","3");
+            startActivity(intent);
+        }
         else if (flag[2]==1){
-            recent=3;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor3);
-            startActivity(intent2);}
+            intent2.putExtra("place","3");
+            startActivity(intent2);
+        }
     }
 
     public void button4 (View view){
         if(flag[3]==0){
-        flag[3]=1;recent=4;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+            flag[3]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","4");
+            startActivity(intent);
+        }
          else if (flag[3]==1){
-            recent=4;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor4);
-            startActivity(intent2);}
+            intent2.putExtra("place","4");
+            startActivity(intent2);
+        }
     }
 }
