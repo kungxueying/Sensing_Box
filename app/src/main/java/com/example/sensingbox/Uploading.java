@@ -11,12 +11,17 @@ import android.widget.TextView;
 
 public class Uploading extends AppCompatActivity {
 
+    int cnt =0;
+    int flag = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_data_page);
-        int cnt = 100;
-        int flag = 1;
+        Intent intent=getIntent();
+
+        cnt = intent.getIntExtra("count",cnt);
+        flag = intent.getIntExtra("flag",flag);
+
 
         TextView BT_dev = (TextView) findViewById(R.id.BT_device);
         TextView UP_info = (TextView) findViewById(R.id.info);
@@ -45,6 +50,7 @@ public class Uploading extends AppCompatActivity {
 
                 }
             });
+            flag=0;
         }
         if(flag==2){
             UP_bar.setVisibility(View.GONE);
@@ -57,6 +63,9 @@ public class Uploading extends AppCompatActivity {
     }
 
     public void UP_success(View v){
+
+        Intent intent = new Intent(this,main_screen.class);
+        startActivity(intent);
         this.finish();
     }
 

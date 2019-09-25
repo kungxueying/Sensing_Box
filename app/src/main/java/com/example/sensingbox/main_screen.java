@@ -21,22 +21,28 @@ import java.io.OutputStream;
 
 
 public class main_screen extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-    }
 
-    public void goTo_Sensor_Select (View view){
+
+
         try{
             //OutputStream mmOutStream = new DataOutputStream(Select_Bluetooth.mBTSocket.getOutputStream());
-            //Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
+            Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
 
         }catch (Exception e){
             Log.d("WTF", "QWQQQQQ");
         }
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    public void goTo_Sensor_Select (View view){
         sensor_set m = (sensor_set) getApplication();
         sensor p = m.getSensor(2);
         Log.e("3333333333",p.getSensorName());
