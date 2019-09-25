@@ -136,6 +136,23 @@ public class sensor_select extends AppCompatActivity {
         sensor3 = m.getSensor(3);
         sensor4 = m.getSensor(4);
 
+        if (model.equals(sensor1.getSensorCode())) {//delete sensor
+            flag[0] = 0;
+            sensor1.setSensorName(model);//click to add sensor
+        }
+        if (model.equals(sensor2.getSensorCode())){
+            flag[1]=0;
+            sensor2.setSensorName(model);
+        }
+        if (model.equals(sensor3.getSensorCode())){
+            flag[2]=0;
+            sensor3.setSensorName(model);
+        }
+        if (model.equals(sensor4.getSensorCode())){
+            flag[3]=0;
+            sensor4.setSensorName(model);
+        }
+
         button1.setText(sensor1.getSensorName());
         button2.setText(sensor2.getSensorName());
         button3.setText(sensor3.getSensorName());
@@ -157,38 +174,44 @@ public class sensor_select extends AppCompatActivity {
     }
 
     public void button2 (View view){
-        if(flag[1]==0){
-        flag[1]=1;recent=2;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+        if(flag[1]==0) {
+            flag[1] = 1;
+            Intent intent = new Intent(this, qr_code_scanner.class);
+            intent.putExtra("place", "2");
+            startActivity(intent);
+        }
         else if (flag[1]==1){
-            recent=2;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor2);
-            startActivity(intent2);}
+            intent2.putExtra("place","2");
+            startActivity(intent2);
+        }
     }
 
     public void button3 (View view){
         if(flag[2]==0){
-        flag[2]=1;recent=3;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+            flag[2]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","3");
+            startActivity(intent);
+        }
         else if (flag[2]==1){
-            recent=3;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor3);
-            startActivity(intent2);}
+            intent2.putExtra("place","3");
+            startActivity(intent2);
+        }
     }
 
     public void button4 (View view){
         if(flag[3]==0){
-        flag[3]=1;recent=4;
-        Intent intent = new Intent (this, qr_code_scanner.class);
-        startActivity(intent);}
+            flag[3]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","4");
+            startActivity(intent);
+        }
          else if (flag[3]==1){
-            recent=4;
             Intent intent2 = new Intent (this, edit_show.class);
-            intent2.putExtra("data",sensor4);
-            startActivity(intent2);}
+            intent2.putExtra("place","4");
+            startActivity(intent2);
+        }
     }
 }
