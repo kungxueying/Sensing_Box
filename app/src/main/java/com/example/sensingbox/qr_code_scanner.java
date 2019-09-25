@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -100,11 +101,16 @@ public class qr_code_scanner extends AppCompatActivity {
     }
 
     public void goTo_sensor_select (View view){
-
-        Intent intent = new Intent (this, add_sensor.class);
-        intent.putExtra("data",message);
-        intent.putExtra("place",now_place);
-        startActivity(intent);
+        //error detect
+        if(message==null){
+            Toast.makeText(getApplicationContext(),"Please scan QR Code before tapping the OK button.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent intent = new Intent(this, add_sensor.class);
+            intent.putExtra("data", message);
+            intent.putExtra("place", now_place);
+            startActivity(intent);
+        }
     }
 
 }
