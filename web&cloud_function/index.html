@@ -35,14 +35,15 @@
             <option>month</option>
         </select>
         <span>locate:</span>
-        <select name="YourLocation">
-        　   <option value="Min">民雄鄉</option>
-　           <option value="Ji">嘉義市</option>
+        <select name="YourLocation" id="seleteLocate">
+        　   <option value="民雄">民雄鄉</option>
+　           <option value="嘉義">嘉義市</option>
         </select>
       <label for="meeting">date:</label>
       <input id="date" type="date" value="2019-07-20"/>  
       <button onclick="gettmpdata()"> OK </button>
     </selectitem>
+    <div id="nodataAlert"></div>
         <canvas id="chart" width="400px" height="200px"></canvas>
         <div id="showdata"></div>
         <div id="avg">Average temperature:</div>
@@ -53,12 +54,12 @@
     <div id="co2-page" class='inactive'>
         <selectitem>
         <span>locate:</span>
-        <select name="YourLocation">
-        　   <option value="Min">民雄鄉</option>
-　           <option value="Ji">嘉義市</option>
+        <select name="YourLocation" id="locateCO2">
+        　   <option value="民雄">民雄鄉</option>
+　           <option value="嘉義">嘉義市</option>
         </select>
  
-      <button onclick="gettmpdata()"> OK </button>
+      <button onclick="getco2data()"> OK </button>
     </selectitem>
         <div>出現每個BOX在地圖上的位置及濃度</div>
         <div id="mapid" ></div>
@@ -69,29 +70,29 @@
     <div id="image-page" class='inactive'>
     <selectitem>
     <span>locate:</span>
-        <select name="YourLocation">
-        　   <option value="Min">民雄鄉</option>
-　           <option value="Ji">嘉義市</option>
+        <select name="YourLocation" id="locateimg">
+        　   <option value="民雄">民雄鄉</option>
+　           <option value="嘉義">嘉義市</option>
         </select>
     <span>time:</span>
-        <select>
-            <option value="Min">日期/時間</option>
-        </select>
+        <input id="timeimg" type="date" value="2019-08-05"/>  
+        <button onclick="getimgdata()"> OK </button>
     </selectitem>
+    
         <div class="imgblock">
-            <img src="back.png"/>
+            <img id="leftbtn" src="back.png"/>
             <div class="imgdatablock">
                 <img id="mainpic" src="star.PNG"/>
                 <div class="imgdata">
                 <div>BOX2</div>
-                <div style='margin-left:327px;'>3/10頁</div>
+                <div style='margin-left:327px;' id='imgpagenum'>defult</div>
                 </div>
                 <div> GPS: (23.xxxx,121.xxxx)</div>
                 <div> 溫度: 25 ℃ </div>
                 <div> 二氧化碳濃度: 200 ppm</div>
                 <div> 詳細拍攝時間: 2019/07/21</div>
             </div>
-            <img src="forward.png"/>
+            <img id="rightbtn" src="forward.png"/>
         </div>
     </div>
     

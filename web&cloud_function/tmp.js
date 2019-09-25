@@ -10,6 +10,12 @@ function gettmpdata() {
       db.ref(path).on('value',e => {
       console.log(e.val());
       tvalue = e.val();
+      var showAlertElement = document.querySelector("#nodataAlert");
+      if(!tvalue){   
+          showAlertElement.innerHTML ="There is no data data, please change date or locate";
+          return;
+      }
+      showAlertElement.innerHTML ='';
       drawtmpTable();
       var showdataElement = document.querySelector("#showdata");
       showdataElement.innerHTML ="Successfully obtained data from firebase!";
@@ -21,13 +27,22 @@ function gettmpdata() {
   }
   function gettmppath(){
       var dataType = document.getElementById("type").value;
+      var locate = document.getElementById("seleteLocate").value;
       var date = document.getElementById("date").value;
       date = date.replace(/-/g,""); //replace all '-' (from 2019-07-20 to 20190720)
       console.log(date);
-      return  dataType +"/"+ date;
+      return  dataType +"/"+ locate +"/"+ date;
+  }
+  function checkValueExist(num){
+      if(!tvalue.hasOwnProperty(num)){
+        return '';     
+      }
+      else{
+        return tvalue[num];   
+      }
   }
   function drawtmpTable(){
-      console.log("Table");
+      console.log("Draw Table");
       //console.log(tvalue);
     var ctx = document.getElementById('chart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -37,9 +52,9 @@ function gettmpdata() {
           "13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],
           datasets: [{
               label: displaydate+' every hour temperature',
-              data: [tvalue["00"], tvalue["01"], tvalue["02"], tvalue["03"], tvalue["04"],tvalue["05"],tvalue["06"],tvalue["07"],tvalue["08"],tvalue["09"],tvalue["10"]
-              ,tvalue["11"],tvalue["12"],tvalue["13"],tvalue["14"],tvalue["15"],tvalue["16"],tvalue["17"],tvalue["18"],tvalue["19"],tvalue["20"]
-              ,tvalue["21"],tvalue["22"],tvalue["23"]],
+              data: [checkValueExist("00"), checkValueExist("01"), checkValueExist("02"),checkValueExist("03"), checkValueExist("04"),checkValueExist("05"),checkValueExist("06"),checkValueExist("07"),checkValueExist("08"),checkValueExist("09"),checkValueExist("10")
+              ,checkValueExist("11"),checkValueExist("12"),checkValueExist("13"),checkValueExist("14"),checkValueExist("15"),checkValueExist("16"),checkValueExist("17"),checkValueExist("18"),checkValueExist("19"),checkValueExist("20")
+              ,checkValueExist("21"),checkValueExist("22"),checkValueExist("23")],
               fill: false,
               borderColor:'red'
           }]
