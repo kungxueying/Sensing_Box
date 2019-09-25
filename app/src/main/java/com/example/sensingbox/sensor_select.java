@@ -19,7 +19,7 @@ public class sensor_select extends AppCompatActivity {
     Button button4;
     static int flag[]=new int[4];
     static int recent;
-    //static String model="Click to add sensor";
+    static String model="Click to add sensor";
 
     sensor sensor1;
     sensor sensor2;
@@ -135,6 +135,23 @@ public class sensor_select extends AppCompatActivity {
         sensor2 = m.getSensor(2);
         sensor3 = m.getSensor(3);
         sensor4 = m.getSensor(4);
+
+        if (model.equals(sensor1.getSensorCode())) {//delete sensor
+            flag[0] = 0;
+            sensor1.setSensorName(model);//click to add sensor
+        }
+        if (model.equals(sensor2.getSensorCode())){
+            flag[1]=0;
+            sensor2.setSensorName(model);
+        }
+        if (model.equals(sensor3.getSensorCode())){
+            flag[2]=0;
+            sensor3.setSensorName(model);
+        }
+        if (model.equals(sensor4.getSensorCode())){
+            flag[3]=0;
+            sensor4.setSensorName(model);
+        }
 
         button1.setText(sensor1.getSensorName());
         button2.setText(sensor2.getSensorName());
