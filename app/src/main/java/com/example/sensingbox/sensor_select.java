@@ -26,16 +26,6 @@ public class sensor_select extends AppCompatActivity {
     sensor sensor3;
     sensor sensor4;
 
-/*
-    static String sensor_code1="Click to add sensor";
-    static String sensor_code2="Click to add sensor";
-    static String sensor_code3="Click to add sensor";
-    static String sensor_code4="Click to add sensor";
-    static String sensor_name1="Click to add sensor";
-    static String sensor_name2="Click to add sensor";
-    static String sensor_name3="Click to add sensor";
-    static String sensor_name4="Click to add sensor";*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
