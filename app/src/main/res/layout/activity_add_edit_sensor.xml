@@ -32,13 +32,75 @@
         android:layout_marginLeft="112dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:textColor="@color/Button_Color"
         android:textSize="@dimen/Text_Size_Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView5" />
+
+    <TextView
+        android:id="@+id/Cycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:textColor="@color/Text_Color"
+        android:textSize="@dimen/Text_Size_Small"
+        android:text="@string/cycle"
+        app:layout_constraintBottom_toTopOf="@id/spinner1_col"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/spinner1_col"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="#FFFFFF"
+        android:layout_marginTop="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2">
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:textColor="@color/Text_Color"
+        android:textSize="@dimen/Text_Size_Small"
+        android:text="@string/status"
+        app:layout_constraintBottom_toTopOf="@id/spinner2_col"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/spinner2_col"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="#FFFFFF"
+        android:layout_marginTop="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner1_col">
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/button23"
@@ -59,51 +121,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/Cycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size_Small"
-        android:text="@string/cycle"
-        app:layout_constraintBottom_toTopOf="@id/spinner1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-
-    <TextView
-        android:id="@+id/Status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:textColor="@color/Text_Color"
-        android:textSize="@dimen/Text_Size_Small"
-        android:text="@string/status"
-        app:layout_constraintBottom_toTopOf="@id/spinner2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner1" />
 
 </android.support.constraint.ConstraintLayout>
