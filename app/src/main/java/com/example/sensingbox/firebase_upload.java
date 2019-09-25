@@ -2,6 +2,7 @@ package com.example.sensingbox;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +57,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class firebase_upload extends AppCompatActivity {
+public class firebase_upload {
     private static final int PICKER = 100;
     private static final int REQUEST_EXTERNAL_STORAGE = 200;
     private TextView uploadInfoText;
@@ -73,6 +74,9 @@ public class firebase_upload extends AppCompatActivity {
     private StorageReference riversRef;
     TextView t1,t2;
     private  String dbpwd;
+    public  boolean login_flag=false;
+
+    /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +122,7 @@ public class firebase_upload extends AppCompatActivity {
         });
         initData();
         initView();
-    }
+    }*/
     public void readData(String email, final String ipwd,String co){
         FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("user/amy123@gmail_com");
@@ -133,7 +137,13 @@ public class firebase_upload extends AppCompatActivity {
                     String dbpwd= String.valueOf(dataSnapshot.getValue());
                     System.out.println(dbpwd);
                     fb_login lo = new fb_login();
-                    lo.pwdcheck(ipwd,dbpwd);
+                    login_flag = lo.pwdcheck(ipwd,dbpwd);
+                    if(login_flag)
+                        Log.e("RRRRRr","true");
+                    else
+                        Log.e("RRRRRr","false");
+
+
                 }
 
             }
@@ -170,6 +180,7 @@ public class firebase_upload extends AppCompatActivity {
 
 
     }
+    public boolean return_flag(){return login_flag;}
     public void b2(View v){//刪除
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CCCC");
@@ -228,6 +239,7 @@ public class firebase_upload extends AppCompatActivity {
     }
 
     private void checkPermission(){
+        /*
         int permission = ActivityCompat.checkSelfPermission(firebase_upload.this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -240,9 +252,12 @@ public class firebase_upload extends AppCompatActivity {
             getLocalImg();
         }
 
+         */
+
     }
 
     private void initView() {
+        /*
         uploadInfoText = (TextView) findViewById(R.id.upload_info_text);
         downloadInfoText = (TextView) findViewById(R.id.download_info_text);
         pickImgButton = (Button) findViewById(R.id.pick_button);
@@ -252,7 +267,7 @@ public class firebase_upload extends AppCompatActivity {
         downloadImgButton = (Button) findViewById(R.id.download_button);
         imgUploadProgress = (ProgressBar) findViewById(R.id.upload_progress);
         deleteImgButton = (Button) findViewById(R.id.delete_button);
-
+*/
         pickImgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,14 +281,14 @@ public class firebase_upload extends AppCompatActivity {
                     imgUploadProgress.setVisibility(View.VISIBLE);
                     uploadImg(imgPath);
                 } else{
-                    Toast.makeText(firebase_upload.this, R.string.plz_pick_img, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(firebase_upload.this, R.string.plz_pick_img, Toast.LENGTH_SHORT).show();
                 }
             }
         });
         downloadImgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadImg(riversRef);
+                //downloadImg(riversRef);
             }
         });
         deleteImgButton.setOnClickListener(new View.OnClickListener() {
@@ -286,25 +301,26 @@ public class firebase_upload extends AppCompatActivity {
 
     private void deleteImg(final StorageReference ref){
         if(ref == null){
-            Toast.makeText(firebase_upload.this, R.string.plz_upload_img, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(firebase_upload.this, R.string.plz_upload_img, Toast.LENGTH_SHORT).show();
             return;
         }
         ref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(firebase_upload.this, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(firebase_upload.this, R.string.delete_success, Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(firebase_upload.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(firebase_upload.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /*
     private void downloadImg(final StorageReference ref){
         if(ref == null){
-            Toast.makeText(firebase_upload.this, R.string.plz_upload_img, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(firebase_upload.this, R.string.plz_upload_img, Toast.LENGTH_SHORT).show();
             return;
         }
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -322,7 +338,7 @@ public class firebase_upload extends AppCompatActivity {
                 downloadInfoText.setText(exception.getMessage());
             }
         });
-    }
+    }*/
 
     public void uploadImg(String path){
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -366,9 +382,10 @@ public class firebase_upload extends AppCompatActivity {
         picker.setType("image/*");
         picker.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         Intent destIntent = Intent.createChooser(picker, null);
-        startActivityForResult(destIntent, PICKER);
+        //startActivityForResult(destIntent, PICKER);
     }
 
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -376,7 +393,7 @@ public class firebase_upload extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getLocalImg();
                 } else {
-                    Toast.makeText(firebase_upload.this, R.string.do_nothing, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(firebase_upload.this, R.string.do_nothing, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -403,7 +420,7 @@ public class firebase_upload extends AppCompatActivity {
         }
     }
 
-
+*/
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
