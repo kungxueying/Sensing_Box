@@ -45,8 +45,9 @@ public class login extends AppCompatActivity {
         String txt_password = password.getText().toString();
         String replaceStr = txt_account.replace('.', '_');
         //login
-        readData(replaceStr,txt_password);
-
+        //readData(replaceStr,txt_password);
+        Intent intent = new Intent (login.this, main_screen.class);
+        startActivity(intent);
     }
 
     public void readData(String email, final String ipwd){
