@@ -20,14 +20,19 @@
 
   </head>
   <body>
-    <h1>Sensing Box data </h1>
-    <div class="btn">
-    <div id="TEM" >temperature</div>
-    <div id="CO2" >CO2</div>
-    <div id="IMG" >image</div>
+    <h1 class='inactive'>Sensing Box data </h1>
+    <div id='main-page'>
+        <div class="btn">
+        <img id="TEM" src='images/btn_tem.png' />
+        <img id="CO2" src='images/btn_co2.png' />
+        <img id="IMG" src='images/btn_img.png' />
+        </div>
+        <img id='main_pic' src='images/main_pic.png'/>
+        <img id='boxbtn' src='images/btn_box.png' />
     </div>
      <!-- temperature page -->
-    <div id ="tem-page">
+    <div id ="tem-page" class='inactive'>
+    <img id='home' src='images/small_box.png'/>
     <selectitem>
         <span>data type</span>
         <select id="type">
@@ -52,6 +57,7 @@
     
     <!-- Co2 page -->
     <div id="co2-page" class='inactive'>
+    <img id='home' src='images/small_box.png'/>
         <selectitem>
         <span>locate:</span>
         <select name="YourLocation" id="locateCO2">
@@ -68,6 +74,7 @@
     
      <!-- image page -->
     <div id="image-page" class='inactive'>
+    <img id='home' src='images/small_box.png'/>
     <selectitem>
     <span>locate:</span>
         <select name="YourLocation" id="locateimg">

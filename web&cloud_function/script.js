@@ -25,9 +25,11 @@
 
   const db = firebase.database();
   console.log(db);
+  var homebtn = document.querySelector("#home");
   var tmpbtn = document.querySelector("#TEM");
   var co2btn = document.querySelector("#CO2");
   var imagebtn = document.querySelector("#IMG");
+  var main_page = document.querySelector("#main-page");
   var tmp_page = document.querySelector("#tem-page");
   var co2_page = document.querySelector("#co2-page");
   var image_page = document.querySelector("#image-page");
@@ -35,20 +37,28 @@
   tmpbtn.addEventListener('click',showtmp);
   co2btn.addEventListener('click',showco2);
   imagebtn.addEventListener('click',showimage);
- 
-  
+  homebtn.addEventListener('click',showhome);
+  function showhome(){
+      tmp_page.classList.add('inactive');
+      co2_page.classList.add('inactive');
+      image_page.classList.add('inactive'); 
+      main_page.classList.remove('inactive'); 
+  }
   function showtmp(){
       tmp_page.classList.remove('inactive');
       co2_page.classList.add('inactive');
       image_page.classList.add('inactive'); 
+      main_page.classList.add('inactive'); 
   }
   function showco2(){
       tmp_page.classList.add('inactive');
       co2_page.classList.remove('inactive');
       image_page.classList.add('inactive');    
+      main_page.classList.add('inactive'); 
   }
   function showimage(){
       tmp_page.classList.add('inactive');
       co2_page.classList.add('inactive');
-      image_page.classList.remove('inactive');      
+      image_page.classList.remove('inactive'); 
+      main_page.classList.add('inactive');       
   }
