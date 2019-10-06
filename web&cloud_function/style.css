@@ -1,6 +1,6 @@
 body {
   font-family: monospace;
-  background-color:#5599FF;
+  background-color:#6196db;
   margin:0;
 }
 h1{
@@ -19,8 +19,9 @@ h1{
     justify-content:center;
     margin-top:30px;
 }
-#home{
-    height:170px;
+#home,#home1,#home2{
+    height:70px;
+    cursor:pointer; 
 }
 #main-page{
     display:flex;

@@ -26,6 +26,8 @@
   const db = firebase.database();
   console.log(db);
   var homebtn = document.querySelector("#home");
+  var homebtn1 = document.querySelector("#home1");
+  var homebtn2 = document.querySelector("#home2");
   var tmpbtn = document.querySelector("#TEM");
   var co2btn = document.querySelector("#CO2");
   var imagebtn = document.querySelector("#IMG");
@@ -38,6 +40,8 @@
   co2btn.addEventListener('click',showco2);
   imagebtn.addEventListener('click',showimage);
   homebtn.addEventListener('click',showhome);
+  homebtn1.addEventListener('click',showhome);
+  homebtn2.addEventListener('click',showhome);
   function showhome(){
       tmp_page.classList.add('inactive');
       co2_page.classList.add('inactive');
