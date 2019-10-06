@@ -32,6 +32,7 @@ function changeNextPic(){
       imgpagenumElement.innerHTML =(imgnum+1)+'/'+imgfilename.length+"頁";
 }
 function getimgdata(){
+    imgnum = 0;
     var locateimg = '民雄';
     
     console.log("image download");

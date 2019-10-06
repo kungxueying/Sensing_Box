@@ -71,6 +71,7 @@ function gettmpdata() {
     scaleLabel: {
         display: true,
         labelString: 'time(hr:min)'
+        
     },        
     ticks: {                 
         fontColor: '#336699'
@@ -84,6 +85,7 @@ function gettmpdata() {
     scaleLabel: {
         display: true,
         labelString: 'temperature(℃)'
+       
     },
     ticks: {           
         fontColor: '#336699'
