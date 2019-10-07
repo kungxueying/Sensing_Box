@@ -3,6 +3,7 @@ package com.example.sensingbox;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -55,6 +56,14 @@ public class edit_show extends AppCompatActivity {
 
     public void delete_sensor (View view){
         now_sensor.setSensorCode(message);
+        now_sensor.setSensorName(message);
+        String cmd = "4,"+ now_place +"\n";
+        try{
+            Select_Bluetooth.mmOutStream.write(cmd.getBytes());
+
+        }catch (Exception e){
+            Log.d("BT","set sensor failed." );
+        }
         this.finish();
     }
 

@@ -80,6 +80,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     public Button search_btn;
     private static int data_count=0;
     int msg_flag = 0;
+    int rcv_flag=0;
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -136,7 +137,8 @@ public class Select_Bluetooth extends AppCompatActivity {
 
                 }else if(_recieveData.equals("upload success!")){
                     if(msg_flag==6) {
-                        if(data_count!=1){
+                        if(rcv_flag==0){
+                            rcv_flag=1;
                             show_upload(data_count,1);
                             get_sensor(0);
                             msg_flag=2;
@@ -149,11 +151,12 @@ public class Select_Bluetooth extends AppCompatActivity {
                 }
                 if(msg_flag==2 &&data.length==5){
                         sensor_set m = (sensor_set) getApplication();
-                        Log.e("555555",data[0]);
                         sensor now_sensor = m.getSensor(Integer.valueOf(data[0]));
                         now_sensor.setSensorName(sensor_type_check(data[1]));
                         now_sensor.setStatus(data[2]);
                         now_sensor.setCycle(Integer.valueOf(data[3]));
+                        String code =data[1]+data[2]+data[3];
+                        now_sensor.setSensorCode(code);
                 }
             }
 
@@ -182,7 +185,7 @@ public class Select_Bluetooth extends AppCompatActivity {
                     msg_flag=6;
                     data_count = Integer.parseInt(data[1]);
                     Log.e("6666666",data[1]);
-                    if(data_count!=1&&data_count!=0)
+                    if(data_count!=1&&data_count!=0&&rcv_flag==0)
                     {
                         show_upload(data_count,0);
                     }
@@ -191,7 +194,8 @@ public class Select_Bluetooth extends AppCompatActivity {
                 if(data[0].equals("2"))
                 {
                     msg_flag=2;
-                    //data_count = Integer.parseInt(data[1]);
+                    data_count = Integer.parseInt(data[1]);
+
                 }
             }
         }
