@@ -43,6 +43,7 @@ public class add_sensor extends AppCompatActivity {
         if (temp==1)now_sensor.setSensorName("Camera");
         else if (temp==2) now_sensor.setSensorName("CO2");
         else if (temp==3) now_sensor.setSensorName("Temperature");
+        else if (temp==4) now_sensor.setSensorName("Light");
         now_sensor.setStatus(data[1]);
         now_sensor.setCycle(Integer.valueOf(data[2]));
 */
@@ -91,6 +92,13 @@ public class add_sensor extends AppCompatActivity {
     }
 
     public void ok (View view){
+        String cmd = "3,"+ now_place + "," + message + ",setv8888\n";
+        try{
+            Select_Bluetooth.mmOutStream.write(cmd.getBytes());
+
+        }catch (Exception e){
+            Log.d("BT","set sensor failed." );
+        }
 
         this.finish();
         //Intent intent = new Intent (this, sensor_select.class);

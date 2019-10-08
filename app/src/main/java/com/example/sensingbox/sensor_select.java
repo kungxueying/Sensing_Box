@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.app.Activity;
 import android.widget.Button;
@@ -29,6 +30,11 @@ public class sensor_select extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try{
+            Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
+        }catch (Exception e){
+            Log.d("WTF", "QWQQQQQ");
+        }
         setContentView(R.layout.activity_sensor_select);
         button1 = (Button)findViewById(R.id.button6);
         button2 = (Button)findViewById(R.id.button7);
@@ -36,15 +42,11 @@ public class sensor_select extends AppCompatActivity {
         button4 = (Button)findViewById(R.id.button9);
 
         sensor_set m = (sensor_set) getApplication();
-        sensor1 = m.getSensor(1);
-        sensor2 = m.getSensor(2);
-        sensor3 = m.getSensor(3);
-        sensor4 = m.getSensor(4);
 
-        button1.setText(sensor1.getSensorName());
-        button2.setText(sensor2.getSensorName());
-        button3.setText(sensor3.getSensorName());
-        button4.setText(sensor4.getSensorName());
+        button1.setText(m.getSensor(1).getSensorName());
+        button2.setText(m.getSensor(2).getSensorName());
+        button3.setText(m.getSensor(3).getSensorName());
+        button4.setText(m.getSensor(4).getSensorName());
 
         /*
         if(recent==1) {
@@ -109,7 +111,6 @@ public class sensor_select extends AppCompatActivity {
         }
         */
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -121,33 +122,34 @@ public class sensor_select extends AppCompatActivity {
 
 
         sensor_set m = (sensor_set) getApplication();
-        sensor1 = m.getSensor(1);
-        sensor2 = m.getSensor(2);
-        sensor3 = m.getSensor(3);
-        sensor4 = m.getSensor(4);
 
-        if (model.equals(sensor1.getSensorCode())) {//delete sensor
-            flag[0] = 0;
-            sensor1.setSensorName(model);//click to add sensor
-        }
-        if (model.equals(sensor2.getSensorCode())){
+        if (model.equals(m.getSensor(1).getSensorCode())) {//delete sensor
+            flag[0]=0;
+        } else
+            flag[0]=1;
+
+        if (model.equals(m.getSensor(2).getSensorCode())){
             flag[1]=0;
-            sensor2.setSensorName(model);
-        }
-        if (model.equals(sensor3.getSensorCode())){
-            flag[2]=0;
-            sensor3.setSensorName(model);
-        }
-        if (model.equals(sensor4.getSensorCode())){
-            flag[3]=0;
-            sensor4.setSensorName(model);
-        }
+        }else
+            flag[1]=1;
 
-        button1.setText(sensor1.getSensorName());
-        button2.setText(sensor2.getSensorName());
-        button3.setText(sensor3.getSensorName());
-        button4.setText(sensor4.getSensorName());
+        if (model.equals(m.getSensor(3).getSensorCode())){
+            flag[2]=0;
+        }else
+            flag[2]=1;
+
+        if (model.equals(m.getSensor(4).getSensorCode())){
+            flag[3]=0;
+        }else
+            flag[3]=1;
+
+        button1.setText(m.getSensor(1).getSensorName());
+        button2.setText(m.getSensor(2).getSensorName());
+        button3.setText(m.getSensor(3).getSensorName());
+        button4.setText(m.getSensor(4).getSensorName());
     }
+
+
 
     public void button1_onclick (View view){
         if(flag[0]==0){
@@ -162,7 +164,46 @@ public class sensor_select extends AppCompatActivity {
             startActivity(intent2);
         }
     }
-
+    public void button2_onclick (View view){
+        if(flag[1]==0){
+            flag[1]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","2");
+            startActivity(intent);
+        }
+        else if (flag[1]==1){
+            Intent intent2 = new Intent (this, edit_show.class);
+            intent2.putExtra("place","2");
+            startActivity(intent2);
+        }
+    }
+    public void button3_onclick (View view){
+        if(flag[2]==0){
+            flag[2]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","3");
+            startActivity(intent);
+        }
+        else if (flag[2]==1){
+            Intent intent2 = new Intent (this, edit_show.class);
+            intent2.putExtra("place","3");
+            startActivity(intent2);
+        }
+    }
+    public void button4_onclick (View view){
+        if(flag[3]==0){
+            flag[3]=1;
+            Intent intent = new Intent (this, qr_code_scanner.class);
+            intent.putExtra("place","4");
+            startActivity(intent);
+        }
+        else if (flag[3]==1){
+            Intent intent2 = new Intent (this, edit_show.class);
+            intent2.putExtra("place","4");
+            startActivity(intent2);
+        }
+    }
+/*
     public void button2 (View view){
         if(flag[1]==0) {
             flag[1] = 1;
@@ -204,4 +245,5 @@ public class sensor_select extends AppCompatActivity {
             startActivity(intent2);
         }
     }
+    */
 }

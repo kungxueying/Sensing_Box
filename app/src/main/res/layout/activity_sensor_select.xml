@@ -28,35 +28,19 @@
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:onClick="button1_onclick"
-        android:text="@string/click_to_add_sensor"
-        app:layout_constraintEnd_toStartOf="@+id/button9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="180dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="148dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:onClick="button4"
-        android:text="@string/click_to_add_sensor"
-        app:layout_constraintStart_toEndOf="@+id/button6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"  />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="180dp"
         android:layout_height="130dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="148dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
-        android:onClick="button2"
-        android:text="@string/click_to_add_sensor"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
-        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="button2_onclick"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -66,11 +50,22 @@
         android:layout_marginTop="300dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
-        android:onClick="button3"
-        android:text="@string/click_to_add_sensor"
-        app:layout_constraintStart_toEndOf="@+id/button7"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="button3_onclick"
+
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="180dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:onClick="button4_onclick"
+        app:layout_constraintStart_toEndOf="@+id/button8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"  />
 
     <TextView
         android:id="@+id/sensor_bottom_1"

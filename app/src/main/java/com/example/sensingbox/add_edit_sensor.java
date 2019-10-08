@@ -3,6 +3,7 @@ package com.example.sensingbox;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,13 +44,15 @@ public class add_edit_sensor extends AppCompatActivity {
         final String[] cycle = {"5", "10", "20", "30", "60"};
         ArrayAdapter<String> cycleList = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
-                cycle);spinner1.setAdapter(cycleList);
+                cycle);
+        spinner1.setAdapter(cycleList);
 
         spinner2 = (Spinner)findViewById(R.id.spinner2);
-        final String[] status = {"Run", "Pause"};
+        final String[] status = {"run", "pause"};
         ArrayAdapter<String> statusList = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
-                status);spinner2.setAdapter(statusList);
+                status);
+        spinner2.setAdapter(statusList);
 
         cycle_temp=Integer.toString(now_sensor.getCycle());
         status_temp=now_sensor.getStatus();
@@ -76,6 +79,16 @@ public class add_edit_sensor extends AppCompatActivity {
     public void ok (View view){
         now_sensor.setCycle(Integer.parseInt(cycle_temp));
         now_sensor.setStatus(status_temp);
+
+        String[] code= now_sensor.getSensorCode().split(",");
+        String cmd = "3,"+ now_place + ","+ code[0]+","+status_temp +","+cycle_temp+ ",aded7777\n";
+
+        try{
+            Select_Bluetooth.mmOutStream.write(cmd.getBytes());
+
+        }catch (Exception e){
+            Log.d("BT","add_edit sensor failed." );
+        }
         this.finish();
     }
 }
