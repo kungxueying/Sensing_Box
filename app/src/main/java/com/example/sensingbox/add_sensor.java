@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class add_sensor extends AppCompatActivity {
 
-    String message;
+    //String message;
     String now_place;
     ListView listView ;
     sensor now_sensor;
@@ -26,9 +26,12 @@ public class add_sensor extends AppCompatActivity {
         setContentView(R.layout.activity_add_sensor);
 
         Intent intent=getIntent();
-        message=intent.getStringExtra("data");
+        //message=intent.getStringExtra("data");
         now_place=intent.getStringExtra("place");
 
+        sensor_set m = (sensor_set) getApplication();
+        now_sensor = m.getSensor(Integer.valueOf(now_place));
+/*
         //extract sensor data
         //sensor code
         String[] data = message.split(",");
@@ -42,7 +45,7 @@ public class add_sensor extends AppCompatActivity {
         else if (temp==3) now_sensor.setSensorName("Temperature");
         now_sensor.setStatus(data[1]);
         now_sensor.setCycle(Integer.valueOf(data[2]));
-
+*/
         /*
         sensor1.setSensorCode(message);
         //name
