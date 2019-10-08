@@ -154,6 +154,7 @@ public class qr_code_scanner extends AppCompatActivity {
                 if (temp == 1) now_sensor.setSensorName("Camera");
                 else if (temp == 2) now_sensor.setSensorName("CO2");
                 else if (temp == 3) now_sensor.setSensorName("Temperature");
+                else if (temp == 4) now_sensor.setSensorName("Light");
             }
             else {
                 Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 1-2)", Toast.LENGTH_SHORT).show();
