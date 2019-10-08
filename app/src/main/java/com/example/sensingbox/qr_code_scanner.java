@@ -150,7 +150,7 @@ public class qr_code_scanner extends AppCompatActivity {
                 return;
             }
 
-            if(temp>=1&&temp<=3) {
+            if(temp>=1&&temp<=4) {
                 if (temp == 1) now_sensor.setSensorName("Camera");
                 else if (temp == 2) now_sensor.setSensorName("CO2");
                 else if (temp == 3) now_sensor.setSensorName("Temperature");

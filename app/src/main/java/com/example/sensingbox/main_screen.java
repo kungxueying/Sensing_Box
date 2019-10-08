@@ -45,7 +45,7 @@ public class main_screen extends AppCompatActivity {
     public void goTo_Sensor_Select (View view){
         sensor_set m = (sensor_set) getApplication();
 
-        Intent intent = new Intent (this, sensor_select.class);
+        Intent intent = new Intent (this, select_sensor_v2.class);
         startActivity(intent);
     }
 

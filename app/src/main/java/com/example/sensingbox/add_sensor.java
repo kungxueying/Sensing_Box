@@ -92,7 +92,7 @@ public class add_sensor extends AppCompatActivity {
     }
 
     public void ok (View view){
-        String cmd = "3,"+ now_place + "," + message + ",setv8888\n";
+        String cmd = "3,"+ now_place + "," + now_sensor.getSensorCode() + ",setv8888\n";
         try{
             Select_Bluetooth.mmOutStream.write(cmd.getBytes());
 
