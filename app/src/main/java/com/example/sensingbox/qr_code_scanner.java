@@ -1,10 +1,13 @@
 package com.example.sensingbox;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
@@ -34,6 +37,8 @@ public class qr_code_scanner extends AppCompatActivity {
     //record message
     String message;
     String now_place;
+    String temp_s;
+    String model="Click to add sensor";
     int temp=0;
     //button
     int count,i,test;
@@ -155,9 +160,43 @@ public class qr_code_scanner extends AppCompatActivity {
                 else if (temp == 2) now_sensor.setSensorName("CO2");
                 else if (temp == 3) now_sensor.setSensorName("Temperature");
                 else if (temp == 4) now_sensor.setSensorName("Light");
+
+                //if similar sensor
+                temp_s=now_sensor.getSensorName();
+                int a=Integer.parseInt(now_place);
+                for(i=1;i<=10 && i!=a;i++){
+                    if(temp_s.equals(m.getSensor(i).getSensorName())){
+                        final AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                        builder1.setTitle("Similar Sensors");
+                        builder1.setMessage("You already have a similar sensor on the SENSING BOX. Are you sure you want to add this sensor:\n" + temp_s);
+                        builder1.setCancelable(false);
+                        builder1.setPositiveButton(
+                                "Yes",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder1.setNegativeButton(
+                                "No",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                        now_sensor.setSensorName(model);
+                                        return;
+                                    }
+                                });
+                        final AlertDialog alert11 = builder1.create();
+                        alert11.show();
+                    }
+                }
             }
             else {
                 Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 1-2)", Toast.LENGTH_SHORT).show();
+                now_sensor.setSensorName(model);
                 return;
             }
 
@@ -166,6 +205,7 @@ public class qr_code_scanner extends AppCompatActivity {
             else if(data[1].equals("Pause")||data[1].equals("pause"))now_sensor.setStatus("Pause");
             else {
                 Toast.makeText(getApplicationContext(),"Please scan the correct QR Code. (Error 2)", Toast.LENGTH_SHORT).show();
+                now_sensor.setSensorName(model);
                 return;
             }
 
@@ -175,6 +215,7 @@ public class qr_code_scanner extends AppCompatActivity {
                 temp=Integer.valueOf(data[2]);
             }else {
                 Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 3-1)", Toast.LENGTH_SHORT).show();
+                now_sensor.setSensorName(model);
                 return;
             }
             /*
@@ -187,6 +228,7 @@ public class qr_code_scanner extends AppCompatActivity {
             if(temp>0) now_sensor.setCycle(temp);
             else {
                 Toast.makeText(getApplicationContext(),"Please scan the correct QR Code. (Error 3-2)", Toast.LENGTH_SHORT).show();
+                now_sensor.setSensorName(model);
                 return;
             }
 
