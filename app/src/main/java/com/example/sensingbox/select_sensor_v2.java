@@ -70,12 +70,12 @@ public class select_sensor_v2 extends AppCompatActivity {
                 if(flag[position]==0){
                     flag[position]=1;
                     Intent intent = new Intent (select_sensor_v2.this, qr_code_scanner.class);
-                    intent.putExtra("place",position+1);
+                    intent.putExtra("place",Integer.toString(position+1));
                     startActivity(intent);
                 }
                 else if (flag[position]==1){
                     Intent intent2 = new Intent (select_sensor_v2.this, edit_show.class);
-                    intent2.putExtra("place",position+1);
+                    intent2.putExtra("place",Integer.toString(position+1));
                     startActivity(intent2);
                 }
             }
@@ -153,12 +153,12 @@ public class select_sensor_v2 extends AppCompatActivity {
                 if(flag[position]==0){
                     flag[position]=1;
                     Intent intent = new Intent (select_sensor_v2.this, qr_code_scanner.class);
-                    intent.putExtra("place",position+1);
+                    intent.putExtra("place",Integer.toString(position+1));
                     startActivity(intent);
                 }
                 else if (flag[position]==1){
                     Intent intent2 = new Intent (select_sensor_v2.this, edit_show.class);
-                    intent2.putExtra("place",position+1);
+                    intent2.putExtra("place",Integer.toString(position+1));
                     startActivity(intent2);
                 }
             }
