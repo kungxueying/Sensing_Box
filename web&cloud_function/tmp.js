@@ -12,16 +12,17 @@ function gettmpdata() {
       tvalue = e.val();
       var showAlertElement = document.querySelector("#nodataAlert");
       if(!tvalue){   
-          showAlertElement.innerHTML ="There is no data, please change date or location";
+          showAlertElement.innerHTML ="There is no data, please change the date or location";
           return;
       }
       showAlertElement.innerHTML ='';
       drawtmpTable();
       var showdataElement = document.querySelector("#showdata");
-      showdataElement.innerHTML ="Successfully obtained data from firebase!";
+      //showdataElement.innerHTML ="Successfully obtained data from firebase!";
       var avg = document.querySelector("#avg");
-      avg.innerHTML = "Average temperature: "+tvalue["avg"];
-      var count = document.querySelector("numberOfData");
+      avg.innerHTML = "Average temperature: "+tvalue["avg"]+"℃";
+      var count = document.querySelector("#numberOfData");
+      count.innerHTML ="Number of data: 共 "+tvalue["avg"]+" 筆資料";
     });
    
   }
@@ -74,7 +75,7 @@ function gettmpdata() {
         
     },        
     ticks: {                 
-        fontColor: '#336699'
+        fontColor: 'black'
      },
      gridLines: { 
       show: true, 
@@ -88,7 +89,7 @@ function gettmpdata() {
        
     },
     ticks: {           
-        fontColor: '#336699'
+        fontColor: 'black'
     },
     gridLines: { 
       show: true, 
