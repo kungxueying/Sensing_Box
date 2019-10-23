@@ -1,6 +1,7 @@
 package com.example.sensingbox;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
@@ -27,7 +28,10 @@ public class main_screen extends AppCompatActivity {
     }
 
     public void goTo_Cloud_Data (View view){
-        Intent intent = new Intent (this, firebase_upload.class);
+        //Intent intent = new Intent (this, firebase_upload.class);
+        Uri uri = Uri.parse("https://fangi7.github.io/web-cloud_function/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        //startActivity(intent);
         startActivity(intent);
     }
 

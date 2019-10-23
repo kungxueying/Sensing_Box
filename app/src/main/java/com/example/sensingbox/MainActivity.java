@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity  {
         System.out.println("抓GPS");
         //Toast.makeText(this, "定位服務", Toast.LENGTH_LONG).show();
         //System.out.println("X=" + longitude.intValue() + ", Y=" + latitude.intValue());
-        Intent i = new Intent();
-        i.setClass(this, gps.class);
-        startActivity(i);
+        //Intent i = new Intent();
+        //i.setClass(this, gps.class);
+        //startActivity(i);
         System.out.println("抓GPS done");
 
         setNewuser(newuser);
