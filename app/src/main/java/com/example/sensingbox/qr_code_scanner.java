@@ -254,7 +254,6 @@ public class qr_code_scanner extends AppCompatActivity {
                             }
                         });
 
-
                         dialog1.show();
                     }
                 }
@@ -271,7 +270,6 @@ public class qr_code_scanner extends AppCompatActivity {
     }
     void goto_add_sensor()
     {
-
         Intent intent = new Intent(this, add_sensor.class);
         //intent.putExtra("data", message);
         intent.putExtra("place", now_place);
