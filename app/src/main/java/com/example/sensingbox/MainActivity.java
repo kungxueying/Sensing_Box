@@ -51,45 +51,12 @@ public class MainActivity extends AppCompatActivity  {
         System.out.println("抓GPS");
         //Toast.makeText(this, "定位服務", Toast.LENGTH_LONG).show();
         //System.out.println("X=" + longitude.intValue() + ", Y=" + latitude.intValue());
-        //Intent i = new Intent();
-        //i.setClass(this, gps.class);
-        //startActivity(i);
+        Intent i = new Intent();
+        i.setClass(this, gps.class);
+        startActivity(i);
         System.out.println("抓GPS done");
 
-        setNewuser(newuser);
-
-        //setNewsensor(sensor);
-
-        //setNewdata(newdata);
-        //setFb(fb);
-
-        fb_register register = new fb_register();
-        register.registerToFB(newuser);
-        fb_login login = new fb_login();
-        login.logincheck("icedrip7@gmail.com","11122");
-        //need goto fb_login to judge correct or not
-
-
-        System.out.println("sqllite test");
-        //sqllite test
-
-        // 建立資料庫物件
-        itemDAO = new DB_itemDAO(getApplicationContext());
-        System.out.println("建立資料庫物件成功");
-        // 如果資料庫是空的，就建立一些範例資料
-        // 這是為了方便測試用的，完成應用程式以後可以拿掉
-        //if (itemDAO.getCount() == 0) {
-        System.out.println("資料庫是空的");
-        itemDAO.sample();
-        // }
-        System.out.println("新增資料成功");
-        List<DS_dataset> items = new ArrayList<>();
-        // 取得所有記事資料
-        items = itemDAO.getAll();
-
-        //System.out.println(items);
-        System.out.println("讀取資料成功");
-        itemDAO.close();
+        
 
     }
 
