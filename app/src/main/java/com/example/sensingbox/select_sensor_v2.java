@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class select_sensor_v2 extends AppCompatActivity {
 
-    static int flag[]=new int[10];
+    static int flag[]=new int[3];
     static int recent;
     static String model="Click to add sensor";
     ListView listView;
@@ -41,13 +41,6 @@ public class select_sensor_v2 extends AppCompatActivity {
         String[] values = new String[] { "Sensor 01:    " + m.getSensor(1).getSensorName(),
                 "Sensor 02:    "+ m.getSensor(2).getSensorName(),
                 "Sensor 03:    "+ m.getSensor(3).getSensorName(),
-                "Sensor 04:    "+ m.getSensor(4).getSensorName(),
-                "Sensor 05:    "+ m.getSensor(5).getSensorName(),
-                "Sensor 06:    "+ m.getSensor(6).getSensorName(),
-                "Sensor 07:    "+ m.getSensor(7).getSensorName(),
-                "Sensor 08:    "+ m.getSensor(8).getSensorName(),
-                "Sensor 09:    "+ m.getSensor(9).getSensorName(),
-                "Sensor 10:    "+ m.getSensor(10).getSensorName(),
         };
 
         // Define a new Adapter
@@ -89,7 +82,7 @@ public class select_sensor_v2 extends AppCompatActivity {
         sensor_set m = (sensor_set) getApplication();
 
         int i;
-        for(i=1;i<=10;i++){
+        for(i=1;i<=3;i++){
             if(model.equals(m.getSensor(i).getSensorCode())){
                 flag[i-1]=0;
             }else
@@ -124,13 +117,6 @@ public class select_sensor_v2 extends AppCompatActivity {
         String[] values = new String[] { "Sensor 01:    " + m.getSensor(1).getSensorName(),
                 "Sensor 02:    "+ m.getSensor(2).getSensorName(),
                 "Sensor 03:    "+ m.getSensor(3).getSensorName(),
-                "Sensor 04:    "+ m.getSensor(4).getSensorName(),
-                "Sensor 05:    "+ m.getSensor(5).getSensorName(),
-                "Sensor 06:    "+ m.getSensor(6).getSensorName(),
-                "Sensor 07:    "+ m.getSensor(7).getSensorName(),
-                "Sensor 08:    "+ m.getSensor(8).getSensorName(),
-                "Sensor 09:    "+ m.getSensor(9).getSensorName(),
-                "Sensor 10:    "+ m.getSensor(10).getSensorName(),
         };
 
         // Define a new Adapter
