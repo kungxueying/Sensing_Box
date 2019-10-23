@@ -98,9 +98,25 @@ public class qr_code_scanner extends AppCompatActivity {
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
-                            textView.setText(qrCodes.valueAt(0).displayValue);
+                            //textView.setText(qrCodes.valueAt(0).displayValue);
                             //record message
                             message=qrCodes.valueAt(0).displayValue;
+                            switch(message.charAt(0)-'0'){
+                                case 1:
+                                    textView.setText("Camera");
+                                    break;
+                                case 2:
+                                    textView.setText("CO2");
+                                    break;
+                                case 3:
+                                    textView.setText("Temperature");
+                                    break;
+                                case 4:
+                                    textView.setText("Light");
+                                    break;
+                                default:
+                                    textView.setText("Wrong QR Code!");
+                            }
                         }
                     });
                 }

@@ -12,7 +12,7 @@ public class sensor_set extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        for(int i=0;i<3;i++)
+        for(int i=0;i<4;i++)
             Obj[i] = new sensor();
     }
     public sensor getSensor(int idx){
