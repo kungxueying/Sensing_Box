@@ -194,6 +194,44 @@ public class qr_code_scanner extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
+
+                                        //sensor status
+                                        if(data[1].equals("Run")||data[1].equals("run"))now_sensor.setStatus("Run");
+                                        else if(data[1].equals("Pause")||data[1].equals("pause"))now_sensor.setStatus("Pause");
+                                        else {
+                                            Toast.makeText(getApplicationContext(),"Please scan the correct QR Code. (Error 2)", Toast.LENGTH_SHORT).show();
+                                            now_sensor.setSensorName(model);
+                                            return;
+                                        }
+
+                                        //sensor cycle
+                                        if(isNumeric(data[2])){
+                                            System.out.println(Integer.valueOf(data[2]));
+                                            temp=Integer.valueOf(data[2]);
+                                        }else {
+                                            Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 3-1)", Toast.LENGTH_SHORT).show();
+                                            now_sensor.setSensorName(model);
+                                            return;
+                                        }
+            /*
+            if(Character.isDigit(Integer.valueOf(data[2])))
+                temp=Integer.valueOf(data[2]);
+            else {
+                Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 3-1)", Toast.LENGTH_SHORT).show();
+                return;
+            }*/
+                                        if(temp>0) now_sensor.setCycle(temp);
+                                        else {
+                                            Toast.makeText(getApplicationContext(),"Please scan the correct QR Code. (Error 3-2)", Toast.LENGTH_SHORT).show();
+                                            now_sensor.setSensorName(model);
+                                            return;
+                                        }
+
+                                        //sensor code
+                                        now_sensor.setSensorCode(message);
+
+                                        //correct QR Code
+                                        goto_add_sensor();
                                     }
                                 });
 
@@ -207,8 +245,17 @@ public class qr_code_scanner extends AppCompatActivity {
                                         dialog.cancel();
                                     }
                                 });
-                        final AlertDialog alert11 = builder1.create();
-                        alert11.show();
+                        final AlertDialog dialog1= builder1.create();
+                        dialog1.setOnShowListener( new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface arg0) {
+                                dialog1.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+                                dialog1.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+                            }
+                        });
+
+
+                        dialog1.show();
                     }
                 }
                 if(flag==1) return;
@@ -219,47 +266,16 @@ public class qr_code_scanner extends AppCompatActivity {
                 return;
             }
 
-            //sensor status
-            if(data[1].equals("Run")||data[1].equals("run"))now_sensor.setStatus("Run");
-            else if(data[1].equals("Pause")||data[1].equals("pause"))now_sensor.setStatus("Pause");
-            else {
-                Toast.makeText(getApplicationContext(),"Please scan the correct QR Code. (Error 2)", Toast.LENGTH_SHORT).show();
-                now_sensor.setSensorName(model);
-                return;
-            }
-
-            //sensor cycle
-            if(isNumeric(data[2])){
-                System.out.println(Integer.valueOf(data[2]));
-                temp=Integer.valueOf(data[2]);
-            }else {
-                Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 3-1)", Toast.LENGTH_SHORT).show();
-                now_sensor.setSensorName(model);
-                return;
-            }
-            /*
-            if(Character.isDigit(Integer.valueOf(data[2])))
-                temp=Integer.valueOf(data[2]);
-            else {
-                Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 3-1)", Toast.LENGTH_SHORT).show();
-                return;
-            }*/
-            if(temp>0) now_sensor.setCycle(temp);
-            else {
-                Toast.makeText(getApplicationContext(),"Please scan the correct QR Code. (Error 3-2)", Toast.LENGTH_SHORT).show();
-                now_sensor.setSensorName(model);
-                return;
-            }
-
-            //sensor code
-            now_sensor.setSensorCode(message);
-
-            //correct QR Code
-            Intent intent = new Intent(this, add_sensor.class);
-            //intent.putExtra("data", message);
-            intent.putExtra("place", now_place);
-            startActivity(intent);
         }
+
+    }
+    void goto_add_sensor()
+    {
+
+        Intent intent = new Intent(this, add_sensor.class);
+        //intent.putExtra("data", message);
+        intent.putExtra("place", now_place);
+        startActivity(intent);
     }
 
 }
