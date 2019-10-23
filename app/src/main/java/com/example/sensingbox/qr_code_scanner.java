@@ -44,6 +44,7 @@ public class qr_code_scanner extends AppCompatActivity {
     int count,i,test;
     String[] data;
     int length;
+    int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +181,8 @@ public class qr_code_scanner extends AppCompatActivity {
                 //if similar sensor
                 temp_s=now_sensor.getSensorName();
                 int a=Integer.parseInt(now_place);
-                for(i=1;i<=10 && i!=a;i++){
+                flag=0;
+                for(i=1;i<=3 && i!=a;i++){
                     if(temp_s.equals(m.getSensor(i).getSensorName())){
                         final AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
                         builder1.setTitle("Similar Sensors");
@@ -200,15 +202,16 @@ public class qr_code_scanner extends AppCompatActivity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
                                         now_sensor.setSensorName(model);
-                                        return;
+                                        flag=1;
+                                        dialog.cancel();
                                     }
                                 });
                         final AlertDialog alert11 = builder1.create();
                         alert11.show();
                     }
                 }
+                if(flag==1) return;
             }
             else {
                 Toast.makeText(getApplicationContext(),"Please scan the correct QR Code.(Error 1-2)", Toast.LENGTH_SHORT).show();
