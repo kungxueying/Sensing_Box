@@ -12,11 +12,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,14 +43,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -79,6 +92,12 @@ public class Select_Bluetooth extends AppCompatActivity {
     public TextView textview;
     public Button search_btn;
     private static int data_count=0;
+    private static int img_count=0;
+    private static int img_size=0;
+    private static String imgname;
+    private static int img_name_size=0;
+    ArrayList<String> img_name = new ArrayList<String>();
+    int img_idx =0;
     int msg_flag = 0;
     int rcv_flag=0;
 
@@ -107,6 +126,36 @@ public class Select_Bluetooth extends AppCompatActivity {
                 String[] data = _recieveData.split(",");
 
                 //字串處理
+                if(_recieveData.equals("upload success!")){
+                    if(msg_flag==6) {
+                        if(rcv_flag==0){
+                            rcv_flag=1;
+                        }
+                        receive_img();
+                    }
+                    else if(msg_flag==2){
+                        msg_flag=0;
+                        //sensor config upload success
+                    }
+                    else if(msg_flag==7){
+                        //img upload success
+                        msg_flag=7;
+                        img_idx =0;
+                        //img_name_size = img_name.size();
+                        if(img_name_size!=0) {
+                            img_name_size--;
+                            String f = img_name.get(img_name_size);
+                            get_img(f);
+                            Log.e("7777771",f);
+                        }
+                        else{
+                            show_upload(data_count,1);
+                            msg_flag=2;
+                            get_sensor(0);
+
+                        }
+                    }
+                }
                 if(msg_flag==6 && data.length==4)
                 {
                     ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -135,20 +184,34 @@ public class Select_Bluetooth extends AppCompatActivity {
                         insert_SQLite(data);
                     }
 
-                }else if(_recieveData.equals("upload success!")){
-                    if(msg_flag==6) {
-                        if(rcv_flag==0){
-                            rcv_flag=1;
-                            show_upload(data_count,1);
-                            get_sensor(0);
-                            msg_flag=2;
-                        }
-
-                    }
-                    else if(msg_flag==2){
-
-                    }
                 }
+                if(msg_flag==7)
+                {
+                    //process img receive
+                    /*
+                    try {
+
+                        String[] name = img_name.get(img_idx-1).split("/");
+                        String path = Environment.getExternalStorageDirectory().toString();
+                        File ImgData = new File(path, name[2]);
+                        if (!ImgData.exists())
+                            ImgData.createNewFile();
+
+                        Log.e("7777773file",name[2]);
+                        // Adds a line to the file
+                        //BufferedWriter writer = new BufferedWriter(new FileWriter(ImgData, true));
+                        FileOutputStream stream = new FileOutputStream(ImgData);
+                        stream.write(_recieveData.getBytes());
+                        stream.close();
+                        if (ImgData.length()!=0)
+                            Log.e("77777774res","write success");
+
+                    } catch (IOException e) {
+                        Log.e("ReadWriteFile", "Unable to write to the TestFile.txt file.");
+                    }
+*/
+                }
+
                 if(msg_flag==2 &&data.length==5){
                         sensor_set m = (sensor_set) getApplication();
                         sensor now_sensor = m.getSensor(Integer.valueOf(data[0]));
@@ -184,22 +247,44 @@ public class Select_Bluetooth extends AppCompatActivity {
                 {
                     msg_flag=6;
                     data_count = Integer.parseInt(data[1]);
-                    Log.e("6666666",data[1]);
+                    img_count = Integer.parseInt(data[2]);
+                    //String[] img_name = new String[img_count];
+                    Log.e("66666661",data[1]);
+                    Log.e("66666662",String.valueOf(img_count));
                     if(data_count!=1&&data_count!=0&&rcv_flag==0)
                     {
                         show_upload(data_count,0);
                     }
 
                 }
+                if(data[0].equals("7"))
+                {
+                    msg_flag=7;
+                    img_size = Integer.parseInt(data[1]);
+                    imgname = String.valueOf(data[2]);
+                    Log.e("77777772",String.valueOf(img_size));
+                    Log.e("77777772",imgname);
+
+                }
                 if(data[0].equals("2"))
                 {
                     msg_flag=2;
                     data_count = Integer.parseInt(data[1]);
-
                 }
             }
         }
     };
+    public void receive_img(){
+        msg_flag=7;
+        img_idx =0;
+        img_name_size = img_name.size();
+        if(img_name_size!=0) {
+            img_name_size--;
+            String f = img_name.get(img_name_size);
+            get_img(f);
+            Log.e("7777771",f);
+        }
+    }
 
     public void show_upload(int count ,int flag){
         Intent intent = new Intent (this, Uploading.class);
@@ -251,6 +336,55 @@ public class Select_Bluetooth extends AppCompatActivity {
 */
     }
 
+
+    private boolean getService = false;
+    //取得系統定位服務
+    private void testLocationProvider() {
+        LocationManager status = (LocationManager) (this.getSystemService(Context.LOCATION_SERVICE));
+        if (status.isProviderEnabled(LocationManager.GPS_PROVIDER) || status.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            //如果GPS或網路定位開啟，呼叫locationServiceInitial()更新位置
+            getService = true;    //確認開啟定位服務
+            locationServiceInitial();
+        } else {
+            Toast.makeText(this, "請開啟定位服務", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));    //開啟設定頁面
+        }
+    }
+    private LocationManager lms;
+    private String bestProvider = LocationManager.GPS_PROVIDER;    //最佳資訊提供者
+
+    private void locationServiceInitial() {
+        lms = (LocationManager) getSystemService(LOCATION_SERVICE);    //取得系統定位服務
+        Criteria criteria = new Criteria();    //資訊提供者選取標準
+        bestProvider = lms.getBestProvider(criteria, true);    //選擇精準度最高的提供者
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = lms.getLastKnownLocation(bestProvider);
+        getLocation(location);
+    }
+
+    public static Double longitude;    //取得經度
+    public static Double latitude;
+    private void getLocation(Location location) {    //將定位資訊顯示在畫面中
+        if (location != null) {
+
+            longitude = location.getLongitude();    //取得經度
+            latitude = location.getLatitude();    //取得緯度
+
+            //Toast.makeText(this, "X=" + String.valueOf(longitude)+ ", Y=" + String.valueOf(latitude), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "無法定位座標", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void insert_fb(String[] _data){
         DS_dataset newdata = new DS_dataset();
 
@@ -259,12 +393,15 @@ public class Select_Bluetooth extends AppCompatActivity {
         newdata.time = _data[2];
         newdata.data = _data[3];
 
+        if(_data[1].equals("1"))
+            img_name.add(_data[3]);
+
         newdata.userID = "111";
         newdata.boxID ="2";
 
         newdata.locate ="民雄";
-        newdata.x = "20";
-        newdata.y = "121";
+        newdata.x =  String.valueOf(longitude) ;
+        newdata.y = String.valueOf(latitude);
 
         fb.insertdata(newdata);
     }
@@ -276,13 +413,15 @@ public class Select_Bluetooth extends AppCompatActivity {
         newdata.sensor = sensor_type_check(_data[1]);
         newdata.time = _data[2];
         newdata.data = _data[3];
+        if(_data[1].equals("1"))
+            img_name.add(_data[3]);
 
         newdata.userID = "111";
         newdata.boxID ="2";
 
         newdata.locate ="民雄";
-        newdata.x = "20";
-        newdata.y = "121";
+        newdata.x =  String.valueOf(longitude) ;
+        newdata.y = String.valueOf(latitude);
 
         itemDAO.insert(newdata);
     }
@@ -306,6 +445,9 @@ public class Select_Bluetooth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_bluetooth);
+
+        //取得定位
+        //testLocationProvider();
 
         // 建立資料庫物件
         itemDAO = new DB_itemDAO(getApplicationContext());
@@ -346,6 +488,14 @@ public class Select_Bluetooth extends AppCompatActivity {
         _recieveData = ""; //清除上次收到的資料
         _sendCMD = "2,"+num+"\n";
         textview.append( "click get_sensor"+num+"\n");
+        textview.append("cmd: "+_sendCMD);
+        if(mConnectedThread != null) //First check to make sure thread created
+            mConnectedThread.write(_sendCMD);
+    }
+    public void get_img(String imgname) {
+        _recieveData = ""; //清除上次收到的資料
+        _sendCMD = "7,1,"+imgname+"\n";
+        textview.append( "get_img"+imgname+"\n");
         textview.append("cmd: "+_sendCMD);
         if(mConnectedThread != null) //First check to make sure thread created
             mConnectedThread.write(_sendCMD);

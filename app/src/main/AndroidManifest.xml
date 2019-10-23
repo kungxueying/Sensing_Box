@@ -90,10 +90,6 @@
             android:label="@string/Sensing_box"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".firebase_upload"
-            android:label="@string/Sensing_box"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".gps"
             android:label="@string/Sensing_box"
             android:theme="@style/AppTheme.NoActionBar" />
