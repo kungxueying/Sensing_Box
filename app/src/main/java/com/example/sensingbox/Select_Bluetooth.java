@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -81,18 +82,19 @@ public class Select_Bluetooth extends AppCompatActivity {
 
     public TextView textview;
     public Button search_btn;
-    private static int data_count=0;
-    private static int img_count=0;
+    private static int data_count = 0;
+    private static int img_count = 0;
     private static String now_img;
     private static String now_img_data;
     private static byte[] idata = new byte[0];
-    private static int img_name_size=0;
+    private static int img_name_size = 0;
     ArrayList<String> img_name = new ArrayList<String>();
-    int img_idx =0;
+    int img_idx = 0;
     int msg_flag = 0;
-    int rcv_flag=0;
-    boolean write_flag=false;
-    public static int BOXID = 0;
+    int rcv_flag = 0;
+    boolean write_flag = false;
+    public static int BOXID = 2;
+    public static String sensorList = "";
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -108,76 +110,78 @@ public class Select_Bluetooth extends AppCompatActivity {
     DS_sensorall sensor = new DS_sensorall();
     firebase_upload fb = new firebase_upload();
 
+    //gps
+    private double locationX = 0.0;
+    private double locationY = 0.0;
+    boolean gpsON = false;
+    LocationManager mlocationManager;
+    private LocationManager lms;
+    private String bestProvider = LocationManager.GPS_PROVIDER;    //最佳資訊提供者
+
     //處理字串
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler(){
-        public void handleMessage(android.os.Message msg){
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
 
-            if(msg.what == MESSAGE_READ){ //收到MESSAGE_READ 開始接收資料
+            if (msg.what == MESSAGE_READ) { //收到MESSAGE_READ 開始接收資料
                 _recieveData = null;
-                _recieveData = (String)(msg.obj);
-                textview.append("read: "+_recieveData+"\n"); //將收到的字串呈現在畫面上
+                _recieveData = (String) (msg.obj);
+                textview.append("read: " + _recieveData + "\n"); //將收到的字串呈現在畫面上
 
                 //字串處理
                 String[] data = _recieveData.split(",");
 
                 //收到結尾符號
-                if(_recieveData.equals("upload success!"))
-                {
-                    if(msg_flag==6) {
-                        if(img_count!=0)
+                if (_recieveData.equals("upload success!")) {
+                    if (msg_flag == 6) {
+                        if (img_count != 0)
                             receive_img();
-                        else if(rcv_flag==0||data_count!=1)
-                        {
-                            show_upload(data_count,1);
+                        else if (rcv_flag == 0 || data_count != 1) {
+                            show_upload(data_count, 1);
                             get_sensor(0);
-                            msg_flag=2;
+                            msg_flag = 2;
                         }
-                        rcv_flag=1;
-                    }
-                    else if(msg_flag==2){
-                        msg_flag=0;
+                        rcv_flag = 1;
+                    } else if (msg_flag == 2) {
+                        msg_flag = 0;
+                        fb.insertBox(sensorList);
                         //sensor config upload success
-                    }
-                    else if(msg_flag==7){
-                        Log.e("now_img_base64::::",now_img_data);
-                        writeToSDcard(now_img,now_img_data);
+                    } else if (msg_flag == 7) {
+                        Log.e("now_img_base64::::", now_img_data);
+                        writeToSDcard(now_img, now_img_data);
 
                         //img upload success
-                        msg_flag=7;
-                        img_idx =0;
+                        msg_flag = 7;
+                        img_idx = 0;
                         now_img_data = "";
                         img_name_size = img_name.size();
-                        if(img_name_size!=0) {
-                            Log.e("img_name_size:::",String.valueOf(img_name_size));
+                        if (img_name_size != 0) {
+                            Log.e("img_name_size:::", String.valueOf(img_name_size));
                             img_name_size--;
-                            now_img= img_name.get(img_name_size);
+                            now_img = img_name.get(img_name_size);
                             get_img(now_img);
                             img_name.remove(now_img);
-                        }
-                        else{
+                        } else {
                             _recieveData = ""; //清除上次收到的資料
                             _sendCMD = "7,0,\n";
-                            textview.append( "upload_end\n");
-                            textview.append("cmd: "+_sendCMD);
-                            if(mConnectedThread != null) //First check to make sure thread created
+                            textview.append("upload_end\n");
+                            textview.append("cmd: " + _sendCMD);
+                            if (mConnectedThread != null) //First check to make sure thread created
                                 mConnectedThread.write(_sendCMD);
-                            if(data_count>1 && rcv_flag==0) {
-                                show_upload(data_count,1);
+                            if (rcv_flag == 0 || data_count != 1) {
+                                show_upload(data_count, 1);
                                 get_sensor(0);
-                                msg_flag=2;
+                                msg_flag = 2;
                             }
                         }
                     }
                 }
-                if(msg_flag==6 && data.length==4)
-                {
+                if (msg_flag == 6 && data.length == 4) {
                     ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
 
                     //如果未連線的話，mNetworkInfo會等於null
-                    if(mNetworkInfo != null)
-                    {
+                    if (mNetworkInfo != null) {
                         //網路是否已連線(true or false)
                         mNetworkInfo.isConnected();
                         //網路連線方式名稱(WIFI or mobile)
@@ -194,15 +198,14 @@ public class Select_Bluetooth extends AppCompatActivity {
                         mNetworkInfo.isRoaming();
 
                         insert_fb(data);
-                    }else{
+                    } else {
                         insert_SQLite(data);
                     }
                 }
 
-                if(msg_flag==7 && !data[0].equals("upload success!"))
-                {
+                if (msg_flag == 7 && !data[0].equals("upload success!")) {
                     //process img receive
-                    if(write_flag){
+                    if (write_flag) {
                         //receive all base64 string
                         byte[] imageBytes = Base64.decode(data[0], Base64.DEFAULT);
                         byte[] allByteArray = new byte[idata.length + imageBytes.length];
@@ -210,62 +213,56 @@ public class Select_Bluetooth extends AppCompatActivity {
                         buff.put(idata);
                         buff.put(imageBytes);
                         idata = buff.array();
-                    }
-                    else
-                        Log.e("??????","write error!");
+                    } else
+                        Log.e("??????", "write error!");
                 }
 
-                if(msg_flag==2 &&data.length==5){
+                if (msg_flag == 2 && data.length == 5) {
                     //receive sensor config detail
-                        sensor_set m = (sensor_set) getApplication();
-                        sensor now_sensor = m.getSensor(Integer.valueOf(data[0]));
-                        now_sensor.setSensorName(sensor_type_check(data[1]));
-                        now_sensor.setStatus(data[2]);
-                        now_sensor.setCycle(Integer.valueOf(data[3]));
-                        String code =data[1]+data[2]+data[3];
-                        now_sensor.setSensorCode(code);
+                    sensor_set m = (sensor_set) getApplication();
+                    sensor now_sensor = m.getSensor(Integer.valueOf(data[0]));
+                    now_sensor.setSensorName(sensor_type_check(data[1]));
+                    now_sensor.setStatus(data[2]);
+                    now_sensor.setCycle(Integer.valueOf(data[3]));
+                    String code = data[1] + data[2] + data[3];
+                    now_sensor.setSensorCode(code);
+                    sensorList = sensorList + sensor_type_check(data[1])+" ";
                 }
             }
 
-
-            if(msg.what == MESSAGE_READ_CMD){
+            if (msg.what == MESSAGE_READ_CMD) {
                 _recieveData = null;
-                _recieveData = (String)(msg.obj);
+                _recieveData = (String) (msg.obj);
                 String[] data = _recieveData.split(",");
-                textview.append(_recieveData+"\n"); //將收到的字串呈現在畫面上
+                textview.append(_recieveData + "\n"); //將收到的字串呈現在畫面上
 
-                if(data[0].equals("6"))
-                {
-                    msg_flag=6;
+                if (data[0].equals("6")) {
+                    msg_flag = 6;
                     data_count = Integer.parseInt(data[1]);
-                    if(rcv_flag==0)
-                    {
-                        show_upload(data_count,0);
+                    if (rcv_flag == 0) {
+                        show_upload(data_count, 0);
                     }
                 }
-                if(data[0].equals("7"))
-                {
-                    msg_flag=7;
+                if (data[0].equals("7")) {
+                    msg_flag = 7;
                     //img_size = Integer.parseInt(data[1]);
                     //String imgname = String.valueOf(data[2]);
                     //Log.e("77777772",String.valueOf(img_size));
                     //Log.e("77777772",imgname);
                 }
-                if(data[0].equals("2"))
-                {
-                    msg_flag=2;
+                if (data[0].equals("2")) {
+                    msg_flag = 2;
                     data_count = Integer.parseInt(data[1]);
                 }
             }
 
-            if(msg.what == CONNECTING_STATUS){
+            if (msg.what == CONNECTING_STATUS) {
                 //收到CONNECTING_STATUS 顯示以下訊息
-                if(msg.arg1 == 1) {
-                    dev_name = (String)(msg.obj);
+                if (msg.arg1 == 1) {
+                    dev_name = (String) (msg.obj);
                     textview.append("Connected to Device: " + dev_name);
                     upload_data();
-                }
-                else
+                } else
                     textview.append("Connection Failed");
             }
 
@@ -273,10 +270,10 @@ public class Select_Bluetooth extends AppCompatActivity {
     };
 
 
-    public void show_upload(int count ,int flag){
-        Intent intent = new Intent (this, Uploading.class);
-        intent.putExtra("count",count);
-        intent.putExtra("flag",flag);
+    public void show_upload(int count, int flag) {
+        Intent intent = new Intent(this, Uploading.class);
+        intent.putExtra("count", count);
+        intent.putExtra("flag", flag);
         startActivity(intent);
     }
 
@@ -299,53 +296,62 @@ public class Select_Bluetooth extends AppCompatActivity {
         return false;
     }
 
-    private boolean getService = false;
     //取得系統定位服務
     private void testLocationProvider() {
-        LocationManager status = (LocationManager) (this.getSystemService(Context.LOCATION_SERVICE));
-        if (status.isProviderEnabled(LocationManager.GPS_PROVIDER) || status.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            //如果GPS或網路定位開啟，呼叫locationServiceInitial()更新位置
-            getService = true;    //確認開啟定位服務
-            locationServiceInitial();
-        } else {
-            Toast.makeText(this, "請開啟定位服務", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));    //開啟設定頁面
+        mlocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(false);//設置允許產生資費
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        String provider = mlocationManager.getBestProvider(criteria, false);
+
+        //詢問是否存取位置資訊
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, 1
+            );
+        }else{
+            Location location = mlocationManager.getLastKnownLocation(provider);
+            updateLocation(location);
+            mlocationManager.requestLocationUpdates(provider, 3000, 0, locationListener);
         }
+
     }
 
-    private LocationManager lms;
-    private String bestProvider = LocationManager.GPS_PROVIDER;    //最佳資訊提供者
-
-    private void locationServiceInitial() {
-        lms = (LocationManager) getSystemService(LOCATION_SERVICE);    //取得系統定位服務
-        Criteria criteria = new Criteria();    //資訊提供者選取標準
-        bestProvider = lms.getBestProvider(criteria, true);    //選擇精準度最高的提供者
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = lms.getLastKnownLocation(bestProvider);
-        getLocation(location);
-    }
-    Double longitude;
-    Double latitude;
-    private void getLocation(Location location) {    //將定位資訊顯示在畫面中
+    private void updateLocation(Location location) {
         if (location != null) {
-
-            longitude = location.getLongitude();    //取得經度
-            latitude = location.getLatitude();    //取得緯度
-
-            Toast.makeText(this, "X=" + String.valueOf(longitude)+ ", Y=" + String.valueOf(latitude), Toast.LENGTH_LONG).show();
+            locationX = location.getLatitude();
+            locationY  = location.getLongitude();
         } else {
-            Toast.makeText(this, "無法定位座標", Toast.LENGTH_LONG).show();
+            locationX = 0.0;
+            locationY = 0.0;
+        }
+        //背景執行時關閉顯示地點
+        if(gpsON == true){
+            Toast.makeText(this, "" + "x:" + locationX  + " y:" + locationY , Toast.LENGTH_SHORT).show();
         }
     }
+    private final LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            updateLocation(location);
+
+        }
+        public void onProviderDisabled(String provider){
+            updateLocation(null);
+        }
+        public void onProviderEnabled(String provider){
+
+        }
+        public void onStatusChanged(String provider, int status,Bundle extras){
+
+        }
+    };
 
     public void insert_fb(String[] _data){
         DS_dataset newdata = new DS_dataset();
@@ -363,8 +369,8 @@ public class Select_Bluetooth extends AppCompatActivity {
         newdata.boxID = String.valueOf(BOXID);
 
         newdata.locate ="民雄";
-        newdata.x =  String.valueOf(longitude) ;
-        newdata.y = String.valueOf(latitude);
+        newdata.x =  String.valueOf(locationX) ;
+        newdata.y = String.valueOf(locationY);
 
         fb.insertdata(newdata);
     }
@@ -383,8 +389,8 @@ public class Select_Bluetooth extends AppCompatActivity {
         newdata.boxID = String.valueOf(BOXID);
 
         newdata.locate ="民雄";
-        newdata.x =  String.valueOf(longitude) ;
-        newdata.y = String.valueOf(latitude);
+        newdata.x =  String.valueOf(locationX) ;
+        newdata.y = String.valueOf(locationY);
 
         itemDAO.insert(newdata);
     }

@@ -215,17 +215,31 @@ public class firebase_upload {
         myRef.child("name").setValue(newsensor.sensorName);
 
     }
+    public void insertBox(String sensorList){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
+        DatabaseReference myRef= database.getReference("box/box1");
+        myRef.child("sensor").setValue(sensorList);
+
+    }
     public void insertdata(DS_dataset newdata){//新增
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("dataset");
+        DatabaseReference myRef2= database.getReference("box/box1");
 
 
         String timekey = newdata.time.substring(0,10);//節點以小時為最小單位
         if(newdata.sensor.equals("camera")){
             String jpgname = newdata.data.substring(5,9);
             myRef.child(newdata.sensor).child(timekey).child(jpgname).setValue(newdata);
+            myRef2.child("image").setValue(jpgname);
+            myRef2.child("time").setValue(newdata.time);
+
         }
-        else myRef.child(newdata.sensor).child(timekey).push().setValue(newdata);
+        else{
+            myRef.child(newdata.sensor).child(timekey).push().setValue(newdata);
+            myRef2.child(newdata.sensor).setValue(newdata.data);
+            myRef2.child("time").setValue(newdata.time);
+        }
     }
 
     public void b4(View v){//更新
