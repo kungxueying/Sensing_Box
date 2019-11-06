@@ -92,6 +92,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     int msg_flag = 0;
     int rcv_flag=0;
     boolean write_flag=false;
+    public static int BOXID = 0;
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -337,8 +338,11 @@ public class Select_Bluetooth extends AppCompatActivity {
     private void getLocation(Location location) {    //將定位資訊顯示在畫面中
         if (location != null) {
 
-            longitude = location.getLongitude();    //取得經度
-            latitude = location.getLatitude();    //取得緯度
+            try{
+                longitude = location.getLongitude();    //取得經度
+                latitude = location.getLatitude();    //取得緯度
+            }catch(Exception e) { }
+
 
             //Toast.makeText(this, "X=" + String.valueOf(longitude)+ ", Y=" + String.valueOf(latitude), Toast.LENGTH_LONG).show();
         } else {
@@ -359,7 +363,7 @@ public class Select_Bluetooth extends AppCompatActivity {
             img_count++;
         }
         newdata.userID = "111";
-        newdata.boxID ="2";
+        newdata.boxID = String.valueOf(BOXID);
 
         newdata.locate ="民雄";
         newdata.x =  String.valueOf(longitude) ;
@@ -379,7 +383,7 @@ public class Select_Bluetooth extends AppCompatActivity {
             img_name.add(_data[3]);
 
         newdata.userID = "111";
-        newdata.boxID ="2";
+        newdata.boxID = String.valueOf(BOXID);
 
         newdata.locate ="民雄";
         newdata.x =  String.valueOf(longitude) ;
@@ -427,6 +431,8 @@ public class Select_Bluetooth extends AppCompatActivity {
             fout.close();
             idata = null;
             idata = new byte[0];
+            fb.uploadImg(path + "/sensingbox" + filename);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -456,7 +462,7 @@ public class Select_Bluetooth extends AppCompatActivity {
         setContentView(R.layout.activity_select_bluetooth);
 
         //取得定位
-        //testLocationProvider();
+        testLocationProvider();
 
         // 建立資料庫物件
         itemDAO = new DB_itemDAO(getApplicationContext());
@@ -468,7 +474,6 @@ public class Select_Bluetooth extends AppCompatActivity {
 
         //System.out.println(items);
         System.out.println("讀取資料成功");
-
 
 
         textview = (TextView) findViewById(R.id.data_log);
@@ -531,80 +536,6 @@ public class Select_Bluetooth extends AppCompatActivity {
             textview.append("Status: Bluetooth not found");
             Toast.makeText(getApplicationContext(), "Bluetooth device not found!", Toast.LENGTH_SHORT).show();
         } else {
-            /*
-            send_command.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = input_command.getText()+ "\n";
-                    textview.append("click send_command \n >");
-                    textview.append("cmd: "+input_command.getText()+ "\n");
-                    if(mConnectedThread != null) //First check to make sure thread created
-                        mConnectedThread.write(_sendCMD);
-
-                    //傳送將輸入的資料出去
-                }
-            });
-            get_sensor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "2,0\n";
-                    textview.append( "click get_sensor(all)\n");
-                    textview.append("cmd: "+_sendCMD);
-                    if(mConnectedThread != null) //First check to make sure thread created
-                        mConnectedThread.write(_sendCMD);
-                }
-            });
-
-            set_sensor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "3,3,3,run,5,tttt2222,/data/datalog.txt\n";
-                    textview.append(  "click set_sensor\n");
-                    textview.append("cmd: "+_sendCMD);
-                    if(mConnectedThread != null) //First check to make sure thread created
-                        mConnectedThread.write(_sendCMD);
-                }
-            });
-
-            del_sensor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "4,3\n";
-                    textview.append("click del_sensor\n");
-                    textview.append("cmd: "+_sendCMD);
-                    if(mConnectedThread != null) //First check to make sure thread created
-                        mConnectedThread.write(_sendCMD);
-                }
-            });
-
-            edit_sensor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "5,3,3,run,1,tttt2222,/data/datalog.txt\n";
-                    textview.append( "click edit_sensor\n");
-                    textview.append("cmd: "+_sendCMD);
-                    if(mConnectedThread != null) //First check to make sure thread created
-                        mConnectedThread.write(_sendCMD);
-                }
-            });
-
-            upload_data.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    _recieveData = ""; //清除上次收到的資料
-                    _sendCMD = "6\n";
-                    textview.append(  "click upload_data\n");
-                    textview.append("cmd: "+_sendCMD);
-                    if(mConnectedThread != null) //First check to make sure thread created
-                        mConnectedThread.write(_sendCMD);
-                }
-            });
-            */
 
         }
         if (!mBTAdapter.isEnabled()) {//如果藍芽沒開啟
