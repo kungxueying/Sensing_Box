@@ -1,11 +1,10 @@
 package com.example.sensingbox;
 
 import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,50 +12,41 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Serializable;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -93,13 +83,15 @@ public class Select_Bluetooth extends AppCompatActivity {
     public Button search_btn;
     private static int data_count=0;
     private static int img_count=0;
-    private static int img_size=0;
-    private static String imgname;
+    private static String now_img;
+    private static String now_img_data;
+    private static byte[] idata = new byte[0];
     private static int img_name_size=0;
     ArrayList<String> img_name = new ArrayList<String>();
     int img_idx =0;
     int msg_flag = 0;
     int rcv_flag=0;
+    boolean write_flag=false;
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -116,6 +108,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     firebase_upload fb = new firebase_upload();
 
     //處理字串
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg){
 
@@ -123,36 +116,56 @@ public class Select_Bluetooth extends AppCompatActivity {
                 _recieveData = null;
                 _recieveData = (String)(msg.obj);
                 textview.append("read: "+_recieveData+"\n"); //將收到的字串呈現在畫面上
-                String[] data = _recieveData.split(",");
 
                 //字串處理
-                if(_recieveData.equals("upload success!")){
+                String[] data = _recieveData.split(",");
+
+                //收到結尾符號
+                if(_recieveData.equals("upload success!"))
+                {
                     if(msg_flag==6) {
-                        if(rcv_flag==0){
-                            rcv_flag=1;
+                        if(img_count!=0)
+                            receive_img();
+                        else if(rcv_flag==0||data_count!=1)
+                        {
+                            show_upload(data_count,1);
+                            get_sensor(0);
+                            msg_flag=2;
                         }
-                        receive_img();
+                        rcv_flag=1;
                     }
                     else if(msg_flag==2){
                         msg_flag=0;
                         //sensor config upload success
                     }
                     else if(msg_flag==7){
+                        Log.e("now_img_base64::::",now_img_data);
+                        writeToSDcard(now_img,now_img_data);
+
                         //img upload success
                         msg_flag=7;
                         img_idx =0;
-                        //img_name_size = img_name.size();
+                        now_img_data = "";
+                        img_name_size = img_name.size();
                         if(img_name_size!=0) {
+                            Log.e("img_name_size:::",String.valueOf(img_name_size));
                             img_name_size--;
-                            String f = img_name.get(img_name_size);
-                            get_img(f);
-                            Log.e("7777771",f);
+                            now_img= img_name.get(img_name_size);
+                            get_img(now_img);
+                            img_name.remove(now_img);
                         }
                         else{
-                            show_upload(data_count,1);
-                            msg_flag=2;
-                            get_sensor(0);
-
+                            _recieveData = ""; //清除上次收到的資料
+                            _sendCMD = "7,0,\n";
+                            textview.append( "upload_end\n");
+                            textview.append("cmd: "+_sendCMD);
+                            if(mConnectedThread != null) //First check to make sure thread created
+                                mConnectedThread.write(_sendCMD);
+                            if(data_count>1 && rcv_flag==0) {
+                                show_upload(data_count,1);
+                                get_sensor(0);
+                                msg_flag=2;
+                            }
                         }
                     }
                 }
@@ -183,36 +196,26 @@ public class Select_Bluetooth extends AppCompatActivity {
                     }else{
                         insert_SQLite(data);
                     }
-
                 }
-                if(msg_flag==7)
+
+                if(msg_flag==7 && !data[0].equals("upload success!"))
                 {
                     //process img receive
-                    /*
-                    try {
-
-                        String[] name = img_name.get(img_idx-1).split("/");
-                        String path = Environment.getExternalStorageDirectory().toString();
-                        File ImgData = new File(path, name[2]);
-                        if (!ImgData.exists())
-                            ImgData.createNewFile();
-
-                        Log.e("7777773file",name[2]);
-                        // Adds a line to the file
-                        //BufferedWriter writer = new BufferedWriter(new FileWriter(ImgData, true));
-                        FileOutputStream stream = new FileOutputStream(ImgData);
-                        stream.write(_recieveData.getBytes());
-                        stream.close();
-                        if (ImgData.length()!=0)
-                            Log.e("77777774res","write success");
-
-                    } catch (IOException e) {
-                        Log.e("ReadWriteFile", "Unable to write to the TestFile.txt file.");
+                    if(write_flag){
+                        //receive all base64 string
+                        byte[] imageBytes = Base64.decode(data[0], Base64.DEFAULT);
+                        byte[] allByteArray = new byte[idata.length + imageBytes.length];
+                        ByteBuffer buff = ByteBuffer.wrap(allByteArray);
+                        buff.put(idata);
+                        buff.put(imageBytes);
+                        idata = buff.array();
                     }
-*/
+                    else
+                        Log.e("??????","write error!");
                 }
 
                 if(msg_flag==2 &&data.length==5){
+                    //receive sensor config detail
                         sensor_set m = (sensor_set) getApplication();
                         sensor now_sensor = m.getSensor(Integer.valueOf(data[0]));
                         now_sensor.setSensorName(sensor_type_check(data[1]));
@@ -223,21 +226,8 @@ public class Select_Bluetooth extends AppCompatActivity {
                 }
             }
 
-            if(msg.what == CONNECTING_STATUS){
-                //收到CONNECTING_STATUS 顯示以下訊息
-                if(msg.arg1 == 1) {
-                    dev_name = (String)(msg.obj);
-                    textview.append("Connected to Device: " + dev_name);
-                    upload_data();
-
-                }
-                else
-                    textview.append("Connection Failed");
-
-            }
 
             if(msg.what == MESSAGE_READ_CMD){
-
                 _recieveData = null;
                 _recieveData = (String)(msg.obj);
                 String[] data = _recieveData.split(",");
@@ -247,24 +237,18 @@ public class Select_Bluetooth extends AppCompatActivity {
                 {
                     msg_flag=6;
                     data_count = Integer.parseInt(data[1]);
-                    img_count = Integer.parseInt(data[2]);
-                    //String[] img_name = new String[img_count];
-                    Log.e("66666661",data[1]);
-                    Log.e("66666662",String.valueOf(img_count));
-                    if(data_count!=1&&data_count!=0&&rcv_flag==0)
+                    if(rcv_flag==0)
                     {
                         show_upload(data_count,0);
                     }
-
                 }
                 if(data[0].equals("7"))
                 {
                     msg_flag=7;
-                    img_size = Integer.parseInt(data[1]);
-                    imgname = String.valueOf(data[2]);
-                    Log.e("77777772",String.valueOf(img_size));
-                    Log.e("77777772",imgname);
-
+                    //img_size = Integer.parseInt(data[1]);
+                    //String imgname = String.valueOf(data[2]);
+                    //Log.e("77777772",String.valueOf(img_size));
+                    //Log.e("77777772",imgname);
                 }
                 if(data[0].equals("2"))
                 {
@@ -272,70 +256,47 @@ public class Select_Bluetooth extends AppCompatActivity {
                     data_count = Integer.parseInt(data[1]);
                 }
             }
+
+            if(msg.what == CONNECTING_STATUS){
+                //收到CONNECTING_STATUS 顯示以下訊息
+                if(msg.arg1 == 1) {
+                    dev_name = (String)(msg.obj);
+                    textview.append("Connected to Device: " + dev_name);
+                    upload_data();
+                }
+                else
+                    textview.append("Connection Failed");
+            }
+
         }
     };
-    public void receive_img(){
-        msg_flag=7;
-        img_idx =0;
-        img_name_size = img_name.size();
-        if(img_name_size!=0) {
-            img_name_size--;
-            String f = img_name.get(img_name_size);
-            get_img(f);
-            Log.e("7777771",f);
-        }
-    }
+
 
     public void show_upload(int count ,int flag){
         Intent intent = new Intent (this, Uploading.class);
         intent.putExtra("count",count);
         intent.putExtra("flag",flag);
         startActivity(intent);
-
-        /*
-        int cnt = data;
-        setContentView(R.layout.upload_data_page);
-        TextView BT_dev = (TextView) findViewById(R.id.BT_device);
-        TextView UP_info = (TextView) findViewById(R.id.info);
-        TextView UP_status = (TextView) findViewById(R.id.status);
-        ProgressBar UP_bar = (ProgressBar) findViewById(R.id.upload_bar);;
-        Button UP_ok = (Button)findViewById(R.id.UP_OK);
-        BT_dev.setText(dev_name);
-        if(flag==0)
-        {
-            UP_info.setText("Uploading data...");
-            UP_bar.setVisibility(View.VISIBLE);
-            UP_status.setVisibility(View.GONE);
-        }
-        if(flag ==1)
-        {
-            UP_bar.setVisibility(View.GONE);
-            UP_status.setVisibility(View.VISIBLE);
-            UP_status.setTextColor(Color.parseColor("#00FF00"));
-            UP_status.setText("SUCCESS!");
-            UP_info.setText("You upload "+cnt+" data.");
-
-            UP_ok.setVisibility(View.VISIBLE);
-            UP_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent;
-                    intent = new Intent (v.getContext(),main_screen.class);
-                    startActivity(intent);
-                }
-            });
-        }
-        if(flag==2){
-            UP_bar.setVisibility(View.GONE);
-            UP_status.setVisibility(View.VISIBLE);
-            UP_status.setTextColor(Color.parseColor("#FF0000"));
-            UP_status.setText("Failed!");
-            UP_info.setVisibility(View.GONE);
-            UP_ok.setVisibility(View.VISIBLE);
-        }
-*/
     }
 
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
 
     private boolean getService = false;
     //取得系統定位服務
@@ -371,8 +332,8 @@ public class Select_Bluetooth extends AppCompatActivity {
         getLocation(location);
     }
 
-    public static Double longitude;    //取得經度
-    public static Double latitude;
+    private static Double longitude;
+    private static Double latitude;
     private void getLocation(Location location) {    //將定位資訊顯示在畫面中
         if (location != null) {
 
@@ -393,9 +354,10 @@ public class Select_Bluetooth extends AppCompatActivity {
         newdata.time = _data[2];
         newdata.data = _data[3];
 
-        if(_data[1].equals("1"))
+        if(_data[1].equals("1")) {
             img_name.add(_data[3]);
-
+            img_count++;
+        }
         newdata.userID = "111";
         newdata.boxID ="2";
 
@@ -441,6 +403,53 @@ public class Select_Bluetooth extends AppCompatActivity {
         return sensor_type;
     }
 
+
+    //寫檔到sdcard
+    private void writeToSDcard(String filename, String data){
+        //建立自己的目錄
+        String path = Environment.getExternalStorageDirectory().getPath();
+        File dir = new File(path + "/sensingbox/img");
+        if (!dir.exists()){
+            dir.mkdirs();
+        }
+        try {
+            InputStream is = new ByteArrayInputStream(idata);
+            Bitmap image= BitmapFactory.decodeStream(is);
+
+            File file = new File(path + "/sensingbox" + filename);
+            FileOutputStream fout = new FileOutputStream(file);
+
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fout);
+            is.close();
+            image.recycle();
+            //fout.write(data.getBytes());
+            fout.flush();
+            fout.close();
+            idata = null;
+            idata = new byte[0];
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("file", "Write to SDCARD!");
+    }
+
+    public void receive_img(){
+        msg_flag=7;
+        img_idx =0;
+        now_img_data = "";
+        img_name_size = img_name.size();
+        if(img_name_size!=0) {
+            Log.e("img_name_size:::",String.valueOf(img_name.size()));
+            img_name_size--;
+            now_img = img_name.get(img_name_size);
+            get_img(now_img);
+            img_name.remove(now_img);
+            Log.e("7777771",now_img);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -473,6 +482,9 @@ public class Select_Bluetooth extends AppCompatActivity {
             }
         });
 
+        if(isExternalStorageReadable()&&isExternalStorageWritable()){
+            write_flag=true;
+        }
     }
 
     public void upload_data(){
@@ -482,7 +494,6 @@ public class Select_Bluetooth extends AppCompatActivity {
         textview.append("cmd: "+_sendCMD);
         if(mConnectedThread != null) //First check to make sure thread created
             mConnectedThread.write(_sendCMD);
-
     }
     public void get_sensor(int num) {
         _recieveData = ""; //清除上次收到的資料

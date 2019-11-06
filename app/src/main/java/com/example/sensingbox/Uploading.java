@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -26,7 +27,7 @@ public class Uploading extends AppCompatActivity {
         TextView BT_dev = (TextView) findViewById(R.id.BT_device);
         TextView UP_info = (TextView) findViewById(R.id.info);
         TextView UP_status = (TextView) findViewById(R.id.status);
-        ProgressBar UP_bar = (ProgressBar) findViewById(R.id.upload_bar);;
+        ProgressBar UP_bar = (ProgressBar) findViewById(R.id.upload_bar);
         Button UP_ok = (Button)findViewById(R.id.UP_OK);
         BT_dev.setText(Select_Bluetooth.dev_name);
         if(flag==0)
