@@ -312,6 +312,7 @@ public class Select_Bluetooth extends AppCompatActivity {
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));    //開啟設定頁面
         }
     }
+
     private LocationManager lms;
     private String bestProvider = LocationManager.GPS_PROVIDER;    //最佳資訊提供者
 
@@ -332,19 +333,15 @@ public class Select_Bluetooth extends AppCompatActivity {
         Location location = lms.getLastKnownLocation(bestProvider);
         getLocation(location);
     }
-
-    private static Double longitude;
-    private static Double latitude;
+    Double longitude;
+    Double latitude;
     private void getLocation(Location location) {    //將定位資訊顯示在畫面中
         if (location != null) {
 
-            try{
-                longitude = location.getLongitude();    //取得經度
-                latitude = location.getLatitude();    //取得緯度
-            }catch(Exception e) { }
+            longitude = location.getLongitude();    //取得經度
+            latitude = location.getLatitude();    //取得緯度
 
-
-            //Toast.makeText(this, "X=" + String.valueOf(longitude)+ ", Y=" + String.valueOf(latitude), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "X=" + String.valueOf(longitude)+ ", Y=" + String.valueOf(latitude), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "無法定位座標", Toast.LENGTH_LONG).show();
         }
