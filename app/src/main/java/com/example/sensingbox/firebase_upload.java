@@ -222,9 +222,9 @@ public class firebase_upload {
 
         String timekey = newdata.time.substring(0,10);//節點以小時為最小單位
         if(newdata.sensor.equals("camera")){
-            myRef.child(newdata.sensor).child(newdata.time).child(newdata.data).setValue(newdata);
+            myRef.child(newdata.sensor).child(timekey).child(newdata.data).setValue(newdata);
         }
-        else myRef.child(newdata.sensor).child(newdata.time).push().setValue(newdata);
+        else myRef.child(newdata.sensor).child(timekey).push().setValue(newdata);
     }
 
     public void b4(View v){//更新
