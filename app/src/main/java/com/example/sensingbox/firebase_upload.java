@@ -222,7 +222,7 @@ public class firebase_upload {
 
         String timekey = newdata.time.substring(0,10);//節點以小時為最小單位
         if(newdata.sensor.equals("camera")){
-            String jpgname = newdata.time.substring(0,9);
+            String jpgname = newdata.data.substring(5,9);
             myRef.child(newdata.sensor).child(timekey).child(jpgname).setValue(newdata);
         }
         else myRef.child(newdata.sensor).child(timekey).push().setValue(newdata);
@@ -282,7 +282,7 @@ public class firebase_upload {
             public void onClick(View v) {
                 if(!TextUtils.isEmpty(imgPath)) {
                     imgUploadProgress.setVisibility(View.VISIBLE);
-                    uploadImg(imgPath);
+                    uploadImg(imgPath,"test","test");
                 } else{
                     //Toast.makeText(firebase_upload.this, R.string.plz_pick_img, Toast.LENGTH_SHORT).show();
                 }
@@ -343,7 +343,7 @@ public class firebase_upload {
         });
     }*/
 
-    public void uploadImg(String path){
+    public void uploadImg(String path,String dataName,String locate){
         mStorageRef = FirebaseStorage.getInstance().getReference();
         Uri file = Uri.fromFile(new File(path));
         System.out.println("圖片的路徑:");
@@ -353,7 +353,7 @@ public class firebase_upload {
                 .setContentType("image/jpg")
                 .build();
         //riversRef = mStorageRef.child(file.getLastPathSegment());
-        riversRef = mStorageRef.child("images/民雄");
+        riversRef = mStorageRef.child(locate+'/'+dataName);
         UploadTask uploadTask = riversRef.putFile(file, metadata);
         /*
         uploadTask.addOnFailureListener(new OnFailureListener() {

@@ -431,7 +431,8 @@ public class Select_Bluetooth extends AppCompatActivity {
             fout.close();
             idata = null;
             idata = new byte[0];
-            fb.uploadImg(path + "/sensingbox" + filename);
+            String jpgname = filename.substring(5,9);
+            fb.uploadImg(path + "/sensingbox" + filename,jpgname,"民雄");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
