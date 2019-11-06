@@ -31,8 +31,6 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         account = (TextView) findViewById(R.id.account);
         password = (TextView) findViewById(R.id.password);
-        user_memo n = (user_memo) getApplication();
-        email = n.getEmail();
     }
 
     @Override
@@ -46,7 +44,6 @@ public class login extends AppCompatActivity {
         String txt_account = account.getText().toString();
         String txt_password = password.getText().toString();
         String replaceStr = txt_account.replace('.', '_');
-        email = replaceStr;
 
         //login
         readData(replaceStr,txt_password);

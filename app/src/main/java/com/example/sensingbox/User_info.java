@@ -27,17 +27,13 @@ public class User_info extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        user_memo n = (user_memo) getApplication();
-        email = n.getEmail();
 
         mdatabase = FirebaseDatabase.getInstance();
         mRef = mdatabase.getReference("user/" + email);
-        Log.e("2","2");
         mRef.addChildEventListener(new ChildEventListener() {//讀取
 
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.e("1","1");
                 if(dataSnapshot.getKey().equals("name"))
                     user.name= String.valueOf(dataSnapshot.getValue());
                 if(dataSnapshot.getKey().equals("email"))
