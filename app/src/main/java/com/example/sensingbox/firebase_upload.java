@@ -231,7 +231,7 @@ public class firebase_upload {
         if(newdata.sensor.equals("camera")){
             String jpgname = newdata.data.substring(5,9);
             myRef.child(newdata.sensor).child(timekey).child(jpgname).setValue(newdata);
-            myRef.child("camera").setValue(jpgname);
+            myRef2.child("image").setValue(jpgname);
 
         }
         else{
