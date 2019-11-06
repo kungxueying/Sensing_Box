@@ -217,7 +217,7 @@ public class firebase_upload {
     }
     public void insertBox(String sensorList){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
-        DatabaseReference myRef= database.getReference("box/box1");
+        DatabaseReference myRef= database.getReference("box/box2");
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("sensor",sensorList);//前面的字是child後面的字是要修改的value值
         myRef.updateChildren(childUpdates);
@@ -232,7 +232,7 @@ public class firebase_upload {
         if(newdata.sensor.equals("camera")){
             String jpgname = newdata.data.substring(5,9);
             myRef.child(newdata.sensor).child(timekey).child(jpgname).setValue(newdata);
-            myRef= database.getReference("box/box1");
+            myRef= database.getReference("box/box2");
             Map<String, Object> childUpdates = new HashMap<>();
             childUpdates.put(newdata.sensor,jpgname);//前面的字是child後面的字是要修改的value值
             childUpdates.put("time",newdata.time);
@@ -240,7 +240,7 @@ public class firebase_upload {
         }
         else{
             myRef.child(newdata.sensor).child(timekey).push().setValue(newdata);
-            myRef= database.getReference("box/box1");
+            myRef= database.getReference("box/box2");
             Map<String, Object> childUpdates = new HashMap<>();
             childUpdates.put(newdata.sensor,newdata.data);//前面的字是child後面的字是要修改的value值
             childUpdates.put("time",newdata.time);
