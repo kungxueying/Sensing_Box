@@ -93,6 +93,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     int rcv_flag=0;
     boolean write_flag=false;
     public static int BOXID = 0;
+    public static String sensorList = "";
 
     //BT
     private String[] datas = {"1", "2", "3", "4", "5"};
@@ -137,6 +138,8 @@ public class Select_Bluetooth extends AppCompatActivity {
                     }
                     else if(msg_flag==2){
                         msg_flag=0;
+                        fb.insertBox(sensorList);
+
                         //sensor config upload success
                     }
                     else if(msg_flag==7){
@@ -224,6 +227,8 @@ public class Select_Bluetooth extends AppCompatActivity {
                         now_sensor.setCycle(Integer.valueOf(data[3]));
                         String code =data[1]+data[2]+data[3];
                         now_sensor.setSensorCode(code);
+                        sensorList = sensorList + sensor_type_check(data[1])+" ";
+
                 }
             }
 

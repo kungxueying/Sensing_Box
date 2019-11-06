@@ -155,7 +155,7 @@ public class DB_itemDAO {
         //delete(1);
         //上傳到firebase
         firebase_upload fb = new firebase_upload();
-        fb.uploadImg(item2.data);
+        //fb.uploadImg(item2.data,"test","test");
 
 
 
