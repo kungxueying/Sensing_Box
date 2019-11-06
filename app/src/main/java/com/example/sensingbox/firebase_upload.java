@@ -352,8 +352,8 @@ public class firebase_upload {
                 .setContentDisposition("universe")
                 .setContentType("image/jpg")
                 .build();
-        riversRef = mStorageRef.child(file.getLastPathSegment());
-
+        //riversRef = mStorageRef.child(file.getLastPathSegment());
+        riversRef = mStorageRef.child("images/民雄");
         UploadTask uploadTask = riversRef.putFile(file, metadata);
         /*
         uploadTask.addOnFailureListener(new OnFailureListener() {
