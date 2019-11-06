@@ -232,11 +232,13 @@ public class firebase_upload {
             String jpgname = newdata.data.substring(5,9);
             myRef.child(newdata.sensor).child(timekey).child(jpgname).setValue(newdata);
             myRef2.child("image").setValue(jpgname);
+            myRef2.child("time").setValue(newdata.time);
 
         }
         else{
             myRef.child(newdata.sensor).child(timekey).push().setValue(newdata);
             myRef2.child(newdata.sensor).setValue(newdata.data);
+            myRef2.child("time").setValue(newdata.time);
         }
     }
 
