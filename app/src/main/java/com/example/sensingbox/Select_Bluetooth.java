@@ -226,7 +226,9 @@ public class Select_Bluetooth extends AppCompatActivity {
                     now_sensor.setCycle(Integer.valueOf(data[3]));
                     String code = data[1] + data[2] + data[3];
                     now_sensor.setSensorCode(code);
-                    sensorList = sensorList + sensor_type_check(data[1])+" ";
+                    if(!sensorList.equals(data[1])) {
+                        sensorList = sensorList + sensor_type_check(data[1]) + " ";
+                    }
                 }
             }
 
