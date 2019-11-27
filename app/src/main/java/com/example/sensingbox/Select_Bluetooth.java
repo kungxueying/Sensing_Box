@@ -21,7 +21,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -199,7 +198,7 @@ public class Select_Bluetooth extends AppCompatActivity {
 
                         insert_fb(data);
                     } else {
-                        insert_SQLite(data);
+                        //insert_SQLite(data);
                     }
                 }
 
@@ -247,10 +246,6 @@ public class Select_Bluetooth extends AppCompatActivity {
                 }
                 if (data[0].equals("7")) {
                     msg_flag = 7;
-                    //img_size = Integer.parseInt(data[1]);
-                    //String imgname = String.valueOf(data[2]);
-                    //Log.e("77777772",String.valueOf(img_size));
-                    //Log.e("77777772",imgname);
                 }
                 if (data[0].equals("2")) {
                     msg_flag = 2;
@@ -438,13 +433,20 @@ public class Select_Bluetooth extends AppCompatActivity {
             idata = new byte[0];
             String jpgname = filename.substring(5,9);
             fb.uploadImg(path + "/sensingbox" + filename,jpgname,"民雄");
-
+            deleteFromSDcard(filename);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Log.d("file", "Write to SDCARD!");
+    }
+    private void deleteFromSDcard(String filename) {
+        String path = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(path + "/sensingbox" + filename);
+        boolean deleted = file.delete();
+        if(!deleted)
+            Log.e("file", "Remove file error!");
     }
 
     public void receive_img(){

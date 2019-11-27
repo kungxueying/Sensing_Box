@@ -26,13 +26,8 @@ public class main_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-
-
         try{
-            //OutputStream mmOutStream = new DataOutputStream(Select_Bluetooth.mBTSocket.getOutputStream());
             Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
-
         }catch (Exception e){
             Log.d("WTF", "QWQQQQQ");
         }
