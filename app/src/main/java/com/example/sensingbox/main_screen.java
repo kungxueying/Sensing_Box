@@ -1,25 +1,12 @@
 package com.example.sensingbox;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-
-
 
 public class main_screen extends AppCompatActivity {
 
@@ -42,7 +29,7 @@ public class main_screen extends AppCompatActivity {
         try{
             Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
         }catch (Exception e){
-            Log.d("WTF", "QWQQQQQ");
+            Log.d("BT", "BT error!");
         }
     }
 

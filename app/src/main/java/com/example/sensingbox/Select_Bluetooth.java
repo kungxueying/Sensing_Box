@@ -77,7 +77,7 @@ public class Select_Bluetooth extends AppCompatActivity {
     public static InputStream mmInStream = null;
     public static OutputStream mmOutStream = null;
     public BufferedReader reader;
-    // bi-directional client-to-client data path
+
 
     public TextView textview;
     public Button search_btn;
@@ -105,7 +105,6 @@ public class Select_Bluetooth extends AppCompatActivity {
     public static String dev_name;
 
     //firebase
-    DS_user newuser = new DS_user();
     DS_sensorall sensor = new DS_sensorall();
     firebase_upload fb = new firebase_upload();
 
@@ -114,8 +113,6 @@ public class Select_Bluetooth extends AppCompatActivity {
     private double locationY = 0.0;
     boolean gpsON = false;
     LocationManager mlocationManager;
-    private LocationManager lms;
-    private String bestProvider = LocationManager.GPS_PROVIDER;    //最佳資訊提供者
 
     //處理字串
     @SuppressLint("HandlerLeak")
@@ -146,9 +143,7 @@ public class Select_Bluetooth extends AppCompatActivity {
                         fb.insertBox(sensorList);
                         //sensor config upload success
                     } else if (msg_flag == 7) {
-                        Log.e("now_img_base64::::", now_img_data);
                         writeToSDcard(now_img, now_img_data);
-
                         //img upload success
                         msg_flag = 7;
                         img_idx = 0;
@@ -500,6 +495,17 @@ public class Select_Bluetooth extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //mConnectedThread.cancel();
+        _sendCMD = "8,\n";
+        textview.append( "break BT link\n");
+        textview.append("cmd: "+_sendCMD);
+        if(mConnectedThread != null) //First check to make sure thread created
+            mConnectedThread.write(_sendCMD);
+    }
+
     public void upload_data(){
         _recieveData = ""; //清除上次收到的資料
         _sendCMD = "6\n";
@@ -526,13 +532,12 @@ public class Select_Bluetooth extends AppCompatActivity {
     }
 
     public void SearchBT() {
+
         dialog = new Dialog(this);
-        // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_listview);
 
         //BT 連線
         mBTAdapter = BluetoothAdapter.getDefaultAdapter();
-        //mBTArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datas);
         mBTArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         mDevicesListView = (ListView) dialog.findViewById(R.id.data_list);
         mDevicesListView.setAdapter(mBTArrayAdapter);
@@ -552,12 +557,14 @@ public class Select_Bluetooth extends AppCompatActivity {
             //開啟設定藍芽畫面
             textview.append(  "Bluetooth enabled");
             Toast.makeText(getApplicationContext(), "Bluetooth turned on", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(getApplicationContext(), "Bluetooth is already on", Toast.LENGTH_SHORT).show();
             discoverBT();
             listPairedDevices();
+            dialog.show();
         }
-        dialog.show();
+
     }
 
     private void discoverBT(){
@@ -676,7 +683,6 @@ public class Select_Bluetooth extends AppCompatActivity {
         private final BluetoothSocket mmSocket;
 
         public ConnectedThread(BluetoothSocket socket) {
-
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -684,7 +690,6 @@ public class Select_Bluetooth extends AppCompatActivity {
             // Get the input and output streams, using temp objects because
             // member streams are final
             try {
-
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
 
@@ -703,17 +708,15 @@ public class Select_Bluetooth extends AppCompatActivity {
                     // Read from the InputStream
                     String str = null;
 
-                    //process data
+                    //cmd process
                     str = reader.readLine();
-                    Log.e("11111111111",str);
-
                     mHandler.obtainMessage(MESSAGE_READ_CMD, str.length(), -1, str)
                             .sendToTarget(); // Send the obtained bytes to the UI activity
 
+                    //datalog process
                     while (true) {
                         try{
                             str = reader.readLine();
-                            Log.e("datalog", str);
                         }catch (IOException e){}
 
                         if(str==null) {
@@ -727,13 +730,9 @@ public class Select_Bluetooth extends AppCompatActivity {
                                 break;
                             }
                         }
-
                     }
-
-
                 } catch (IOException e) {
                     e.printStackTrace();
-
                 }
             }
         }
@@ -741,7 +740,7 @@ public class Select_Bluetooth extends AppCompatActivity {
 
         /* Call this from the main activity to send data to the remote device */
         public void write(String input) {
-            byte[] bytes = input.getBytes();           //converts entered String into bytes
+            byte[] bytes = input.getBytes();    //converts entered String into bytes
             try {
                 mmOutStream.write(bytes);
             } catch (IOException e) { }

@@ -1,6 +1,4 @@
 package com.example.sensingbox;
-
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,10 +19,7 @@ public class login extends AppCompatActivity {
 
     private TextView account;
     private TextView password;
-    private boolean flag;
     private String eeepwd;
-    fb_login login = new fb_login();
-    String email;
     sensor user_info;
 
     @Override
@@ -51,23 +47,28 @@ public class login extends AppCompatActivity {
         user_info.setSensorCode(txt_account);
 
         //login
-        readData(replaceStr,txt_password);
+        if(!replaceStr.equals("")&&!txt_password.equals(""))
+            readData(replaceStr,txt_password);
+        else
+            Toast.makeText(getApplicationContext(), "email or password can't be null!", Toast.LENGTH_SHORT).show();
+
         //Intent intent = new Intent (login.this, Select_Bluetooth.class);
-        //Intent intent = new Intent (login.this, main_screen.class);
         //startActivity(intent);
     }
-
+    public void gotobt()
+    {
+        Intent intent = new Intent (this, Select_Bluetooth.class);
+        startActivity(intent);
+    }
     public void readData(String email, final String ipwd){
         FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("user/"+email);
 
         System.out.println("讀取 login db1");
-        //Log.e("144",eeepwd);
         System.out.println(eeepwd);
         System.out.println(email);
         System.out.println(ipwd);
         eeepwd = ipwd;
-        Log.e("123",eeepwd);
 
         myRef.addChildEventListener(new ChildEventListener() {//讀取
 
@@ -85,14 +86,9 @@ public class login extends AppCompatActivity {
                     String dbpwd= String.valueOf(dataSnapshot.getValue());
 
                     if(eeepwd.equals(dbpwd)){
-                        Intent intent = new Intent (login.this, Select_Bluetooth.class);
-                        //Intent intent = new Intent (login.this, main_screen.class);
-                        startActivity(intent);
+                        gotobt();
                     }else{
-                        new AlertDialog.Builder(login.this)
-                                .setMessage("login failed!")
-                                .create()
-                                .show();
+                        Toast.makeText(getApplicationContext(), "login failed!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -100,7 +96,6 @@ public class login extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //t1.setText(""+dataSnapshot.getValue());
 
             }
 
