@@ -1,7 +1,9 @@
 package com.example.sensingbox;
 
 import java.io.Serializable;
-
+//user info (name & email) are saved in sensor[0]
+//name saved in sensor name
+//email saved in sensor code
 public class sensor implements Serializable {
 
     private String sensor_name;

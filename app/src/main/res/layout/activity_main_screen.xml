@@ -11,12 +11,11 @@
     <TextView
         android:id="@+id/Welcome"
         android:layout_width="250dp"
-        android:layout_height="63dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
         android:gravity="center"
-        android:text="@string/Welcome"
         android:textColor="@color/Text_Color"
         android:textSize="@dimen/Title_Size"
         app:layout_constraintTop_toTopOf="parent"

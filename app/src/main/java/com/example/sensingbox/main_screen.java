@@ -22,10 +22,20 @@ import java.io.OutputStream;
 
 
 public class main_screen extends AppCompatActivity {
+
+    private TextView welcome_name;
+    sensor user_info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        sensor_set m = (sensor_set) getApplication();
+        user_info = m.getSensor(Integer.valueOf(0));//save user name in sensor[0];
+        welcome_name = (TextView) findViewById(R.id.Welcome);
+        welcome_name.setText("Welcome!");
+
         try{
             Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());
         }catch (Exception e){

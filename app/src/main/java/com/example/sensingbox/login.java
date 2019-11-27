@@ -24,6 +24,7 @@ public class login extends AppCompatActivity {
     private String eeepwd;
     fb_login login = new fb_login();
     String email;
+    sensor user_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,14 @@ public class login extends AppCompatActivity {
         String txt_password = password.getText().toString();
         String replaceStr = txt_account.replace('.', '_');
 
+        sensor_set m = (sensor_set) getApplication();
+        user_info = m.getSensor(Integer.valueOf(0));//save user email in sensor[0];
+        user_info.setSensorCode(txt_account);
+
         //login
         readData(replaceStr,txt_password);
-        Intent intent = new Intent (login.this, Select_Bluetooth.class);
+        //Intent intent = new Intent (login.this, Select_Bluetooth.class);
+        Intent intent = new Intent (login.this, main_screen.class);
         startActivity(intent);
     }
 
@@ -68,12 +74,19 @@ public class login extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 System.out.println(dataSnapshot.getKey());
+
+                sensor_set m = (sensor_set) getApplication();
+                user_info = m.getSensor(Integer.valueOf(0));//save user name in sensor[0];
+                if(dataSnapshot.getKey().equals("name"))
+                    user_info.setSensorName(String.valueOf(dataSnapshot.getValue()));
+
                 if(dataSnapshot.getKey().equals("pwd")){
 
                     String dbpwd= String.valueOf(dataSnapshot.getValue());
 
                     if(eeepwd.equals(dbpwd)){
-                        Intent intent = new Intent (login.this, Select_Bluetooth.class);
+                        //Intent intent = new Intent (login.this, Select_Bluetooth.class);
+                        Intent intent = new Intent (login.this, main_screen.class);
                         startActivity(intent);
                     }else{
                         new AlertDialog.Builder(login.this)
