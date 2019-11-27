@@ -33,8 +33,11 @@ public class main_screen extends AppCompatActivity {
 
         sensor_set m = (sensor_set) getApplication();
         user_info = m.getSensor(Integer.valueOf(0));//save user name in sensor[0];
+
+        if(user_info.getSensorName().equals("Click to add sensor"))
+            user_info.setSensorName("Adam");
         welcome_name = (TextView) findViewById(R.id.Welcome);
-        welcome_name.setText("Welcome!");
+        welcome_name.setText("Welcome, "+user_info.getSensorName());
 
         try{
             Select_Bluetooth.mmOutStream.write("2,0\n".getBytes());

@@ -22,9 +22,6 @@ public class User_info extends AppCompatActivity {
         sensor_set m = (sensor_set) getApplication();
         user_info = m.getSensor(Integer.valueOf(0));
 
-        if(user_info.getSensorName().equals("Click to add sensor"))
-            user_info.setSensorName("Adam");
-
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView

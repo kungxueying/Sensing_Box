@@ -53,8 +53,8 @@ public class login extends AppCompatActivity {
         //login
         readData(replaceStr,txt_password);
         //Intent intent = new Intent (login.this, Select_Bluetooth.class);
-        Intent intent = new Intent (login.this, main_screen.class);
-        startActivity(intent);
+        //Intent intent = new Intent (login.this, main_screen.class);
+        //startActivity(intent);
     }
 
     public void readData(String email, final String ipwd){
