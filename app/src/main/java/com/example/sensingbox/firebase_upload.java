@@ -218,7 +218,16 @@ public class firebase_upload {
     public void insertBox(String sensorList){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();//取得資料庫連結
         DatabaseReference myRef= database.getReference("box/box1");
-        myRef.child("sensor").setValue(sensorList);
+        String newsensorList="";
+        String[] tokens = sensorList.split(" ");
+        for(String token : tokens) {
+            System.out.println(token);
+            if(newsensorList.indexOf(token)<0) {
+                newsensorList = newsensorList+token+" ";
+            }
+        }
+
+        myRef.child("sensor").setValue(newsensorList);
 
     }
     public void insertdata(DS_dataset newdata){//新增
