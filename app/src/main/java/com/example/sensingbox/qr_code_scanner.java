@@ -104,16 +104,16 @@ public class qr_code_scanner extends AppCompatActivity {
                             message=qrCodes.valueAt(0).displayValue;
                             switch(message.charAt(0)-'0'){
                                 case 1:
-                                    textView.setText("Camera");
+                                    textView.setText("camera");
                                     break;
                                 case 2:
-                                    textView.setText("CO2");
+                                    textView.setText("co2");
                                     break;
                                 case 3:
-                                    textView.setText("Temperature");
+                                    textView.setText("temperature");
                                     break;
                                 case 4:
-                                    textView.setText("Light");
+                                    textView.setText("light");
                                     break;
                                 default:
                                     textView.setText("Wrong QR Code!");
@@ -173,10 +173,10 @@ public class qr_code_scanner extends AppCompatActivity {
             }
 
             if(temp>=1&&temp<=4) {
-                if (temp == 1) now_sensor.setSensorName("Camera");
-                else if (temp == 2) now_sensor.setSensorName("CO2");
-                else if (temp == 3) now_sensor.setSensorName("Temperature");
-                else if (temp == 4) now_sensor.setSensorName("Light");
+                if (temp == 1) now_sensor.setSensorName("camera");
+                else if (temp == 2) now_sensor.setSensorName("co2");
+                else if (temp == 3) now_sensor.setSensorName("temperature");
+                else if (temp == 4) now_sensor.setSensorName("light");
 
 
                 temp_s=now_sensor.getSensorName();
