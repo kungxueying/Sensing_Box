@@ -85,8 +85,8 @@ public class login extends AppCompatActivity {
                     String dbpwd= String.valueOf(dataSnapshot.getValue());
 
                     if(eeepwd.equals(dbpwd)){
-                        //Intent intent = new Intent (login.this, Select_Bluetooth.class);
-                        Intent intent = new Intent (login.this, main_screen.class);
+                        Intent intent = new Intent (login.this, Select_Bluetooth.class);
+                        //Intent intent = new Intent (login.this, main_screen.class);
                         startActivity(intent);
                     }else{
                         new AlertDialog.Builder(login.this)
