@@ -64,7 +64,6 @@ public class Uploading extends AppCompatActivity {
     }
 
     public void UP_success(View v){
-
         Intent intent = new Intent(this,main_screen.class);
         startActivity(intent);
         this.finish();

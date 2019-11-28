@@ -130,14 +130,8 @@ public class Select_Bluetooth extends AppCompatActivity {
                 //收到結尾符號
                 if (_recieveData.equals("upload success!")) {
                     if (msg_flag == 6) {
-                        if (img_count != 0)
-                            receive_img();
-                        else if (rcv_flag == 0 || data_count != 1) {
-                            show_upload(data_count, 1);
-                            get_sensor(0);
-                            msg_flag = 2;
-                        }
-                        rcv_flag = 1;
+                        receive_img();
+
                     } else if (msg_flag == 2) {
                         msg_flag = 0;
                         fb.insertBox(sensorList);
@@ -162,9 +156,9 @@ public class Select_Bluetooth extends AppCompatActivity {
                             textview.append("cmd: " + _sendCMD);
                             if (mConnectedThread != null) //First check to make sure thread created
                                 mConnectedThread.write(_sendCMD);
-                            if (rcv_flag == 0 || data_count != 1) {
+                            if (rcv_flag == 0 ) {
                                 show_upload(data_count, 1);
-                                get_sensor(0);
+                                //get_sensor(0);
                                 msg_flag = 2;
                             }
                         }
@@ -235,6 +229,7 @@ public class Select_Bluetooth extends AppCompatActivity {
                 if (data[0].equals("6")) {
                     msg_flag = 6;
                     data_count = Integer.parseInt(data[1]);
+                    rcv_flag = Integer.parseInt(data[3]);
                     if (rcv_flag == 0) {
                         show_upload(data_count, 0);
                     }
@@ -428,7 +423,7 @@ public class Select_Bluetooth extends AppCompatActivity {
             idata = new byte[0];
             String jpgname = filename.substring(5,9);
             fb.uploadImg(path + "/sensingbox" + filename,jpgname,"民雄");
-            deleteFromSDcard(filename);
+            //deleteFromSDcard(filename);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -456,6 +451,18 @@ public class Select_Bluetooth extends AppCompatActivity {
             get_img(now_img);
             img_name.remove(now_img);
             Log.e("7777771",now_img);
+        }else {
+            _recieveData = ""; //清除上次收到的資料
+            _sendCMD = "7,0,\n";
+            textview.append("upload_end\n");
+            textview.append("cmd: " + _sendCMD);
+            if (mConnectedThread != null) //First check to make sure thread created
+                mConnectedThread.write(_sendCMD);
+            if (rcv_flag == 0 ) {
+                show_upload(data_count, 1);
+                //get_sensor(0);
+                msg_flag = 2;
+            }
         }
     }
 
@@ -499,11 +506,14 @@ public class Select_Bluetooth extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         //mConnectedThread.cancel();
+        /*
         _sendCMD = "8,\n";
         textview.append( "break BT link\n");
         textview.append("cmd: "+_sendCMD);
         if(mConnectedThread != null) //First check to make sure thread created
             mConnectedThread.write(_sendCMD);
+
+         */
     }
 
     public void upload_data(){
